@@ -1,0 +1,5 @@
+extends ./includes/layout
+block body
+    div
+        toaster-container(toaster-options="{'position-class': 'toast-top-right', 'time-out': 5000,'spinner':false }")
+        div(ng-view)

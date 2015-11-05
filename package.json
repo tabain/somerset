@@ -2,9 +2,11 @@
   "name": "somerset",
   "version": "1.0.0",
   "description": "Visitor check-in system",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "bower install -F && gulp build && sh postgulp.sh",
+    "start": "node server.js",
+    "test": "NODE_ENV=test mocha server/test --recursive"
   },
   "repository": {
     "type": "git",

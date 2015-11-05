@@ -1,0 +1,63 @@
+script(type="text/javascript").
+    // Avoid `console` errors in browsers that lack a console.
+    // IE9 fix
+    //    if (window.console) {
+    //        alert('console hai');
+    //    }
+    //    else {
+    //        alert('console nai hai');
+    //    }
+    //    if (console) {
+    //        alert("there");
+    //    } else {
+    //        alert("not there");
+    //    }
+    (function () {
+        var method;
+        var noop = function () {
+        };
+        var methods = [
+            'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+            'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+            'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+            'timeStamp', 'trace', 'warn'
+        ];
+        var length = methods.length;
+        var console = (window.console = window.console || {});
+        while (length--) {
+            method = methods[length];
+                // Only stub undefined methods.
+            if (!console[method]) {
+                console[method] = noop;
+            }
+        }
+    }());
+script(type="text/javascript", src="/lib/jquery/dist/jquery.js")
+script(type="text/javascript", src="/lib/intl-tel-input/build/js/intlTelInput.min.js")
+script(type="text/javascript", src="/lib/angular/angular.js")
+script(type="text/javascript", src="/lib/moment/moment.js")
+script(type="text/javascript", src="/lib/angular-resource/angular-resource.js")
+script(type="text/javascript", src="/lib/angular-route/angular-route.js")
+script(type="text/javascript", src="/lib/angular-animate/angular-animate.js")
+script(type="text/javascript", src="/lib/angularjs-toaster/toaster.js")
+script(type="text/javascript", src="/lib/bootstrap/dist/js/bootstrap.js")
+script(type="text/javascript", src="/lib/bootstrap-daterangepicker/daterangepicker.js")
+script(type="text/javascript", src="/js/constants.js")
+script(type="text/javascript", src="/lib/d3/d3.js")
+script(type="text/javascript", src="/js/clientapp.js")
+//script(type="text/javascript", src="/js/AboutYou.js")
+//script(type="text/javascript", src="/js/FamilyCtrl.js")
+//script(type="text/javascript", src="/js/studentCtrl.js")
+//script(type="text/javascript", src="/js/OtherCtrl.js")
+//script(type="text/javascript", src="/js/BusinessCtrl.js")
+//script(type="text/javascript", src="/js/StudentOtherCtrl.js")
+//script(type="text/javascript", src="/js/EventCtrl.js")
+script(type="text/javascript", src="/js/directive-inputph.js")
+script(type="text/javascript", src="/js/Auth.js")
+//script(type="text/javascript", src="/js/controllers.js")
+script(type="text/javascript", src="/js/navicontroller.js")
+script(type="text/javascript", src="/js/index.js")
+//script(type="text/javascript", src="/js/ManageAdmins.js")
+//script(type="text/javascript", src="/js/Stats.js")
+//script(type="text/javascript", src="/js/ReCtrl.js")
+script(type="text/javascript", src="/js/datePicker.js")
