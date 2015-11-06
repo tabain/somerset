@@ -1,0 +1,20 @@
+form(name="newAdminForm" ng-submit="submitForm(newAdminForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
+    .form-group#adminName
+        input.form-control(type="name" placeholder="Name" ng-model="admin.username" name="username" required)
+        p.help-block(ng-show="newAdminForm.username.$invalid && !newAdminForm.username.$pristine") Please provide us with a username
+    .form-group#adminEmail
+        input.form-control(type="email" placeholder="Email" ng-model="admin.email" name="email" required)
+        p.help-block(ng-show="newAdminForm.email.$invalid && !newAdminForm.email.$pristine") Please provide us with a valid email address
+    .form-group#adminPassword
+        input.form-control(type="password" placeholder="Password" ng-model="admin.password" ng-minlength=8 name="password" required)
+        p.help-block(ng-show="newAdminForm.password.$invalid && !newAdminForm.password.$pristine") Your password needs to be more than 8 characters.
+    .form-group
+        label Location
+        select.form-control(name="location" ng-model="admin.defaultLocation" ng-options="location for location in validLocations" required)
+        p.help-block(ng-show="newAdminForm.location.$invalid && !newAdminForm.location.$pristine") Please select a location.
+    .form-group
+        label Role
+        select.form-control(placeholder="Type" name="type" ng-model="admin.role" ng-options="role for role in validRoles" required)
+        p.help-block(ng-show="newAdminForm.type.$invalid && !newAdminForm.type.$pristine") Role of this user
+    .form-group#adminSubmit
+        button(type="submit" ng-disabled="newAdminForm.$invalid").btn.btn-primary.btn-lg.btn-block Go

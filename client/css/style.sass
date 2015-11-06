@@ -1,0 +1,306 @@
+// variable
+
+$button-padding: 8px 10px 5px 10px
+$color-green: #000000
+$color-dr-gray: #616265
+$color-lt-gray: #8b8b8b
+$color-dropdown-selector: #e7e7e7
+$color-br: #5f4d3a
+$color-white: #fff
+$pad-porfile-heading: 16px 70px 5px 25px
+$font-roboto-reg: roboto-reg
+$font-roboto-light: roboto-light
+$font-roboto-bold: roboto-bold
+$shadow: 3px 4px 7px -2px rgba(0, 0, 0, 0.3)
+$color-br-gray: rgb(166, 159, 155)
+
+$font-x-large: 72px
+$font-large: 50px
+$font-med: 32px
+$font-small: 24px
+$font-x-smaill: 16px
+$font-tiny: 14px
+
+//fonts
+@font-face
+  font-family: Verlag-Bold
+  src: url(/fonts/greystar/fonts/Verlag-Bold.otf)
+@font-face
+  font-family: Century-Gothic
+  src: url(/fonts/greystar/fonts/century_gothic.ttf)
+
+@font-face
+  font-family: Verlag-Book
+  src: url(/fonts/greystar/fonts/Verlag-Book.otf)
+
+@font-face
+  font-family: Verlag-Light
+  src: url(/fonts/greystar/fonts/Verlag-Light.otf)
+
+@font-face
+  font-family: Verlag-XLight
+  src: url(/fonts/greystar/fonts/Verlag-XLight.otf)
+
+body
+  margin: 0px
+  padding: 25px 0px
+  font-family: Century-Gothic
+
+label
+  color: $color-lt-gray
+  font-weight: normal
+
+h1, h2, h3, h4, h5, h6
+  color: $color-dr-gray
+
+nav.navbar
+  height: 120px
+  margin-bottom: 25px
+  color: $color-lt-gray
+  width: 100%
+  background-color: white
+  border-bottom: 2px solid $color-dr-gray
+
+section
+  margin: 10px
+  padding: 10px 10px 10px 10px
+//class
+.cir-h1
+  margin: auto
+  border: 1px solid transparent
+  background-color: #e7e7e7
+  border-radius: 40px
+  height: 80px
+  width: 80px
+  line-height: 2
+.center-ali
+  margin-left: auto
+  margin-right: auto
+.glyphicon-trash,.glyphicon-edit
+  font-size: 20px
+.help-block
+  color: #FF3D3D
+#mandatory
+  font-color:  lightgrey
+  font-size: 10px
+.navbar-right
+  margin-top: 25px
+  li
+    ul
+      li
+        span.span-left-margin
+          display: none
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus
+  background-color: transparent
+  color: $color-lt-gray
+
+#promotions label
+  font-size: 12px
+
+.nav>li>a:hover
+  background-color: transparent
+  color: $color-lt-gray
+.nav ul
+
+  li > a:hover, a:focus
+    background-color: $color-dropdown-selector
+  li
+    ul.dropdown-menu
+      li
+        span.span-left-margin
+          display: none
+
+#locationName
+  font-size: 48px
+  color: #969391
+
+.modal-dialog
+  width: 430px
+  margin: 10px auto
+
+.modal-content
+  border: 0px
+  border-radius: 0px
+
+.modal-header
+  border-bottom: 0px solid rgba(128, 128, 128, 0.6)
+  box-shadow: 0 2px 2px 0px rgba(0, 0, 0, 0.4)
+  h4.modal-title
+    i
+      padding-right: 15px
+      padding-left: 10px
+    font-weight: 500
+
+.modal-body
+  padding: 15px 15px 1px 15px
+
+.span-left-margin
+  margin-left: 10px
+.margin-right-btn
+  margin-right: 7px
+
+.span-right-margin
+  margin-right: 10px
+.btn-min-width
+  min-width: 91px
+  width: 91px
+  margin-top: 5px
+  font-size: 12px
+  display: block
+.btn
+  text-align: center
+  border-radius: 0
+  font-family: Century-Gothic
+  text-transform: none
+  transition: all 0.2s ease-in-out
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+
+  a
+    text-decoration: none
+    color: #333
+.btn-fifty
+  width: 48%
+
+.displayed-center
+  display: block
+  margin-left: auto
+  margin-right: auto
+
+.displayed-v-center
+  display: table-cell
+  vertical-align: middle
+
+.color-light-gray
+  color: #afafaf
+  font-family: Century-Gothic
+
+.space
+  padding: 20px 0
+.space-form
+  padding: 1px 0
+
+.navbar-brand
+  color: $color-dr-gray
+  padding: 0px
+  img
+    height: 100px
+
+.form-group
+  border: 0px
+  border-radius: 0px
+  margin: 0px
+  margin-bottom: 10px
+
+.form-control
+  height: 45px
+  border: 1px solid #dadbde
+  border-radius: 0px
+  box-shadow: 3px 4px 8px -3px rgba(0, 0, 0, 0.0)
+  &::-webkit-input-placeholder
+    color: $color-lt-gray
+    font-family: Century-Gothic
+  &:focus
+    border-color: #c0c0c0
+    box-shadow: 3px 4px 8px -3px rgba(0, 0, 0, 0.0)
+    &::-webkit-input-placeholder
+      color: #c0c0c0
+      font-family: Century-Gothic
+
+.title
+  margin-bottom: 25px
+  font-family: Century-Gothic
+
+.fa-gift
+  margin: 0px 3px
+.info
+  margin: 5px 0px
+.icon-area
+  position: relative
+  margin-top: 10px
+  margin-bottom: 10px
+  .left, .right
+    display: inline-block
+  .i
+    //height: 50px
+  .fa
+    //font-size: 48px
+  .fa-gift
+    //font-size: 60px
+    margin: 0px 3px
+  span
+    position: relative
+.section-left-right-padding
+  padding-left: 2%
+  padding-right: 2%
+
+#searcharea
+  .form-control
+    height: 40px
+    font-size: 12px
+
+.idcheck
+  min-width: 82px
+
+.btn-success.disabled, .btn-success[disabled]
+  opacity: 0.35
+  background-color: darkgrey
+  border: 0px
+
+footer
+  position: relative
+  bottom: -25px
+  width: 100%
+  height: auto
+  padding: 10px
+  text-align: center
+  margin: 50px 0px 0px 0px
+  p
+    font-size: 12px
+
+
+@media print
+  table
+    display: block
+  .printit
+    display: block !important
+  .dontprint
+    display: none
+
+#Frontdesk
+
+
+
+  table
+    width: 100%
+    float: none !important
+    align: center
+    margin: 40px auto
+    font-size: 14px
+
+    tr
+
+      td.firstchild
+        padding-left: 0px
+      td.lastchild
+        padding-right: 0px
+        width: 70px
+
+      td, th
+        padding-left: 10px
+        padding-right: 10px
+        button
+          margin-top: 5px
+          i.glyphicon-search
+            font-size: 24px
+
+.icon-refresh-animate
+  animation-name: rotateThis
+  animation-duration: .5s
+  animation-iteration-count: infinite
+  animation-timing-function: linear
+
+@keyframes rotateThis
+  0%
+    transform: scale(1) rotate(0deg)
+  100%
+    transform: scale(1) rotate(360deg)

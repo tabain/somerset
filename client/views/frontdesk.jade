@@ -1,0 +1,96 @@
+nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/greystar/views/partials/navi_bar.html'")
+
+section#Frontdesk.section-left-right-padding
+    .container-fluid
+        .row
+            .col-lg-12(ng-controller="Frontdesk")
+
+                h1.title.text-center.dontprint Front Desk
+                .row#searcharea
+                    .col-sm-4
+                        .form-group
+                            label Date Range
+                            input(date-range-picker ng-model="date" min="'2015-01-01'" ng-disabled="loadingGuests" options="opts" placeholder="{{date.startDate | date:'EEE dd MMM yyyy'}} - {{date.endDate | date:'EEE dd MMM yyyy'}} ").form-control.date-picker
+
+                    .col-sm-4
+                        .form-group
+                            label Search
+                            input(type="text" ng-model="searchTerm" placeholder="Name, Resident Name, Email & Phone").form-control
+
+                    .col-sm-4
+                        .form-group
+                            label Location
+                            select.form-control(name="location" ng-model="searchLocation" ng-disabled="loadingGuests" ng-options="l.value as l.name for l in searchValidLocations" required)
+
+                button(ng-click="forceLoadGuests()" ng-disabled="loadingGuests").btn.btn-default.dontprint
+                    i.glyphicon.glyphicon-refresh(ng-class="{'icon-refresh-animate': loadingGuests}")
+                    span.span-left-margin  Refresh
+
+                button(ng-click="addGuest()").btn.btn-default.pull-right.dontprint
+                        i.glyphicon.glyphicon-plus-sign
+                        span.span-left-margin New Guest
+
+                table.table.table-condensed.printit
+                    thead
+                        tr
+                            th  Name
+                            th  Email
+                            th  Phone
+                            th  Visiting
+                            th  About
+                            th  Timestamps
+                            th.idcheck Checked Id
+                            th  Allow Marketing
+                            th  Under 18
+                            th
+                    tbody
+                            tr(ng-repeat="guest in guests | orderBy:'-createdAt' | filter:searchTerm" ng-include="'views/greystar/views/partials/guest_row.html'")
+
+
+
+                .pull-right.dontprint
+                        .btn.btn-default(ng-click="print()")
+                                i.glyphicon.glyphicon-print
+                                span.span-left-margin Print Data
+                        .btn.btn-default
+                            a(ng-href="{{reports()}}")
+                                i.glyphicon.glyphicon-export
+                                span.span-left-margin Export to CSV
+
+                .modal.fade#editGuest
+                    .modal-dialog
+                        .modal-content
+                            .modal-header
+                                h4.modal-title
+                                    i.glyphicon.glyphicon-user.span-right-margin
+                                    | Edit Guest
+                            .modal-body
+                                div(ng-include="'views/greystar/views/partials/guest_form_frontdesk.html'")
+                .modal.fade#deleteGuest
+                    .modal-dialog
+                        .modal-content
+                            .modal-header
+                                h4.modal-title
+                                    i.glyphicon.glyphicon-user.span-right-margin
+                                    | Delete Guest
+                            .modal-body
+                                p Are you sure you want to delete this guest?
+                            .modal-footer
+                                btn.btn.btn-primary(ng-click="confirmDeleted()") Confirm
+                                btn.btn.btn-danger(ng-click="cancel()") Cancel
+
+
+                .modal.fade#addGuest
+                    .modal-dialog
+                        .modal-content
+                            .modal-header
+                                h4.modal-title
+                                    i.glyphicon.glyphicon-user.span-right-margin
+                                    | New Guest
+
+                            .modal-body
+                                div(ng-include="'views/greystar/views/partials/guest_form_frontdesk.html'")
+
+
+
+footer(ng-include="'views/greystar/views/partials/footer.html'")

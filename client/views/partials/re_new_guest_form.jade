@@ -1,0 +1,56 @@
+form(name="reNewForm" ng-submit="returnGuestSubmit(reNewForm.$valid)" autocomplete="off" ng-model-options="{ updateOn: 'blur', debounce: { default: 5000, blur: 100 } }" novalidate)
+    p   Hi again, {{renew.name}}, these are your saved details, are they still correct?
+
+    .form-group#name
+        input.form-control(placeholder="Full Name e.g John Smith" type="text" ng-model="renew.name" name="name" ng-pattern="namePattern" required)
+        p.help-block(ng-show="reNewForm.name.$invalid && !reNewForm.name.$pristine") Please provide us with your full name
+
+    .form-group
+        input.form-control(placeholder="Email e.g john@gmail.com" type="email" ng-model="renew.email" name="email" required)
+        p.help-block(ng-show="reNewForm.email.$invalid && !reNewForm.email.$pristine") Please provide us with a valid email address
+
+    .form-group
+        input(type="text" ng-model="renew.phone" intl-tel-input placeholder="Phone No e.g 1234567" default-country="gb" preferred-countries="gb, us" name="phone" required).form-control
+
+        p.help-block(ng-show="reNewForm.phone.$invalid && !reNewForm.phone.$pristine") Please provide us with a valid phone number beginning with country code e.g. +44
+
+    .form-group(ng-model-options="{ debounce: { default: 2000, blur: 100 } }")
+        input.form-control(type="text" placeholder="Resident Name e.g. Jane Doe" ng-model="renew.residentName" name="residentName" ng-pattern="namePattern" required)
+        p.help-block(ng-show="reNewForm.residentName.$invalid && !reNewForm.residentName.$pristine") Please provide us the full name of your host
+
+    .form-group
+        label Location
+        select.form-control(name="location" ng-model="renew.location" ng-init="lastLocation" ng-options="location for location in validLocations" required)
+        p.help-block(ng-show="reNewForm.location.$invalid && !reNewForm.location.$pristine") Please select a location.
+
+    .form-group
+        label Tell us about you
+        select.form-control(placeholder="Type" name="type" ng-model="guest.type" ng-options="type for type in validTypes" required)
+        p.help-block(ng-show="guestForm.type.$invalid && !guestForm.type.$pristine") What do you do?
+
+    .form-group
+        button(type="submit").btn.btn-success.btn-lg.btn-block Submit
+
+    .space
+        .row
+            .row.info
+                .col-xs-3.col-sm-2.text-center
+                    i.fa.fa-medkit.fa-4x
+                .col-xs-9.col-sm-10
+                    span Please share your contact information to also allow us to contact you in the event of an emergency.
+            .row.info
+                .col-xs-3.col-sm-2.text-center
+                    i.fa.fa-gift.fa-4x
+                .col-xs-9.col-sm-10
+                    span Your contact information helps us to tell you about our exciting events and special offers.
+            .row.info
+                .col-xs-3.col-sm-2.text-center
+                .col-xs-9.col-sm-10
+                    .space-form
+                        .checkbox
+                            label
+                                input(type="checkbox" ng-model="renew.sendPromotions")
+                                | Would you like to be contacted with great offers from Greystar and our marketing partners?
+
+
+

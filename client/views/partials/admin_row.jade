@@ -1,0 +1,10 @@
+td {{admin.username | capitalize}}
+td {{admin.email}}
+td {{admin.defaultLocation}}
+td {{admin.role | capitalize}}
+td
+    .btn-group
+        .btn.btn-default(ng-click="delAdmin(admin)")
+            i.glyphicon.glyphicon-trash
+        .btn.btn-default(ng-click="editAdmin(admin)")
+            i.glyphicon.glyphicon-edit

@@ -35,13 +35,13 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 gulp.task('jshint', function () {
-    return gulp.src([baseDevDir + 'js/*.js', baseDevDir + 'js/**/*.js'])
+    return gulp.src([baseDevDir + 'js/*.js', baseDevDir + '*/js/**/*.js'])
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('images', function () {
-    return gulp.src(baseDevDir + '/imgs/**/*')
+    return gulp.src(baseDevDir + 'imgs/**/*')
         .pipe($.imagemin({
             progressive: true,
             interlaced: false
@@ -97,7 +97,7 @@ gulp.task('html', function () {
         }))
         .on('error', $.util.log)
         .pipe(!isProd ? $.prettify({indent_size: 2}) : $.util.noop())
-        .pipe(gulp.dest(copyDir))
+        .pipe(gulp.dest(copyDir + 'views'))
 
 });
 
@@ -121,10 +121,10 @@ gulp.task('watch', ['build'], function () {
     // TODO: Add watch for responsive images
     // TODO: Add watch for audio and fonts
     //gulp.watch([debugDevDir + '**/*'], ['bower']);
-    gulp.watch([baseDevDir + 'views/**/*.jade',], ['html']);
-    gulp.watch([baseDevDir + 'css/**/*.{scss,css,sass}'], ['styles']);
-    gulp.watch([baseDevDir + 'js/*.js', baseDevDir + 'js/**/*.js'], ['scripts']);
-    gulp.watch([baseDevDir + 'imgs/**/*', baseDevDir + 'fonts/**/*'], ['images', 'fonts']);
+    gulp.watch([baseDevDir + '**/views/**/*.jade',], ['html']);
+    gulp.watch([baseDevDir + '**/css/**/*.{scss,css,sass}'], ['styles']);
+    gulp.watch([baseDevDir + '**/js/*.js', baseDevDir + '**/js/**/*.js'], ['scripts']);
+    gulp.watch([baseDevDir + '**/imgs/**/*', baseDevDir + '**/fonts/**/*'], ['images', 'fonts']);
 
 });
 

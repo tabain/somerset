@@ -1,0 +1,49 @@
+nav.navbar.navbar-default.navbar-static-top.clearfix(role='navigation' ng-controller="NaviController" ng-include="'views/greystar/views/partials/navi_bar.html'")
+section(ng-controller="EventCtrl")
+    .container-fluid
+        .row
+            .col-lg-4.col-md-6.col-sm-6.col-xs-12.col-lg-offset-4.col-md-offset-3.col-sm-offset-3
+                h1.title.text-center Check In
+                h3.text-center {{pagename}}
+                form(name="eventForm" ng-submit="submitForm(eventForm.$valid)" autocomplete="off" ng-model-options="{ updateOn: 'blur', debounce: { default: 5000, blur: 100 } }" novalidate)
+                    p * Please fill in your details to check in
+                    .form-group
+                        input.form-control(placeholder="Full Name e.g John Smith" type="text" ng-model="eventGuest.name" name="name" ng-pattern="namePattern" required)#nameinput
+                        p.help-block(ng-show="eventForm.name.$invalid && !eventForm.name.$pristine") Please provide us with your full name
+                    .form-group
+                        input.form-control(placeholder="Email e.g john@gmail.com" type="email" ng-model="eventGuest.email" name="email" ng-pattern='emailPattern' required)
+                        p.help-block(ng-show="eventForm.email.$invalid && !eventForm.email.$pristine") Please provide us with a valid email address
+                    .form-group
+                        input(type="text" ng-model="eventGuest.phone" intl-tel-input placeholder="Phone No e.g 1234567" default-country="gb" preferred-countries="gb, us" name="phone" required)#ph.form-control
+                        p.help-block(ng-show="eventForm.phone.$invalid && !eventForm.phone.$pristine") Please provide us with a valid phone number beginning with country code e.g. +44
+
+                    .form-group(ng-model-options="{ debounce: { default: 2000, blur: 100 } }")
+                        input.form-control(type="text" placeholder="Event Name" ng-model="eventGuest.event" name="event" required)
+                        p.help-block(ng-show="eventForm.event.$invalid && !eventForm.event.$pristine") Please provide us the your event
+                    .form-group
+                        label Location
+                        select.form-control(name="location" ng-model="eventGuest.location" ng-init="lastLocation" ng-options="location.name for location in validLocations" required)
+                        p.help-block(ng-show="eventForm.location.$invalid && !eventForm.location.$pristine") Please select a location.
+                            .form-group
+                        button(type="submit").btn.btn-success.btn-lg.btn-block Submit
+
+        .row
+            .col-lg-4.col-md-6.col-sm-6.col-xs-12.col-lg-offset-4.col-md-offset-3.col-sm-offset-3
+                    .row.info
+                        .col-xs-3.col-sm-2.text-center
+                            i.fa.fa-medkit.fa-4x
+                        .col-xs-9.col-sm-10
+                            span Please share your contact information to also allow us to contact you in the event of an emergency.
+                    .row.info
+                        .col-xs-3.col-sm-2.text-center
+                            i.fa.fa-gift.fa-4x
+                        .col-xs-9.col-sm-10
+                            span Your contact information helps us to tell you about our exciting events and special offers.
+
+                    .row.info
+                        .col-xs-12.col-sm-12
+                            .space-form
+                                .checkbox#promotions
+                                    label
+                                        input(type="checkbox" ng-model="eventGuest.sendPromotions")
+                                        | Would you like to be contacted with great offers from Greystar and our marketing partners?

@@ -66,7 +66,13 @@ website.get('/reports', [frontdesk.isFrontDesk], admins.generateReport);
 
 website.get('/', function (req, res, next) {
     req.session.isGuest = true;
-    res.render('main', {});
+    if (req.headers.host === 'localhost:3000' || req.headers.host === 'greystar-stage.elasticbeanstalk.com' || req.headers.host === 'greystar-prod.elasticbeanstalk.com'){
+        res.render('main', {});
+    }
+    else if(req.headers.host === 'localhost:5060' || req.headers.host === 'nido-stage.elasticbeanstalk.com' || req.headers.host === 'nido-prod.elasticbeanstalk.com'){
+        res.render('main-nido', {});
+
+    }
 });
 website.get('/guests', guests.getGuest);
 website.get('/newGuests', newGuests.getGuest);

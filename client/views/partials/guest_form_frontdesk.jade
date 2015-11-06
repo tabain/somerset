@@ -1,0 +1,66 @@
+form(name="guestForm" ng-submit="submitForm(guestForm.$valid)" autocomplete="off" ng-model-options="{ updateOn: 'blur', debounce: { default: 5000, blur: 100 } }" novalidate)
+    .form-group
+        label Full Name
+        input.form-control(placeholder="Name" type="text" ng-model="guest.name" name="name" ng-pattern="namePattern" required)#edname
+        p.help-block(ng-show="guestForm.name.$invalid && !guestForm.name.$pristine") Please provide us with your full name
+
+    .form-group
+        label Email
+        input.form-control(placeholder="Email" type="email" ng-model="guest.email" name="email" required)
+        p.help-block(ng-show="guestForm.email.$invalid && !guestForm.email.$pristine") Please provide us with a valid email address
+
+    .form-group
+        label Phone Number
+        input(type="text" ng-model="guest.phone" intl-tel-input placeholder="Phone No e.g 1234567" default-country="gb" preferred-countries="gb, us" name="phone"  required )#edphone.form-control
+        //input.form-control(type="text" placeholder="Phone No" ng-model="guest.phone" ng-pattern="phonePattern" name="phone" required)
+        p.help-block(ng-show="guestForm.phone.$invalid && !guestForm.phone.$pristine") Please provide us with a valid phone number beginning with country code e.g. +44
+
+    .form-group(ng-model-options="{ debounce: { default: 500, blur: 100 } }" ng-show="residentshow()")#guestResidentName
+        label Name of person you are visiting  e.g. Jane Doe
+        input.form-control(type="text" placeholder="Name of person you are visiting e.g. Jane Doe" ng-model="guest.residentName"  name="residentName" ng-pattern="namePattern" )
+        p.help-block(ng-show="guestForm.residentName.$invalid && !guestForm.residentName.$pristine") Please provide us the full name of your host
+    .form-group(ng-model-options="{ debounce: { default: 500, blur: 100 } }" ng-show="roomshow()")#guestRoomNo
+        label Room Number
+        input.form-control(type="text" placeholder="Room Number" ng-model="guest.roomNo" name="roomNo" )
+        p.help-block(ng-show="guestForm.roomNo.$invalid && !guestForm.roomNo.$pristine") Please provide us the Room Number of your host
+    .form-group(ng-model-options="{ debounce: { default: 500, blur: 100 } }" ng-show="eventshow()")#guestEvent
+        label Event Name
+        input.form-control(type="text" placeholder="Event Name" ng-model="guest.event" name="event" )
+        p.help-block(ng-show="guestForm.event.$invalid && !guestForm.event.$pristine") Please provide us the event
+    .form-group(ng-model-options="{ debounce: { default: 500, blur: 100 } }" ng-show="companyshow()")#guestCompany
+        label company Name
+        input.form-control(type="text" placeholder="company Name" ng-model="guest.company" name="company" )
+        p.help-block(ng-show="guestForm.company.$invalid && !guestForm.company.$pristine") Please provide us the company
+    .form-group(ng-model-options="{ debounce: { default: 500, blur: 100 } }" ng-show="whorushow()")#whoAreYou
+        label Who are you visiting
+        input.form-control(type="text" placeholder="Who are you visiting" ng-model="guest.whoAreYou" name="whoAreYou" )
+        p.help-block(ng-show="guestForm.whoAreYou.$invalid && !guestForm.whoAreYou.$pristine") Please provide us the Who are you visiting
+    .form-group(ng-model-options="{ debounce: { default: 500, blur: 100 } }" ng-show="purposeOfVisitshow()")#guestPurposeOfVisit
+        label Purpose Of Visit
+        input.form-control(type="text" placeholder="Purpose of visit" ng-model="guest.purposeOfVisit" name="purposeOfVisit" )
+        p.help-block(ng-show="guestForm.purposeOfVisit.$invalid && !guestForm.purposeOfVisit.$pristine") Please provide us the purpose of visit
+
+    .form-group
+        label Location
+        select.form-control(name="location" ng-model="guest.location" ng-init="lastLocation.name" ng-options="location.name for location in validLocationsEdit" required)
+        p.help-block(ng-show="guestForm.location.$invalid && !guestForm.location.$pristine") Please select a location.
+
+    .form-group
+        label Tell us about you
+        select.form-control(placeholder="Type" name="type" ng-model="guest.type" ng-options="type for type in validTypes" required)
+        p.help-block(ng-show="guestForm.type.$invalid && !guestForm.type.$pristine") What do you do?
+    .space
+        .checkbox
+            label
+                input(type="checkbox" ng-model="guest.sendPromotions")
+                | Would you like to be contacted with great offers from Greystar and our marketing partners?
+        .checkbox
+            label
+                input(type="checkbox" ng-model="guest.plus18")
+                | Under 18
+
+
+    .form-group.text-right
+        button(type="cancel" data-dismiss='modal').btn.btn-danger.btn-lg.btn-fifty Cancel
+        button(type="submit").btn.btn-success.btn-lg.btn-fifty.margin-right-btn Save
+

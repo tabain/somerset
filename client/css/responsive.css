@@ -1,0 +1,104 @@
+@media (max-width: 1200px) {
+  .container {
+    width: 1170px; }
+
+  .navbar-right {
+    float: right; }
+    .navbar-right .navbar-brand img {
+      height: 90px; } }
+@media (max-width: 1024px) {
+  .section-left-right-padding {
+    padding-left: 10px;
+    padding-right: 10px; }
+
+  .container {
+    width: 885px; }
+
+  nav.navbar {
+    height: 80px;
+    margin-bottom: 25px; }
+    nav.navbar .navbar-right {
+      float: right;
+      margin-top: 18px; }
+    nav.navbar .navbar-brand img {
+      height: 78px; } }
+@media (max-width: 768px) {
+  .container {
+    width: 675px; }
+
+  nav.navbar .navbar-right {
+    margin-top: 12px; }
+
+  .modal-dialog {
+    width: 103%;
+    margin: 0px; }
+    .modal-dialog .modal-content {
+      height: 100%; }
+
+  .hideTable {
+    display: none; } }
+@media (max-width: 767px) {
+  body {
+    padding: 0px; }
+
+  .container {
+    width: 675px; }
+
+  .navbar-right .dropdown-menu {
+    right: 0;
+    left: auto; }
+
+  .navbar-nav .open .dropdown-menu {
+    position: absolute;
+    background-color: whitesmoke;
+    border: 1px solid #cccccc;
+    border: 1px solid rgba(0, 0, 0, 0.15); }
+
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    background-color: whitesmoke; }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+      background-color: #e7e7e7; }
+
+  nav.navbar .navbar-right {
+    margin-top: -31px; } }
+@media (min-width: 480px) and (max-width: 768px) {
+  .modal-dialog {
+    width: 103%;
+    margin: 0px; }
+    .modal-dialog .modal-content {
+      height: auto; } }
+@media (max-width: 480px) {
+  .container {
+    width: 320px; }
+
+  .modal-dialog {
+    width: 104%;
+    margin: 0px; }
+    .modal-dialog .modal-content {
+      height: auto; }
+
+  nav.navbar {
+    height: 60px;
+    margin-bottom: 25px; }
+    nav.navbar .navbar-right {
+      float: right;
+      margin-top: -39px;
+      margin-right: 0px; }
+      nav.navbar .navbar-right li ul li span.span-left-margin {
+        display: inline;
+        margin-left: 5px; }
+      nav.navbar .navbar-right li a span.span-left-margin {
+        display: none; }
+      nav.navbar .navbar-right li a span.glyphicon.glyphicon-user {
+        margin-right: 10px; }
+    nav.navbar .navbar-brand img {
+      height: 60px; } }
+@media (min-width: 320px) and (max-width: 360px) {
+  .container {
+    width: 320px; }
+
+  .modal-dialog {
+    width: 106%;
+    margin: 0px; }
+    .modal-dialog .modal-content {
+      height: 100%; } }

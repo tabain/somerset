@@ -1,0 +1,20 @@
+nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/greystar/views/partials/navi_bar.html'")
+
+section
+    .container-fluid
+        .row
+            .col-lg-4.col-md-6.col-sm-6.col-xs-8.col-lg-offset-4.col-md-offset-3.col-sm-offset-3.col-xs-offset-2
+                div(ng-controller="AdminLogin")
+                    h1.title Login
+                    form(name="adminForm" ng-submit="submitForm(adminForm.$valid)" ng-model-options="{ debounce: { default: 1800, blur: 100 } }" novalidate)
+                        .form-group#adminEmail
+                            input.form-control(type="email" placeholder="Email" ng-model="admin.email" name="email" required)
+                            p.help-block(ng-show="adminForm.email.$invalid && !adminForm.email.$pristine") Please provide us with a valid email address
+                        .form-group#adminPassword
+                            input.form-control(type="password" placeholder="Password" ng-model="admin.password" ng-minlength=8 name="password" required)
+                            p.help-block(ng-show="adminForm.password.$invalid && !adminForm.password.$pristine") Your password needs to be more than 8 characters.
+                        .form-group#adminSubmit
+                            button(type="submit" ng-disabled="adminForm.$invalid").btn.btn-primary.btn-lg.btn-block Go
+
+
+footer(ng-include="'views/greystar/views/partials/footer.html'")

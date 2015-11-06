@@ -1,0 +1,44 @@
+nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/greystar/views/partials/navi_bar.html'")
+
+section
+    .container-fluid(ng-controller="ManageAdmins")
+        .row
+            .col-lg-12
+                h1.text-center Manage Admins
+                h3.text-center Coming Soon!
+                h4.text-center This page is under construction.
+                button(ng-click="addUser()").pull-right Create User
+        .row
+            .col-lg-12
+                table.table.table-condensed
+                    thead
+                        tr
+                            th  Name
+                            th  Email
+                            th  Location
+                            th  Role
+                            th
+                    tbody
+                        tr(ng-repeat="admin in admins | orderBy:'-createdAt'" ng-include="'views/greystar/views/partials/admin_row.html'")
+
+
+        .modal.fade#addUser
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | New User
+                    .modal-body
+                        div(ng-include="'views/greystar/views/partials/create_admin.html'")
+        .modal.fade#editAdmin
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | Edit Admin
+                    .modal-body
+                        div(ng-include="'views/greystar/views/partials/edit_admin.html'")
+
+footer(ng-include="'views/greystar/views/partials/footer.html'")

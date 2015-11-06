@@ -1,0 +1,21 @@
+td {{guest.name | capitalize}}
+td {{guest.email}}
+td {{guest.phone}}
+td {{guest.residentName | capitalize}} {{guest.company | capitalize}} {{guest.roomNo | capitalize}} {{guest.event | capitalize}} {{guest.purposeOfVisit | capitalize}}
+td {{guest.type | capitalize}}
+td
+    p In: {{guest.checkedInAt | date: 'MMM d, y h:mm a'}}
+    p Out: {{guest.checkedOutAt | date: 'MMM d, y h:mm a'}}
+td.text-center
+    input(type="checkbox" ng-model="ids[guest.id]")
+td.text-center
+    input(type="checkbox" ng-click="togglePromotions(guest)" ng-model="guest.sendPromotions")
+td.text-center
+    input(type="checkbox" ng-click="togglePlus18(guest)" ng-model="guest.plus18")
+td.dontprint
+    .btn-group
+        .btn.btn-default(ng-click="deleteGuest(guest)")
+            i.glyphicon.glyphicon-trash
+        .btn.btn-default(ng-click="editGuest(guest)")
+            i.glyphicon.glyphicon-edit
+    .btn.btn-min-width(ng-click="checkInOrCheckOut(guest)" ng-class="{'btn-primary': !guest.checkedIn, 'btn-danger': guest.checkedIn}" ng-disabled="((guest.checkedIn && guest.checkedOut) || !ids[guest.id]) ?  true : false") {{ guest.checkedIn?"Check Out":"Check In" }}
