@@ -17,19 +17,8 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
         all: '*'
     };
     $routeProvider
-        .when('/', {
-            templateUrl: '/views/aboutYou.html',
-            data: {
-                authorizedRoles: [USER_ROLES.all]
-            }
-        })
-        .when('/checkin', {
-            templateUrl: '/views/checkin.html',
-            data: {
-                authorizedRoles: [USER_ROLES.all]
-            }
-        }).when('/welcome', {
-            templateUrl: '/views/welcome.html',
+        .when('/',  {
+            templateUrl: '/views/login.html',
             data: {
                 authorizedRoles: [USER_ROLES.all]
             }
@@ -38,55 +27,15 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
             data: {
                 authorizedRoles: [USER_ROLES.all]
             }
-        }).when('/returningGuest', {
-            templateUrl: '/views/reNew.html',
+        }).when('/manage/admin', {
+            templateUrl: '/views/manageAdmin.html',
             data: {
-                authorizedRoles: [USER_ROLES.all]
+                authorizedRoles: [USER_ROLES.admin]
             }
-        }).when('/familyMember', {
-            templateUrl: '/views/familyVisitor.html',
-            data: {
-                authorizedRoles: [USER_ROLES.all]
-            }
-        }).when('/studentVisitor', {
-            templateUrl: '/views/studentVisitor.html',
-            data: {
-                authorizedRoles: [USER_ROLES.all]
-            }
-        }).when('/otherVisitor', {
-            templateUrl: '/views/otherVisitor.html',
-            data: {
-                authorizedRoles: [USER_ROLES.all]
-            }
-        }).when('/studentOtherPropertyVisitor', {
-            templateUrl: '/views/studentOtherVisitor.html',
-            data: {
-                authorizedRoles: [USER_ROLES.all]
-            }
-        }).when('/businessPartner', {
-            templateUrl: '/views/businessVisitor.html',
-            data: {
-                authorizedRoles: [USER_ROLES.all]
-            }
-        }).when('/eventGuest', {
-            templateUrl: '/views/eventVisitor.html',
-            data: {
-                authorizedRoles: [USER_ROLES.all]
-            }
-        }).when('/admin', {
+        }).when('/manage', {
             templateUrl: '/views/manage.html',
             data: {
                 authorizedRoles: [USER_ROLES.admin]
-            }
-        }).when('/stats', {
-            templateUrl: '/views/stats.html',
-            data: {
-                authorizedRoles: [USER_ROLES.admin]
-            }
-        }).when('/frontdesk', {
-            templateUrl: '/views/frontdesk.html',
-            data: {
-                authorizedRoles: [USER_ROLES.admin, USER_ROLES.frontdesk]
             }
         }).when('/404', {
             templateUrl: '/views/404.html',
@@ -334,7 +283,14 @@ angular.module('app').controller('AdminLogin',
                 Auth
                     .login($scope.admin.email, $scope.admin.password)
                     .then(function (data) {
-                        $location.path('/frontdesk');
+                        if ($rootScope.currentUser.role == 'frontdesk' && $rootScope.currentUser.role == 'admin'){
+                            $location.path('/manage');
+                        }else if($rootScope.currentUser.role == 'admin'){
+                            $location.path('/manage');
+                        }else {
+                            $location.path('/login');
+                        }
+
                     }, function (err) {
                         // TODO: Create Error Translator on Server and add helpful errors here
                         if (err.status == 401) {

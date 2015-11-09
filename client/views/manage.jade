@@ -1,44 +1,13 @@
-nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/greystar/views/partials/navi_bar.html'")
-
+nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/partials/navi_bar.html'")
 section
-    .container-fluid(ng-controller="ManageAdmins")
+    .container-fluid
         .row
-            .col-lg-12
-                h1.text-center Manage Admins
-                h3.text-center Coming Soon!
-                h4.text-center This page is under construction.
-                button(ng-click="addUser()").pull-right Create User
-        .row
-            .col-lg-12
-                table.table.table-condensed
-                    thead
-                        tr
-                            th  Name
-                            th  Email
-                            th  Location
-                            th  Role
-                            th
-                    tbody
-                        tr(ng-repeat="admin in admins | orderBy:'-createdAt'" ng-include="'views/greystar/views/partials/admin_row.html'")
+            .col-lg-4.col-md-6.col-sm-6.col-xs-8.col-lg-offset-4.col-md-offset-3.col-sm-offset-3.col-xs-offset-2
+                div(ng-controller="Manage")
+                    h2.title.text-center {{name}}
 
-
-        .modal.fade#addUser
-            .modal-dialog
-                .modal-content
-                    .modal-header
-                        h4.modal-title
-                            i.glyphicon.glyphicon-user.span-right-margin
-                            | New User
-                    .modal-body
-                        div(ng-include="'views/greystar/views/partials/create_admin.html'")
-        .modal.fade#editAdmin
-            .modal-dialog
-                .modal-content
-                    .modal-header
-                        h4.modal-title
-                            i.glyphicon.glyphicon-user.span-right-margin
-                            | Edit Admin
-                    .modal-body
-                        div(ng-include="'views/greystar/views/partials/edit_admin.html'")
-
-footer(ng-include="'views/greystar/views/partials/footer.html'")
+                    button(type="button" ng-click="gotoAdminManage()").btn.btn-default.btn-lg.btn-block Manage Admin
+                    button(type="button" ng-click="gotoWingManage()").btn.btn-default.btn-lg.btn-block Manage Wing
+                    button(type="button" ng-click="gotoWingPropertyManage()").btn.btn-default.btn-lg.btn-block Manage Wing Property
+                    button(type="button" ng-click="gotoOrganisationManage()").btn.btn-default.btn-lg.btn-block Manage Organisation
+                    button(type="button" ng-click="gotoMemberManage()").btn.btn-default.btn-lg.btn-block Manage Member
