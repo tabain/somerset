@@ -24,22 +24,22 @@ $font-tiny: 14px
 //fonts
 @font-face
   font-family: Verlag-Bold
-  src: url(/fonts/greystar/fonts/Verlag-Bold.otf)
+  src: url(/fonts/Verlag-Bold.otf)
 @font-face
   font-family: Century-Gothic
-  src: url(/fonts/greystar/fonts/century_gothic.ttf)
+  src: url(/fonts/century_gothic.ttf)
 
 @font-face
   font-family: Verlag-Book
-  src: url(/fonts/greystar/fonts/Verlag-Book.otf)
+  src: url(/fonts/Verlag-Book.otf)
 
 @font-face
   font-family: Verlag-Light
-  src: url(/fonts/greystar/fonts/Verlag-Light.otf)
+  src: url(/fonts/Verlag-Light.otf)
 
 @font-face
   font-family: Verlag-XLight
-  src: url(/fonts/greystar/fonts/Verlag-XLight.otf)
+  src: url(/fonts/Verlag-XLight.otf)
 
 body
   margin: 0px
@@ -59,7 +59,7 @@ nav.navbar
   color: $color-lt-gray
   width: 100%
   background-color: white
-  border-bottom: 2px solid $color-dr-gray
+  border-bottom: 0px solid $color-white
 
 section
   margin: 10px
@@ -181,7 +181,14 @@ section
 
 .navbar-brand
   color: $color-dr-gray
+  position: absolute
+  width: 100%
+  left: 0
+  top: 0
+  text-align: center
+  margin: auto
   padding: 0px
+
   img
     height: 100px
 
