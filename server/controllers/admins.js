@@ -52,6 +52,7 @@ exports.me = function (req, res, next) {
 exports.createUser = function (req, res, next) {
 
     var result = joi.validate(req.body, userV, {stripUnknown: true});
+
     if (result.error) return res.status(400).json(result.error);
 
     User.create(result.value, function (err, user) {
@@ -59,6 +60,8 @@ exports.createUser = function (req, res, next) {
         if (!user) /*TODO: What to do*/ ;
         res.json(user.public());
     });
+
+        
 };
 
 var reportHeaders = "First Name, " +
@@ -294,18 +297,14 @@ exports.updateUser = function (req, res, next) {
 
 exports.deleteUser = function (req, res, next) {
 
-    User.findOne(req.params.userId, function (err, user) {
+    User.findByIdAndUpdate(req.params.userId, { $set: { deleted: true }},function(err, user) {
         if (err) return next(err);
         if (!user) return res.status(404).json({message: 'User not found, invalid identifier'});
 
-        user.deletedBy = req.user._id;
-        user.deletedAt = new Date();
-        user.deleted = true;
 
-        user.save(function (err, newUser) {
             if (err) return next(err);
-            res.json(newUser.public());
-        });
+            res.json(user);
+
 
     });
 

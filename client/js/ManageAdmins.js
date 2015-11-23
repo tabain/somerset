@@ -6,14 +6,14 @@ angular.module('app').controller('ManageAdmins',
                 username: '',
                 email: '',
                 password: '',
-                defaultLocation: 'Spitalfields',
+                defaultLocation: '',
                 role: 'frontdesk'
             };
         };
 
         $scope.admin = defaultAdmin();
         $scope.validRoles = ['frontdesk', 'admin'];
-        $scope.validLocations = ['Spitalfields', 'Notting Hill', 'King\'s Cross'];
+        $scope.validLocations = ['All'];
         $scope.admins = [];
 
         loadAdmins = function () {
@@ -59,6 +59,7 @@ angular.module('app').controller('ManageAdmins',
                         $('#addUser').modal('hide');
                         // TODO: When Success Reset Form
                         // TODO: Post Success
+                        $scope.admins.push(data);
                     }, function (err) {
                         // TODO: Create Error Translator on Server and add helpful errors here
                         showError(err);
@@ -90,6 +91,34 @@ angular.module('app').controller('ManageAdmins',
             };
         };
 
+        $scope.deleteAdmin = function (admin) {
+            $('#deleteAdmin').modal('show');
+            $scope.confirmDeleted = function () {
+                $http.delete('/users/' +  admin.id, {})
+                    .success(function (result) {
+                        var index = -1;
+                        $scope.admins.forEach(function (g, i) {
+                            if (g.id == admin.id) {
+                                index = i;
+                            }
+                        });
+                        if (index >= 0) {
+                            $scope.admins.splice(index, 1);
 
+                        }
+                        $('#deleteAdmin').modal('hide');
+                    })
+                    .error(function (err) {
+                        $('#deleteAdmin').modal('hide');
+                        showError(err);
+                    });
+
+            };
+
+            $scope.cancel = function () {
+                $('#deleteAdmin').modal('hide');
+            };
+        };
     });
+
 
