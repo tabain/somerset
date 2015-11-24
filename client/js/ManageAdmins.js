@@ -82,6 +82,15 @@ angular.module('app').controller('ManageAdmins',
                     $http.put('/users/' + $scope.admin.id, $scope.admin)
                         .success(function (result) {
                             $('#editAdmin').modal('hide');
+                            $scope.admins.forEach(function (ad, i) {
+                                if (ad.id == result.id) {
+                                    ad.username= result.username;
+                                    ad.email= result.email;
+                                    ad.defaultLocation= result.defaultLocation;
+                                    ad.role= result.role;
+
+                                }
+                            });
                         })
                         .error(function (err) {
                             showError(err);

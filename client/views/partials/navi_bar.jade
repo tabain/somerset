@@ -12,11 +12,7 @@
                     span.caret
                 ul.dropdown-menu(role='menu', aria-labelledby='navimenu')
                     li
-                        a(ng-click="frontdesk()") Front Desk
-                    li
-                        a(ng-click="manage()" ng-show="isAdminUser()") Manage Admins
-                    li
-                        a(ng-click="stats()" ng-show="isAdminUser()") Stats
+                        a(ng-click="manage()" ng-show="isAdminUser()") Manage
                     li
                         a(ng-click="logout()") Logout
                             span.span-left-margin | {{currentUser}}

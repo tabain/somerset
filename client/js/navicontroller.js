@@ -36,7 +36,7 @@ angular.module('app').controller('NaviController',
             $location.path('/frontdesk');
         };
         $scope.manage = function () {
-            $location.path('/admin');
+            $location.path('/manage');
         };
         $scope.stats = function () {
             $location.path('/stats');
