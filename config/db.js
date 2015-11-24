@@ -2,7 +2,7 @@ var config = require('./config');
 var mongoose = require('mongoose');
 var logger = require('./logger');
 var User = require('../server/models/User');
-var Location = require('../server/models/Location');
+var Wing = require('../server/models/Wing');
 
 var superadmin = {
     email: 'admin@erlystage.com',
@@ -25,6 +25,7 @@ mongoose.connect(config.getDbConnectionString(), function (err) {
     if (err) throw err;
     logger.info('connected to mongodb.');
     createDefaultUsers();
+    createDefaultWings();
 });
 
 mongoose.set('debug', config.debug);
@@ -41,6 +42,26 @@ function createDefaultUsers() {
     });
 
     User.findOne({email: front.email}).exec(function (err, model) {
+        // TODO: should not create default user when someone deleted superadmin
+        if (model) return;
+        if (err) /*Continue and create a user*/;
+
+        User.create(front, function (err, user) {
+            // In any case continue on
+        });
+    })
+}
+
+function createDefaultWings() {
+    Wing.find({deleted: false}).exec(function (err, wings) {
+        if (err) /*Continue and create a user*/;
+        if (wings.length === 0){
+            Wing.create({name: 'No Wing'});
+        }
+
+    });
+
+    Wing.findOne({email: front.email}).exec(function (err, model) {
         // TODO: should not create default user when someone deleted superadmin
         if (model) return;
         if (err) /*Continue and create a user*/;

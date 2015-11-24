@@ -5,6 +5,7 @@ var session = require('express-session');
 var logger = require('../config/logger');
 var db = require('../config/db');
 var admins = require('./controllers/admins');
+var wings = require('./controllers/wings');
 var base = require('./controllers/base');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
@@ -34,12 +35,16 @@ website.post('/login', passport.authenticate('local'), admins.me);
 website.post('/logout', base.logout);
 
 website.get('/me', admins.me);
-
+//users
 website.get('/users', [admins.isAdmin], admins.listUsers);
 website.post('/users', [admins.isAdmin], admins.createUser);
 website.put('/users/:userId', [admins.isAdmin], admins.updateUser);
 website.delete('/users/:userId', [admins.isAdmin], admins.deleteUser);
-
+//wings
+website.get('/wings', [admins.isAdmin], wings.listWings);
+website.post('/wings', [admins.isAdmin], wings.createWing);
+website.put('/wings/:wingId', [admins.isAdmin], wings.updateWing);
+website.delete('/wings/:wingId', [admins.isAdmin], wings.deleteWing);
 
 // Chart Data
 //website.get('/data/promotions', [admins.isAdmin], admins.usageData);
