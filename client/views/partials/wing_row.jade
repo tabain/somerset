@@ -1,0 +1,8 @@
+td {{w.name | capitalize}}
+
+td
+    .btn-group
+        .btn.btn-default(ng-click="deleteWing(w)")
+            i.glyphicon.glyphicon-trash
+        .btn.btn-default(ng-click="editWing(w)")
+            i.glyphicon.glyphicon-edit

@@ -8,7 +8,7 @@ angular.module('app').controller('Manage',
 
         };
         $scope.gotoWingManage = function(){
-            $location.path('/wingManage');
+            $location.path('/manage/wing');
 
         };
         $scope.gotoWingPropertyManage = function(){

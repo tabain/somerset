@@ -1,0 +1,6 @@
+form(name="editWingForm" ng-submit="submitForm(editWingForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
+    .form-group
+        input.form-control(type="name" placeholder="Name" ng-model="wing.name" name="name" required)
+        p.help-block(ng-show="editWingForm.name.$invalid && !editWingForm.name.$pristine") Please provide us with a name
+    .form-group
+        button(type="submit" ng-disabled="editWingForm.$invalid").btn.btn-primary.btn-lg.btn-block Save
