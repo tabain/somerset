@@ -1,0 +1,11 @@
+form(name="newWingLocForm" ng-submit="submitForm(newWingLocForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
+    .form-group
+        label Location
+        input.form-control(type="text" placeholder="Location" ng-model="wingloce.location" name="location" required)
+        p.help-block(ng-show="newWingLocForm.location.$invalid && !newWingLocForm.location.$pristine") Please provide us with a loction
+    .form-group
+        label Wing
+        select.form-control(name="wing" ng-model="wingloce.wing" ng-options="wl.name | capitalize  for wl in wings"  required)
+        p.help-block(ng-show="newWingLocForm.wing.$invalid && !newWingLocForm.wing.$pristine") Wing
+    .form-group
+        button(type="submit" ng-disabled="newWingLocForm.$invalid").btn.btn-primary.btn-lg.btn-block Go

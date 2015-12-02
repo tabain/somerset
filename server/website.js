@@ -6,6 +6,7 @@ var logger = require('../config/logger');
 var db = require('../config/db');
 var admins = require('./controllers/admins');
 var wings = require('./controllers/wings');
+var wingLocs = require('./controllers/wingLocations');
 var base = require('./controllers/base');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
@@ -45,6 +46,11 @@ website.get('/wings', [admins.isAdmin], wings.listWings);
 website.post('/wings', [admins.isAdmin], wings.createWing);
 website.put('/wings/:wingId', [admins.isAdmin], wings.updateWing);
 website.delete('/wings/:wingId', [admins.isAdmin], wings.deleteWing);
+//winglocations
+website.get('/winglocs', [admins.isAdmin], wingLocs.listWingLocs);
+website.post('/winglocs', [admins.isAdmin], wingLocs.createWingLoc);
+website.put('/winglocs/:wingLocId', [admins.isAdmin], wingLocs.updateWingLoc);
+website.delete('/winglocs/:wingLocId', [admins.isAdmin], wingLocs.deleteWingLoc);
 
 // Chart Data
 //website.get('/data/promotions', [admins.isAdmin], admins.usageData);

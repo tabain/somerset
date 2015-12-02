@@ -1,0 +1,9 @@
+td {{w.location | capitalize}}
+td {{w.wing.name | capitalize}}
+
+td
+    .btn-group
+        .btn.btn-default(ng-click="deleteWingLoc(w)")
+            i.glyphicon.glyphicon-trash
+        .btn.btn-default(ng-click="editWingLoc(w)")
+            i.glyphicon.glyphicon-edit

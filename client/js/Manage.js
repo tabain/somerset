@@ -11,8 +11,8 @@ angular.module('app').controller('Manage',
             $location.path('/manage/wing');
 
         };
-        $scope.gotoWingPropertyManage = function(){
-            $location.path('/wingPropertyManage');
+        $scope.gotoWingLocManage = function(){
+            $location.path('/manage/wingLoc');
 
         };
         $scope.gotoOrganisationManage = function(){
