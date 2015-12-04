@@ -7,6 +7,7 @@ var db = require('../config/db');
 var admins = require('./controllers/admins');
 var wings = require('./controllers/wings');
 var wingLocs = require('./controllers/wingLocations');
+var wingRooms = require('./controllers/wingLocRooms');
 var base = require('./controllers/base');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
@@ -52,6 +53,12 @@ website.post('/winglocs', [admins.isAdmin], wingLocs.createWingLoc);
 website.put('/winglocs/:wingLocId', [admins.isAdmin], wingLocs.updateWingLoc);
 website.delete('/winglocs/:wingLocId', [admins.isAdmin], wingLocs.deleteWingLoc);
 
+
+//wingRooms
+website.get('/rooms', [admins.isAdmin], wingRooms.listRooms);
+website.post('/rooms', [admins.isAdmin], wingRooms.createRoom);
+website.put('/rooms/:roomId', [admins.isAdmin], wingRooms.updateRoom);
+website.delete('/rooms/:roomId', [admins.isAdmin], wingRooms.deleteRoom);
 // Chart Data
 //website.get('/data/promotions', [admins.isAdmin], admins.usageData);
 
