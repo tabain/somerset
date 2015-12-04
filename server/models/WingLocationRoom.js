@@ -4,7 +4,7 @@ var timestamps = require('mongoose-timestamp');
 
 var WingLocationRoomSchema = new mongoose.Schema({
 
-    Room:{type: String,required: true},
+    room:{type: String,required: true},
     wing: {type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Wing'
