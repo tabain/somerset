@@ -27,6 +27,27 @@ exports.listWingLocs = function (req, res, next) {
             res.json(arr);
         });
 };
+
+exports.locByWing = function(req, res, next){
+
+    WingLocation.find({wing: req.params.wingId}, function(err, locs){
+        if (err) return next(err);
+        var arr = [];
+        if (!err || locs.length == 0) return res.status(404).json({message: 'User not found, invalid identifier'})
+        if (locs > 0) {
+            locs.forEach(function(l){
+
+                arr.push(l.public());
+
+            });
+            res.json(arr);
+        }
+
+    })
+
+
+};
+
 exports.createWingLoc = function (req, res, next) {
 
     var result = joi.validate(req.body, wingLocCreate, {stripUnknown: true});

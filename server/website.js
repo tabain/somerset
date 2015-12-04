@@ -49,6 +49,7 @@ website.put('/wings/:wingId', [admins.isAdmin], wings.updateWing);
 website.delete('/wings/:wingId', [admins.isAdmin], wings.deleteWing);
 //winglocations
 website.get('/winglocs', [admins.isAdmin], wingLocs.listWingLocs);
+website.get('/winglocs/:wingId', [admins.isAdmin], wingLocs.locByWing);
 website.post('/winglocs', [admins.isAdmin], wingLocs.createWingLoc);
 website.put('/winglocs/:wingLocId', [admins.isAdmin], wingLocs.updateWingLoc);
 website.delete('/winglocs/:wingLocId', [admins.isAdmin], wingLocs.deleteWingLoc);
