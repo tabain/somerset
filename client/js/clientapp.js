@@ -47,6 +47,11 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
             data: {
                 authorizedRoles: [USER_ROLES.admin]
             }
+        }).when('/manage/room', {
+            templateUrl: '/views/manageRoom.html',
+            data: {
+                authorizedRoles: [USER_ROLES.admin]
+            }
         }).when('/404', {
             templateUrl: '/views/404.html',
             data: {
