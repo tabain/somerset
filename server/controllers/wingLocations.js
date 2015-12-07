@@ -106,15 +106,5 @@ exports.deleteWingLoc = function (req, res, next) {
 
 
 
-    WingLocation.findByIdAndUpdate(req.params.wingLocId, { $set: { deleted: true }},function(err, wingLoc) {
-        if (err) return next(err);
-        if (!wingLoc) return res.status(404).json({message: 'User not found, invalid identifier'});
-
-
-        if (err) return next(err);
-        res.json(wingLoc);
-
-
-    });
 
 };
