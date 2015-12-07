@@ -15,6 +15,10 @@ angular.module('app').controller('Manage',
             $location.path('/manage/wingLoc');
 
         };
+        $scope.gotoRoomManage = function(){
+            $location.path('/manage/room');
+
+        };
         $scope.gotoOrganisationManage = function(){
             $location.path('/organisationManage');
 
