@@ -1,0 +1,10 @@
+td {{r.room | capitalize}}
+td {{r.location.location | capitalize}}
+td {{r.wing.name | capitalize}}
+
+td
+    .btn-group
+        .btn.btn-default(ng-click="deleteRoom(r)")
+            i.glyphicon.glyphicon-trash
+        .btn.btn-default(ng-click="editRoom(r)")
+            i.glyphicon.glyphicon-edit

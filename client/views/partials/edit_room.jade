@@ -1,0 +1,15 @@
+form(name="newRoomForm" ng-submit="submitForm(newRoomForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
+   .form-group
+      label Room
+      input.form-control(type="text" placeholder="Room" ng-model="roome.room" name="room" required)
+      p.help-block(ng-show="newRoomForm.room.$invalid && !newRoomForm.room.$pristine") Please provide us with a room
+   .form-group
+      label Wing
+      select.form-control(name="wing" ng-model="roome.wing" ng-options="w.name | capitalize for w in wings" required)
+      p.help-block(ng-show="newRoomForm.wing.$invalid && !newRoomForm.wing.$pristine") Please provide us with a Wing
+   .form-group
+      label Location
+      select.form-control(name="location" ng-model="roome.location" ng-options="l.location | capitalize for l in winglocs" ng-disabled="locDisabled" required)
+      p.help-block(ng-show="newRoomForm.location.$invalid && !newRoomForm.location.$pristine") Please provide us with a location
+   .form-group
+      button(type="submit" ng-disabled="newRoomForm.$invalid").btn.btn-primary.btn-lg.btn-block Update
