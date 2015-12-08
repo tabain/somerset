@@ -49,3 +49,27 @@ exports.createOrg = function (req, res, next) {
 
 };
 
+exports.updateOrg = function (req, res, next) {
+
+    var result = joi.validate(req.body, Create, {stripUnknown: true});
+    if (result.error) return res.status(400).json(result.error);
+
+    Organisation.findOne({_id: req.params.orgId}, function (err, org) {
+        if (err) return next(err);
+        if (!org) return res.status(404).json({message: 'Organistion not found, invalid identifier'});
+        var update = false;
+        for (prop in result.value) {
+            org[prop] = result.value[prop];
+            update = true;
+        }
+        if (update) org.updatedBy = req.user._id;
+
+        org.save(function (err, uorg) {
+            if (err) return next(err);
+            res.json(uorg.public());
+        });
+
+    });
+
+};
+
