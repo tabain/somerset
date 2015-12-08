@@ -28,6 +28,25 @@ exports.listRooms = function (req, res, next) {
             res.json(arr);
         });
 };
+exports.locByRoom = function(req, res, next){
+
+    WingLocationRoom.find({location: req.params.locationId, deleted: false}, function(err, rooms){
+        if (err) return next(err);
+        var arr = [];
+        if (rooms.length == 0) return res.status(404).json({message: 'Room not found, invalid identifier'})
+        if (rooms.length > 0) {
+            rooms.forEach(function(l){
+
+                arr.push(l.public());
+
+            });
+            res.json(arr);
+        }
+
+    })
+
+
+};
 exports.createRoom = function (req, res, next) {
 
     var result = joi.validate(req.body, Create, {stripUnknown: true});
