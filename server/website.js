@@ -57,6 +57,7 @@ website.delete('/winglocs/:wingLocId', [admins.isAdmin], wingLocs.deleteWingLoc)
 
 //wingRooms
 website.get('/rooms', [admins.isAdmin], wingRooms.listRooms);
+website.get('/rooms/:locationId', [admins.isAdmin], wingRooms.roombyloc);
 website.post('/rooms', [admins.isAdmin], wingRooms.createRoom);
 website.put('/rooms/:roomId', [admins.isAdmin], wingRooms.updateRoom);
 website.delete('/rooms/:roomId', [admins.isAdmin], wingRooms.deleteRoom);
