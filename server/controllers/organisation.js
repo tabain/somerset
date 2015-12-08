@@ -34,3 +34,18 @@ exports.listOrgs= function (req, res, next) {
             res.json(arr);
         });
 };
+exports.createOrg = function (req, res, next) {
+
+    var result = joi.validate(req.body, Create, {stripUnknown: true});
+
+    if (result.error) return res.status(400).json(result.error);
+
+    Organisation.create(result.value, function (err, org) {
+        if (err) return next(err);
+        if (!org) /*TODO: What to do*/ ;
+        res.json(org.public());
+    });
+
+
+};
+
