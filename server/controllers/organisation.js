@@ -73,3 +73,21 @@ exports.updateOrg = function (req, res, next) {
 
 };
 
+exports.deleteOrg = function (req, res, next) {
+
+    Organisation.findOne({_id: req.params.orgId}, function (err, org) {
+        if (err) return next(err);
+        if (!org) return res.status(404).json({message: 'Organisation not found, invalid identifier'});
+        org.deleted = true;
+        org.deletedAt = new Date();
+        org.deletedBy = req.user._id;
+
+        org.save(function (err, uorg) {
+            if (err) return next(err);
+            res.json(uorg.public());
+        });
+
+    });
+
+
+};
