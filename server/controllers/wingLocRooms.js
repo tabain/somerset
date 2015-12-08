@@ -28,7 +28,7 @@ exports.listRooms = function (req, res, next) {
             res.json(arr);
         });
 };
-exports.locByRoom = function(req, res, next){
+exports.roombyloc = function(req, res, next){
 
     WingLocationRoom.find({location: req.params.locationId, deleted: false}, function(err, rooms){
         if (err) return next(err);
