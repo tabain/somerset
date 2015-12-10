@@ -64,10 +64,10 @@ website.put('/rooms/:roomId', [admins.isAdmin], wingRooms.updateRoom);
 website.delete('/rooms/:roomId', [admins.isAdmin], wingRooms.deleteRoom);
 
 //Organisation
-website.get('/rooms', [admins.isAdmin], orgs.listOrgs);
-website.post('/rooms', [admins.isAdmin], orgs.createOrg);
-website.put('/rooms/:roomId', [admins.isAdmin], orgs.updateOrg);
-website.delete('/rooms/:roomId', [admins.isAdmin], orgs.deleteOrg);
+website.get('/orgs', [admins.isAdmin], orgs.listOrgs);
+website.post('/orgs', [admins.isAdmin], orgs.createOrg);
+website.put('/orgs/:orgId', [admins.isAdmin], orgs.updateOrg);
+website.delete('/orgs/:orgId', [admins.isAdmin], orgs.deleteOrg);
 // Chart Data
 //website.get('/data/promotions', [admins.isAdmin], admins.usageData);
 
