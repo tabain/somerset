@@ -20,9 +20,9 @@ var OrganisationSchema = new mongoose.Schema({
     },
     email: {type: String, required: true, lowercase: true},
     phone: {type: String, required: true},
-    mobile: {type: String, required: true},
-    fax: {type: String, required: true},
-    ext: {type: String, required: true},
+    mobile: {type: String, required: false},
+    fax: {type: String, required: false},
+    ext: {type: String, required: false},
     updatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         required: false,
