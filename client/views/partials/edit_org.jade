@@ -1,0 +1,39 @@
+form(name="newRoomForm" ng-submit="submitForm(newRoomForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
+   .form-group
+      label Wing
+      select.form-control(name="wing" ng-model="orge.wing" ng-options="w.name | capitalize for w in wings" required)
+      p.help-block(ng-show="newOrgForm.wing.$invalid && !newOrgForm.wing.$pristine") Please provide us with a Wing
+   .form-group
+      label Location
+      select.form-control(name="location" ng-model="orge.location" ng-options="l.location | capitalize for l in winglocs" required)
+      p.help-block(ng-show="newOrgForm.location.$invalid && !newOrgForm.location.$pristine") Please provide us with a location
+   .form-group
+      label Room
+      select.form-control(name="room" ng-model="orge.room" ng-options="r.room | capitalize for r in rooms" required)
+      p.help-block(ng-show="newOrgForm.room.$invalid && !newOrgForm.room.$pristine") Please provide us with a room
+   .form-group
+      label Organisation Name
+      input.form-control(type="text" placeholder="Organisation Name" ng-model="orge.name" name="name" required)
+      p.help-block(ng-show="newOrgForm.name.$invalid && !newOrgForm.name.$pristine") Please provide us with a organisation name
+   .form-group
+      label Email
+      input.form-control(placeholder="Email e.g john@gmail.com" type="email" ng-model="orge.email" name="email" ng-pattern='emailPattern' required)
+      p.help-block(ng-show="newOrgForm.email.$invalid && !newOrgForm.email.$pristine") Please provide us with a valid email address
+   .form-group
+      label Phone
+      input(type="text" ng-model="orge.phone" intl-tel-input placeholder="Phone No e.g 1234567" default-country="gb" preferred-countries="gb, us" name="phone" required).form-control
+      p.help-block(ng-show="newOrgForm.phone.$invalid && !newOrgForm.phone.$pristine") Please provide us with a valid phone number beginning with country code e.g. +44
+   .form-group
+      label Ext
+      input.form-control(placeholder="Ext No e.g 12345" type="text" ng-model="orge.ext" name="ext")
+      p.help-block(ng-show="newOrgForm.ext.$invalid && !newOrgForm.ext.$pristine") Please provide us with a valid ext
+   .form-group
+      label Fax
+      input(type="text" ng-model="orge.fax" intl-tel-input placeholder="Fax No e.g 1234567" default-country="gb" preferred-countries="gb, us" name="fax").form-control
+      p.help-block(ng-show="newOrgForm.fax.$invalid && !newOrgForm.fax.$pristine") Please provide us with a valid fax number beginning with country code e.g. +44
+   .form-group
+      label Mobile
+      input(type="text" ng-model="orge.mobile" intl-tel-input placeholder="Mobile No e.g 1234567" default-country="gb" preferred-countries="gb, us" name="mobile").form-control
+      p.help-block(ng-show="newOrgForm.mobile.$invalid && !newOrgForm.mobile.$pristine") Please provide us with a valid mobile number beginning with country code e.g. +44
+   .form-group
+      button(type="submit" ng-disabled="newRoomForm.$invalid").btn.btn-primary.btn-lg.btn-block Update

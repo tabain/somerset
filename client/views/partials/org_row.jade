@@ -1,0 +1,16 @@
+td {{o.name | capitalize}}
+td {{o.email}}
+td {{o.phone}}
+td {{o.ext}}
+td {{o.fax}}
+td {{o.mobile}}
+td {{o.wing.name | capitalize}}
+td {{o.location.location | capitalize}}
+td {{o.room.room | capitalize}}
+
+td
+    .btn-group
+        .btn.btn-default(ng-click="deleteOrg(o)")
+            i.glyphicon.glyphicon-trash
+        .btn.btn-default(ng-click="editOrg(o)")
+            i.glyphicon.glyphicon-edit
