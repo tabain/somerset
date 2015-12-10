@@ -20,7 +20,7 @@ angular.module('app').controller('Manage',
 
         };
         $scope.gotoOrganisationManage = function(){
-            $location.path('/organisationManage');
+            $location.path('/manage/org');
 
         };
         $scope.gotoMemberManage = function(){
