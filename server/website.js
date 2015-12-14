@@ -9,6 +9,7 @@ var wings = require('./controllers/wings');
 var wingLocs = require('./controllers/wingLocations');
 var wingRooms = require('./controllers/wingLocRooms');
 var orgs = require('./controllers/organisations');
+var members = require('./controllers/members');
 var base = require('./controllers/base');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
@@ -69,6 +70,13 @@ website.get('/orgs/:roomId', [admins.isAdmin], orgs.orgbyroom);
 website.post('/orgs', [admins.isAdmin], orgs.createOrg);
 website.put('/orgs/:orgId', [admins.isAdmin], orgs.updateOrg);
 website.delete('/orgs/:orgId', [admins.isAdmin], orgs.deleteOrg);
+
+//Member
+website.get('/members', [admins.isAdmin], members.listMembers);
+website.post('/members', [admins.isAdmin], members.createMember);
+website.put('/members/:memberId', [admins.isAdmin], members.updateMember);
+website.delete('/members/:memberId', [admins.isAdmin], members.deleteMember);
+
 // Chart Data
 //website.get('/data/promotions', [admins.isAdmin], admins.usageData);
 
