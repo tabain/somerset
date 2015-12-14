@@ -65,6 +65,7 @@ website.delete('/rooms/:roomId', [admins.isAdmin], wingRooms.deleteRoom);
 
 //Organisation
 website.get('/orgs', [admins.isAdmin], orgs.listOrgs);
+website.get('/orgs/:roomId', [admins.isAdmin], orgs.orgbyroom);
 website.post('/orgs', [admins.isAdmin], orgs.createOrg);
 website.put('/orgs/:orgId', [admins.isAdmin], orgs.updateOrg);
 website.delete('/orgs/:orgId', [admins.isAdmin], orgs.deleteOrg);
