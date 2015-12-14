@@ -8,7 +8,7 @@ joi.objectId = require('joi-objectid');
 
 var Create = {
     name: joi.string().required(),
-    age: joi.Number().required(),
+    age: joi.number().required(),
     email: joi.string().required(),
     phone: joi.string().required(),
     mobile: joi.string(),

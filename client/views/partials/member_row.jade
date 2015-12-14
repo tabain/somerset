@@ -1,0 +1,17 @@
+td {{m.name | capitalize}}
+td {{m.age}}
+td {{m.email}}
+td {{m.phone}}
+td {{m.ext}}
+td {{m.organisation.name}}
+td {{m.mobile}}
+td {{m.wing.name | capitalize}}
+td {{m.location.location | capitalize}}
+td {{m.room.room | capitalize}}
+
+td
+    .btn-group
+        .btn.btn-default(ng-click="deleteMember(m)")
+            i.glyphicon.glyphicon-trash
+        .btn.btn-default(ng-click="editMember(m)")
+            i.glyphicon.glyphicon-edit
