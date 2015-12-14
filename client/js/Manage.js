@@ -24,7 +24,7 @@ angular.module('app').controller('Manage',
 
         };
         $scope.gotoMemberManage = function(){
-            $location.path('/memberManage');
+            $location.path('/manage/member');
 
         };
 
