@@ -34,6 +34,27 @@ exports.listOrgs= function (req, res, next) {
             res.json(arr);
         });
 };
+
+exports.orgbyroom = function(req, res, next){
+
+    Organisation.find({room: req.params.roomId, deleted: false}, function(err, orgs){
+        if (err) return next(err);
+        var arr = [];
+        if (orgs.length == 0) return res.status(404).json({message: 'Room not found, invalid identifier'})
+        if (orgs.length > 0) {
+            orgs.forEach(function(o){
+
+                arr.push(o.public());
+
+            });
+            res.json(arr);
+        }
+
+    })
+
+
+};
+
 exports.createOrg = function (req, res, next) {
 
     var result = joi.validate(req.body, Create, {stripUnknown: true});
