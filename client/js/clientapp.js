@@ -18,7 +18,7 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
     };
     $routeProvider
         .when('/',  {
-            templateUrl: '/views/login.html',
+            templateUrl: '/views/cli-guest.html',
             data: {
                 authorizedRoles: [USER_ROLES.all]
             }
