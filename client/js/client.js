@@ -56,17 +56,29 @@ angular.module('app').controller('client',
                 $window.localStorage.setItem('default_wing_id', $scope.wing.id);
             }
         });
+
         defaultwing = function () {
-            $('#defaultwing').modal('show');
-            $scope.submitForm = function(isvaild){
-                if (isvaild){
-                    $('#defaultwing').modal('hide');
-                }
+            $('#defaultwing').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            if ($rootScope.defaultWing){
 
-            };
-            $scope.cancel = function () {
+            }else{
+                $('#defaultwing').modal('show');
+                $scope.submitForm = function(isvaild){
+                    if (isvaild){
+                        $rootScope.defaultWing = $window.localStorage.getItem('default_wing_id');
+                        loadWings();
+                        $('#defaultwing').modal('hide');
+                    }
 
-            };
+                };
+                $scope.cancel = function () {
+
+                };
+            }
+
         };
         if(!$rootScope.defaultWing || $rootScope.defaultWing === "undefined" || $rootScope.defaultWing === null){
             defaultwing();
@@ -81,14 +93,23 @@ angular.module('app').controller('client',
             else
                 toaster.error(errors.UNKNOWN);
         };
+        showfunc = function(){
+            $('#defaultwing').modal('show');
+        };
 
         //$('#defaultwing').on('shown.bs.modal', function () {
         //    $scope.modalshowhide = true;
         //});
         //$('#defaultwing').on('hide.bs.modal', function () {
+        //
+        //
         //    if ($rootScope.defaultWing){
         //        $scope.modalshowhide = true;
         //    }
+        //    else{
+        //        showfunc();
+        //    }
+        //
         //});
 
     });
