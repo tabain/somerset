@@ -98,6 +98,11 @@ angular.module('app').controller('ManageMembers',
 
 
         });
+        $scope.$watch('membere', function(){
+            loadwingbyloc($scope.membere);
+            loadlocbyroom($scope.membere);
+            loadroombyorg($scope.membere);
+        });
         $scope.$watch('winglocs', function(){
 
             if ($scope.membere.location){
@@ -127,14 +132,14 @@ angular.module('app').controller('ManageMembers',
         });
         $scope.$watch('orgs', function(){
 
-            if ($scope.membere.org){
+            if ($scope.membere.organisation){
                 $scope.orgs.forEach(function(d){
-                    if (d.id === $scope.membere.org.id){
-                        $scope.membere.org = d;
+                    if (d.id === $scope.membere.organisation.id){
+                        $scope.membere.organisation = d;
                     }
                 });
             }
-            if ($scope.org.length > 0){
+            if ($scope.orgs.length > 0){
                 $scope.orgDisabled = false;
             }
         });
@@ -193,6 +198,7 @@ angular.module('app').controller('ManageMembers',
 
         $('#addMember').on('shown.bs.modal', function () {
             $scope.modalshowhide = true;
+
         });
 
 
@@ -243,6 +249,15 @@ angular.module('app').controller('ManageMembers',
                             }
                         });
                         $scope.members.push(data);
+                        $scope.member={};
+                        $scope.$$childHead.memberForm.wing = false;
+                        $scope.$$childHead.memberForm.name = false;
+                        $scope.$$childHead.memberForm.age = false;
+                        $scope.$$childHead.memberForm.phone = false;
+                        $scope.$$childHead.memberForm.email = false;
+                        $scope.$$childHead.memberForm.organistaion = false;
+                        $scope.$$childHead.memberForm.room = false;
+                        $scope.$$childHead.memberForm.location = false;
 
                     }, function (err) {
                         // TODO: Create Error Translator on Server and add helpful errors here
@@ -255,19 +270,29 @@ angular.module('app').controller('ManageMembers',
         };
 
 
-        $scope.editMember = function (member) {
-            loadwingbyloc(member);
-            loadlocbyroom(member);
-            loadroombyorg(member);
-            $rootScope.editMember= member;
+        $scope.editMember = function (membere) {
+            loadwingbyloc(membere);
+            loadlocbyroom(membere);
+            loadroombyorg(membere);
+            $rootScope.editMember= membere;
 
-            $scope.membere = angular.copy(member);
+            $scope.membere = angular.copy(membere);
+
+            //$scope.membere.wing = membere.wing;
+            //$scope.membere.organisation = membere.organisation;
+            //$scope.orgs.forEach(function(d){
+            //    if (d.id === $scope.membere.organisation.id ){
+            //        $scope.membere.organisation = d;
+            //
+            //    }
+            //});
             $scope.wings.forEach(function(d){
                 if (d.id === $scope.membere.wing.id ){
                     $scope.membere.wing = d;
 
                 }
             });
+
 
             $('#editMember').modal('show');
             $scope.submitForm = function (isValid) {
