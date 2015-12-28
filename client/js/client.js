@@ -2,6 +2,7 @@ angular.module('app').controller('client',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window) {
 
 
+
         $scope.wings = [];
         $scope.wing ={};
         $scope.member ="";
