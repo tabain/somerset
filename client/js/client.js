@@ -1,5 +1,5 @@
 angular.module('app').controller('client',
-    function ($scope, $http, $interval, toaster, $rootScope, $resource, $window) {
+    function ($scope, $http, $interval, toaster, $rootScope, $resource, $window,$location) {
 
 
 
@@ -28,7 +28,13 @@ angular.module('app').controller('client',
 
 
         };
+        $scope.selectOne = function(member){
 
+            $rootScope.member = member;
+
+            $location.path('/guest');
+
+        };
 
         $rootScope.defaultWing = $window.localStorage.getItem('default_wing_id');
         loadWings = function () {
