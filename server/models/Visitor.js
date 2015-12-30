@@ -5,7 +5,7 @@ var timestamps = require('mongoose-timestamp');
 var VisitorSchema = new mongoose.Schema({
 
     name:{type: String,required: true},
-    email: {type: String, required: true, lowercase: true},
+    email: {type: String, required: true, lowercase: true, unique: true},
     phone: {type: String, required: true},
     mobile: {type: String, required: false},
     age: {type: Number, required: false},

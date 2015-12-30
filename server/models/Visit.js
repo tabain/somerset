@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var joi = require('joi');
 var timestamps = require('mongoose-timestamp');
 
-var MemberSchema = new mongoose.Schema({
+var VisitSchema = new mongoose.Schema({
 
     member: {type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -44,13 +44,13 @@ var MemberSchema = new mongoose.Schema({
 
 });
 
-MemberSchema.methods.public = function () {
+VisitSchema.methods.public = function () {
     var obj = this.toObject({virtuals: true});
     delete obj._id;
     delete obj.__v;
     //delete obj.id;
     return obj;
 };
-MemberSchema.plugin(timestamps);
-var Member = mongoose.model('Member', MemberSchema);
-module.exports = Member;
+VisitSchema.plugin(timestamps);
+var Visit = mongoose.model('Visit', VisitSchema);
+module.exports = Visit;
