@@ -27,6 +27,11 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
             data: {
                 authorizedRoles: [USER_ROLES.all]
             }
+        }).when('/welcome',  {
+            templateUrl: '/views/welcome.html',
+            data: {
+                authorizedRoles: [USER_ROLES.all]
+            }
         }).when('/login', {
             templateUrl: '/views/login.html',
             data: {
