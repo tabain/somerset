@@ -84,6 +84,8 @@ website.delete('/members/:memberId', [admins.isAdmin], members.deleteMember);
 
 website.get('/clientMembers', [base.isSessionAvailable], clients.listMembers);
 website.get('/clientWings', [base.isSessionAvailable], wings.listWings);
+website.post('/guests', [base.isSessionAvailable], clients.createVisitor);
+website.get('/guests/:visitId', [base.isSessionAvailable], clients.findoneVisit);
 
 //website.get('/locations', [base.isSessionAvailable], locations.getLocations);
 //website.post('/newGuests', [base.isSessionAvailable], newGuests.createGuest);
