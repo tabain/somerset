@@ -11,6 +11,7 @@ var wingRooms = require('./controllers/wingLocRooms');
 var orgs = require('./controllers/organisations');
 var members = require('./controllers/members');
 var clients = require('./controllers/clients');
+var frontdesks = require('./controllers/frontdesks');
 var base = require('./controllers/base');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
@@ -46,7 +47,7 @@ website.post('/users', [admins.isAdmin], admins.createUser);
 website.put('/users/:userId', [admins.isAdmin], admins.updateUser);
 website.delete('/users/:userId', [admins.isAdmin], admins.deleteUser);
 //wings
-website.get('/wings', [admins.isAdmin], wings.listWings);
+website.get('/wings', [base.isSessionAvailable], wings.listWings);
 website.post('/wings', [admins.isAdmin], wings.createWing);
 website.put('/wings/:wingId', [admins.isAdmin], wings.updateWing);
 website.delete('/wings/:wingId', [admins.isAdmin], wings.deleteWing);
@@ -77,6 +78,9 @@ website.get('/members', [admins.isAdmin], members.listMembers);
 website.post('/members', [admins.isAdmin], members.createMember);
 website.put('/members/:memberId', [admins.isAdmin], members.updateMember);
 website.delete('/members/:memberId', [admins.isAdmin], members.deleteMember);
+
+//frontdesk
+website.get('/visits', [frontdesks.isFrontDesk], frontdesks.listVisits);
 
 
 //client side routes

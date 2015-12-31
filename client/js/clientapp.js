@@ -37,6 +37,11 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
             data: {
                 authorizedRoles: [USER_ROLES.all]
             }
+        }).when('/frontdesk', {
+            templateUrl: '/views/frontdesk.html',
+            data: {
+                authorizedRoles: [USER_ROLES.admin, USER_ROLES.frontdesk]
+            }
         }).when('/manage/admin', {
             templateUrl: '/views/manageAdmin.html',
             data: {
@@ -162,143 +167,6 @@ angular.module('app').run(function ($rootScope, $location, $http, Auth) {
 
 });
 
-angular.module('app').controller('Guest',
-    function ($scope, $rootScope, $resource, $location, $window, toaster, errors, $timeout) {
-        $scope.sendpro = true;
-        var Guest = $resource('/guests/:id', {id: '@id'}, {
-            checkin: {method: 'POST', params: {}, responseType: 'json'}
-        }, {/*empty options*/});
-        $scope.guest = {};
-        $scope.guest.location = $window.localStorage.getItem('guest_defaultLocation');
-        if ($scope.guest.location == "undefined" || $scope.guest.location == "null" || $scope.guest.location === null) $scope.guest.location = 'Spitalfields';
-
-        $scope.$watch('guest.location', function () {
-            $window.localStorage.setItem('guest_defaultLocation', $scope.guest.location);
-        });
-
-        $scope.validTypes = types;
-        $scope.guest.type = $scope.validTypes[0];
-        $scope.validLocations = locations;
-        $scope.lastLocation = 'Spitalfields';
-        $scope.defaultType = $scope.validTypes[0];
-        //$scope.phonePattern = /^([0-9]{3,4})?[-. ]?([0-9]{3,4})[-. ]?([0-9]{4})$/;
-        $scope.phonePattern = /^[\+](?:[0-9] ?){6,14}[0-9]$/;
-        $scope.namePattern = /^[a-zA-Z0-9 .'-]+ [a-zA-Z0-9 .'-]+$/;
-        $scope.guest.sendPromotions = true;
-        $scope.guest.plus18 = true;
-
-        //$timeout(function(){
-            if($rootScope.returningGuest){
-                $rootScope.returningGuest = false;
-                $scope.guest = angular.copy($rootScope.guest);
-                //$scope.guest.phone = $scope.guest.phone.substring(1,$scope.guest.phone.length);
-
-                $scope.returningGuest = true;
-                $timeout(function(){
-                    $('#ph').focus();
-                    $( '#nameinput' ).focus();
-                },100);
-
-            }
-        //},5000);
-
-
-        showError = function (err) {
-            if (!err)
-                toaster.error(errors.UNKNOWN);
-            else if (err.status == 403)
-                toaster.error(errors.UNAUTHORIZED);
-            else if (err.status == 400)
-                toaster.error(errors.BAD);
-            else
-                toaster.error(errors.UNKNOWN);
-        };
-
-        $scope.submitForm = function (isValid) {
-            if (isValid) {
-                $scope.guest.plus18 = !$scope.guest.under18;
-                if($scope.guest.phone.charAt(0)!='+') $scope.guest.phone = '+'+$scope.guest.phone;
-                new Guest($scope.guest).$save(function (data, headers) {
-                    $(".modal-backdrop");
-                    $('#addGuest').modal('hide');
-
-                    // TODO: When Success Reset Form
-                    // TODO: Post Success
-                    $rootScope.lastGuest = data;
-                    $location.path('/welcome');
-
-                }, function (err) {
-                    // TODO: Create Error Translator on Server and add helpful errors here
-                    showError(err);
-                });
-            } else {
-
-                if (!$scope.$$childHead) {
-                    toaster.error(errors.RELOAD);
-                } else {
-                    $scope.$$childHead.guestForm.name.$pristine = false;
-                    $scope.$$childHead.guestForm.residentName.$pristine = false;
-                    $scope.$$childHead.guestForm.email.$pristine = false;
-                    $scope.$$childHead.guestForm.phone.$pristine = false;
-                    if ($scope.$$childHead.guestForm.name.$invalid) {
-                        toaster.error(errors.BAD_NAME);
-                    } else if ($scope.$$childHead.guestForm.email.$invalid) {
-                        toaster.error(errors.BAD_RESIDENT);
-                    } else if ($scope.$$childHead.guestForm.phone.$invalid) {
-                        toaster.error(errors.BAD_PHONE);
-                    } else if ($scope.$$childHead.guestForm.residentName.$invalid) {
-                        toaster.error(errors.BAD_EMAIL);
-                    } else {
-                        toaster.error(errors.BAD);
-                    }
-                }
-            }
-
-        };
-    });
-
-
-angular.module('app').controller('Welcome',
-    function ($scope, $rootScope, $location) {
-        //$scope.locationImage="";
-
-
-        var timer;
-
-        function startTimer() {
-            timer = setTimeout(function () {
-                window.open("/#!/", "_self");
-
-            }, 60000);
-        }
-        startTimer();
-
-        function stopTimer() {
-            clearTimeout(timer);
-        }
-
-        $scope.checkin = function () {
-            stopTimer();
-            window.open("/#!/", "_self");
-        };
-        $scope.guest = $rootScope.lastGuest;
-        $rootScope.validLocations.forEach(function(doc){
-            if (doc.id ==  $scope.guest.locationId) $scope.guest.location = doc.name;
-        });
-
-        var userlocation = $scope.guest.location;
-        if (userlocation === "Spitalfields") {
-            $scope.locationImage = "/imgs/spitalfields-empty.png";
-        }
-        else if (userlocation === "Notting Hill") {
-            $scope.locationImage = "/imgs/nottinghill-empty.png";
-        }
-        else if (userlocation === "Kings Cross") {
-            $scope.locationImage = "/imgs/kingscross-empty.png";
-        }
-
-
-    });
 
 angular.module('CustomFilter', []).
     filter('capitalize', function () {
@@ -318,8 +186,8 @@ angular.module('app').controller('AdminLogin',
                 Auth
                     .login($scope.admin.email, $scope.admin.password)
                     .then(function (data) {
-                        if ($rootScope.currentUser.role == 'frontdesk' && $rootScope.currentUser.role == 'admin'){
-                            $location.path('/manage');
+                        if ($rootScope.currentUser.role == 'frontdesk'){
+                            $location.path('/frontdesk');
                         }else if($rootScope.currentUser.role == 'admin'){
                             $location.path('/manage');
                         }else {

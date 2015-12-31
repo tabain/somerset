@@ -30,6 +30,12 @@ angular.module('app').controller('NaviController',
                 return true;
             }
             return false;
+        };$scope.isFrontUser = function () {
+            var u = Auth.getUserInfo();
+            if ((u && u.role == 'admin') || (u && u.role == 'frontdesk')) {
+                return true;
+            }
+            return false;
         };
 
         $scope.frontdesk = function () {

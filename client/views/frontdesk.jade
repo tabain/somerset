@@ -1,0 +1,31 @@
+nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/partials/navi_bar.html'")
+
+section
+    .container-fluid(ng-controller="FrontDest")
+        .row
+            .col-lg-12
+                h1.text-center Frontdesk ({{frontdesk}})
+                button(ng-click="forceLoadVisits()" ng-disabled="loadingVisits").btn.btn-default.dontprint
+                    i.glyphicon.glyphicon-refresh(ng-class="{'icon-refresh-animate': loadingVisits}")
+                    span.span-left-margin  Refresh
+        .row
+            .col-lg-12
+                table.table.table-condensed
+                    thead
+                        tr
+                            th  Visitor Name
+                            th  Email
+                            th  Member
+                            th  Organisation
+                            th  Room
+                            th  Wing
+                            th  Wing Location
+                            th  Accepted
+                            th
+                    tbody
+                        tr(ng-repeat="v in visits | orderBy:'-createdAt'" ng-include="'views/partials/frontdesk_row.html'")
+
+
+
+
+footer(ng-include="'views/partials/footer.html'")

@@ -14,6 +14,8 @@
                     li
                         a(ng-click="manage()" ng-show="isAdminUser()") Manage
                     li
+                        a(ng-click="frontdesk()" ng-show="isFrontUser()") Frondesk
+                    li
                         a(ng-click="logout()") Logout
                             span.span-left-margin | {{currentUser}}
 
