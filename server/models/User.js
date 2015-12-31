@@ -24,9 +24,13 @@ var UserSchema = new mongoose.Schema({
         required: true,
         default: 'frontdesk'
     },
-    defaultLocation: {
-        type: String
-    },
+    //defaultLocation: {
+    //    type: String
+    //},
+        wing: {type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'Wing'
+        },
     permissions: [String],
     deleted: {type: Boolean, required: false, default: false},
     deletedAt: {type: Date, required: false},

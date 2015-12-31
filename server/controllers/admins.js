@@ -9,7 +9,8 @@ var userV = {
     email: joi.string().email().required(),
     password: joi.string().regex(/[a-zA-Z0-9#]{8,30}/).required(),
     role: joi.string().valid('frontdesk').valid('admin').required(),
-    defaultLocation: joi.string().when('role', {is: 'frontdesk', then: joi.required(), otherwise: joi.optional()})
+    //defaultLocation: joi.string().when('role', {is: 'frontdesk', then: joi.required(), otherwise: joi.optional()}),
+    wing: joi.objectId()
 };
 
 var userU = {
@@ -17,7 +18,8 @@ var userU = {
     email: joi.string().email().optional(),
     password: joi.string().regex(/[a-zA-Z0-9#]{8,30}/).optional(),
     role: joi.string().valid('frontdesk').valid('admin').optional(),
-    defaultLocation: joi.string().when('role', {is: 'frontdesk', then: joi.required(), otherwise: joi.optional()})
+    //defaultLocation: joi.string().when('role', {is: 'frontdesk', then: joi.required(), otherwise: joi.optional()}),
+    wing: joi.objectId()
 };
 
 currentDate = function () {
@@ -66,6 +68,7 @@ exports.listUsers = function (req, res, next) {
     User.find({deleted: false})
         .limit(req.query.limit ? req.query.limit : 30)
         .skip(req.query.offset ? req.query.offset : 0)
+        .populate('wing')
         .exec(function (err, users) {
             if (err) return next(err);
             var arr = [];

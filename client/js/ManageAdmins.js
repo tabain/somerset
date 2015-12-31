@@ -1,21 +1,21 @@
 angular.module('app').controller('ManageAdmins',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window) {
 
+
+        $scope.validRoles = ['frontdesk', 'admin'];
+        $scope.validLocations = [];
+        $scope.admins = [];
         defaultAdmin = function () {
             return {
                 username: '',
                 email: '',
                 password: '',
-                defaultLocation: '',
+                wing:$scope.validLocations[1],
                 role: 'frontdesk'
             };
         };
 
         $scope.admin = defaultAdmin();
-        $scope.validRoles = ['frontdesk', 'admin'];
-        $scope.validLocations = ['All'];
-        $scope.admins = [];
-
         loadAdmins = function () {
             var url = '/users';
             $http.get(url)
@@ -28,6 +28,18 @@ angular.module('app').controller('ManageAdmins',
         };
 
         loadAdmins();
+        loadWings = function(){
+            $http.get('/wings')
+                .success(function (data, headers){
+                    if (data) {
+                        $scope.validLocations = data;
+                    }
+                })
+                .error(function(err){
+                    showError(err);
+                });
+        };
+        loadWings();
 
         showError = function (err) {
             if (!err)
@@ -54,6 +66,7 @@ angular.module('app').controller('ManageAdmins',
             $scope.submitForm = function (isValid) {
 
                 if (isValid) {
+                    $scope.admin.wing = $scope.admin.wing.id;
                     new Admin($scope.admin).$save(function (data, headers) {
                         $(".modal-backdrop").hide();
                         $('#addUser').modal('hide');
@@ -75,20 +88,30 @@ angular.module('app').controller('ManageAdmins',
             $rootScope.editadmin = admin;
 
             $scope.admin = angular.copy(admin);
-
             $('#editAdmin').modal('show');
+            if ($scope.admin.wing)   {
+                $scope.validLocations.forEach(function(d){
+                    if (d.id === $scope.admin.wing.id ){
+                        $scope.admin.wing = d;
+                    }
+                });
+            }
+
             $scope.submitForm = function (isValid) {
                 if (isValid) {
+                    $scope.admin.wing = $scope.admin.wing.id;
                     $http.put('/users/' + $scope.admin.id, $scope.admin)
                         .success(function (result) {
                             $('#editAdmin').modal('hide');
+                            $scope.validLocations.forEach(function(d){
+                                if (d.id === result.wing ){
+                                    result.wing = d;
+                                }
+                            });
                             $scope.admins.forEach(function (ad, i) {
                                 if (ad.id == result.id) {
-                                    ad.username= result.username;
-                                    ad.email= result.email;
-                                    ad.defaultLocation= result.defaultLocation;
-                                    ad.role= result.role;
 
+                                    ad=result;
                                 }
                             });
                         })
