@@ -4,7 +4,8 @@ section
     .container-fluid(ng-controller="FrontDest")
         .row
             .col-lg-12
-                h1.text-center Frontdesk ({{frontdesk}})
+                h1.text-center Frontdesk
+                h4.text-center(ng-show = "frontdesk") {{frontdesk | capitalize}}
                 button(ng-click="forceLoadVisits()" ng-disabled="loadingVisits").btn.btn-default.dontprint
                     i.glyphicon.glyphicon-refresh(ng-class="{'icon-refresh-animate': loadingVisits}")
                     span.span-left-margin  Refresh

@@ -3,6 +3,7 @@ angular.module('app').controller('FrontDest',
         $scope.visits = [];
         $scope.loadingVisits = false;
         $scope.wing = $rootScope.currentUser.wing;
+        if ($rootScope.currentUser.role === 'admin') $scope.wing= null;
         $scope.wings=[];
         loadWings = function(){
             $http.get('/wings')
