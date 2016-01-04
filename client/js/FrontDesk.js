@@ -3,16 +3,27 @@ angular.module('app').controller('FrontDest',
         $scope.visits = [];
         $scope.loadingVisits = false;
         $scope.wing = $rootScope.currentUser.wing;
-        if ($rootScope.currentUser.role === 'admin') $scope.wing= null;
+        $scope.vaildwings=[{name: 'All', value: null}];
+        $scope.isadmin = false;
+        if ($rootScope.currentUser.role === 'admin') {$scope.wing= $scope.vaildwings[0].value;$scope.isadmin=true;}
         $scope.wings=[];
+
         loadWings = function(){
             $http.get('/wings')
                 .success(function (data, headers){
                     if (data) {
                         $scope.wings = data;
                         $scope.wings.forEach(function(d){
+
                             if ($scope.wing === d.id){
                                 $scope.frontdesk = d.name;
+                            }
+                            if(d){
+                                var obj = {
+                                    name: d.name,
+                                    value: d.id
+                                }
+                                $scope.vaildwings.push(obj);
                             }
 
                         });
@@ -26,8 +37,17 @@ angular.module('app').controller('FrontDest',
 
         $scope.phonePattern = /^[\+](?:[0-9] ?){6,14}[0-9]$/;
         $scope.namePattern = /^[a-zA-Z0-9 .'-]+ [a-zA-Z0-9 .'-]+/;//[a-zA-Z.]+ [a-zA-Z.]+
-       
+        $scope.date = {
+            startDate: moment().startOf('day').toDate(),
+            endDate: moment().endOf('day').toDate()
+        };
+        $scope.$watch('date', function () {
 
+            $scope.forceLoadVisits();
+        }); $scope.$watch('wing', function () {
+
+            $scope.forceLoadVisits();
+        });
         var loadEndTime = 0;
         loadVisits = function () {
 
@@ -36,7 +56,11 @@ angular.module('app').controller('FrontDest',
             $scope.loadingVisits = true;
 
             var url = '/visits';
-            if( $scope.wing )   url+='?wing='+ $scope.wing
+            if ($scope.date){
+                url +='?startdate=' + moment($scope.date.startDate).format("YYYY-MM-DD") +
+                '&enddate=' + moment($scope.date.endDate).format("YYYY-MM-DD");
+            };
+            if( $scope.wing )   url+='&wing='+ $scope.wing;
 
 
             $http.get(url,{cache: false})

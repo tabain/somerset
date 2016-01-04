@@ -13,6 +13,11 @@ joi.objectId = require('joi-objectid');
 
 exports.listVisits= function (req, res, next) {
     var query = {deleted:false};
+    if (req.query.startdate && req.query.enddate){
+        var startDate = moment(req.query.startdate).startOf('day').toDate();
+        var endDate = moment(req.query.enddate).startOf('day').add(1, 'day').toDate();
+        query.createdAt= {$gte: startDate, $lt: endDate};
+    }
     if (req.query.wing) query.wing = req.query.wing;
     Visit.find(query)
         .limit(req.query.limit ? req.query.limit : 30)

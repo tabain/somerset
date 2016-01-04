@@ -6,6 +6,22 @@ section
             .col-lg-12
                 h1.text-center Frontdesk
                 h4.text-center(ng-show = "frontdesk") {{frontdesk | capitalize}}
+            .col-lg-12
+                .row
+                    .col-lg-4
+                        .form-group
+                            label Date Range
+                            input(date-range-picker ng-model="date" min="'2015-01-01'" ng-disabled="loadingVisits" options="opts" placeholder="{{date.startDate | date:'EEE dd MMM yyyy'}} - {{date.endDate | date:'EEE dd MMM yyyy'}} ").form-control.date-picker
+
+                    .col-lg-4
+                        .form-group
+                            label Search
+                            input(ng-model="searchText" placeholder="Visitor Name, Email, Member, Organisation, Room, Wing Location").form-control
+                    .col-lg-4(ng-show='isadmin')
+                        .form-group
+                            label Wing
+                            select.form-control(name="wing" ng-model="wing" ng-disabled="loadingVisits" ng-options="w.value as w.name | capitalize for w in vaildwings" required)
+            .col-lg-12
                 button(ng-click="forceLoadVisits()" ng-disabled="loadingVisits").btn.btn-default.dontprint
                     i.glyphicon.glyphicon-refresh(ng-class="{'icon-refresh-animate': loadingVisits}")
                     span.span-left-margin  Refresh
@@ -24,7 +40,7 @@ section
                             th  Accepted
                             th
                     tbody
-                        tr(ng-repeat="v in visits | orderBy:'-createdAt'" ng-include="'views/partials/frontdesk_row.html'")
+                        tr(ng-repeat="v in visits | orderBy:'-createdAt' | filter:searchText" ng-include="'views/partials/frontdesk_row.html'")
 
 
 
