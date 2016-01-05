@@ -5,8 +5,10 @@ var Visitor = require('../models/Visitor');
 var Visit = require('../models/Visit');
 var joi = require('joi');
 var moment = require('moment');
+var Mailgun = require('mailgun-js');
+var config = require('../../config/config');
 joi.objectId = require('joi-objectid');
-
+var mailgun = new Mailgun({apiKey: config.MAILGUN_API_KEY, domain: config.MAILGUN_DOMAIN});
 
 var lists = {
     name: joi.string().optional(),
@@ -122,10 +124,78 @@ exports.createVisitor = function(req, res, next){
             if (err) return next(err);
             if (!visit) return res.status(400).json(result.error);
             if (visit) {
-                res.json(visit.public());
+                Visit.findOne({_id:visit.id})
+                    .populate(['wing', 'location', 'room', 'organisation', 'member', 'visitor'])
+                    .exec(function(err, doc){
+                        if (err) return next(err);
+                        if (!doc) return res.status(400).json(result.error);
+                        if (doc){
+                            var data = {
+                                //Specify email data
+                                from: config.MAILGUN_FROM_WHO,
+                                //The email to contact
+                                to: doc.member.email,
+                                //Subject and text data
+                                subject: 'Hello '+doc.member.name.toUpperCase()+' meet to '+doc.visitor.name.toUpperCase(),
+                                html: 'Name of Visitor: '+doc.visitor.name.toUpperCase()+'<br/> Visitor Email: '+doc.visitor.email+'<br/> Please <a href="http://192.168.1.2:3000/selfaccepted/'+doc.id+' ">Accepted</a>'
+                            }
+
+                            //Invokes the method to send emails given the above data with the helper library
+                            mailgun.messages().send(data, function (err, body) {
+                                //If there is an error, render the error page
+                                if (err) {
+                                    res.render('error', { error : err});
+                                    console.log("got an error: ", err);
+                                }
+                                //Else we can greet    and leave
+                                else {
+                                    //Here "submitted.jade" is the view file for this landing page
+                                    //We pass the variable "email" from the url parameter in an object rendered by Jade
+
+                                    console.log(body);
+                                    res.json(visit.public());
+                                }
+
+                            });
+
+
+
+                        }
+
+                    });
+
             }
         });
     };
 
 };
+exports.updateVisit = function (req, res, next) {
 
+
+
+    Visit.findOne({_id: req.params.visitId}, function (err, visit) {
+        if (err) return next(err);
+        if (!visit) return res.status(404).json({message: 'Member not found, invalid identifier'});
+        if (visit){
+            visit.accepted = true;
+
+
+            visit.save(function (err, uvisit) {
+                if (err) return next(err);
+                res.send("thank you")
+                //res.json(uvisit.public());
+            });
+        }
+
+
+    });
+
+};
+
+var api_key = 'key-c86dae640d81900ecd77aff209f15f8a';
+
+//Your domain, from the Mailgun Control Panel
+var domain = 'sandbox35788e99d4274bfd8d14bd22d07f5c32.mailgun.org';
+
+//Your sending email address
+var from_who = 'postmaster@sandbox35788e99d4274bfd8d14bd22d07f5c32.mailgun.org';

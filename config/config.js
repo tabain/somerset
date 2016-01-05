@@ -22,6 +22,9 @@ module.exports = {
     S3_BUCKET: process.env.S3_BUCKET,
     REGION: process.env.S3_REGION,
     debug: process.env.DEBUG || true,
+    MAILGUN_API_KEY: process.env.MAILGUN_API_KEY,
+    MAILGUN_DOMAIN: process.env.MAILGUN_DOMAIN,
+    MAILGUN_FROM_WHO: process.env.MAILGUN_FROM_WHO,
 
     viewPath: function () {
         return this.rootPath + '/server/views';

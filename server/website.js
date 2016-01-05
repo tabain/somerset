@@ -77,6 +77,7 @@ website.delete('/orgs/:orgId', [admins.isAdmin], orgs.deleteOrg);
 website.get('/members', [admins.isAdmin], members.listMembers);
 website.post('/members', [admins.isAdmin], members.createMember);
 website.put('/members/:memberId', [admins.isAdmin], members.updateMember);
+website.put('/selfaccepted/:visitId', [admins.isAdmin], members.updateMember);
 website.delete('/members/:memberId', [admins.isAdmin], members.deleteMember);
 
 //frontdesk
@@ -90,6 +91,7 @@ website.get('/clientMembers', [base.isSessionAvailable], clients.listMembers);
 website.get('/clientWings', [base.isSessionAvailable], wings.listWings);
 website.post('/guests', [base.isSessionAvailable], clients.createVisitor);
 website.get('/guests/:visitId', [base.isSessionAvailable], clients.findoneVisit);
+website.get('/selfaccepted/:visitId', clients.updateVisit);
 
 //website.get('/locations', [base.isSessionAvailable], locations.getLocations);
 //website.post('/newGuests', [base.isSessionAvailable], newGuests.createGuest);

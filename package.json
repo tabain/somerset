@@ -17,8 +17,7 @@
   "bugs": {
     "url": "https://github.com/tabain/somerset/issues"
   },
-  "homepage": "https://github.com/tabain/somerset"
-  ,
+  "homepage": "https://github.com/tabain/somerset",
   "dependencies": {
     "async": "^0.9.0",
     "bcrypt": "^0.8.2",
@@ -31,6 +30,7 @@
     "joi": "^6.1.2",
     "joi-objectid": "^1.1.0",
     "lodash": "^3.6.0",
+    "mailgun-js": "^0.7.7",
     "moment": "^2.10.2",
     "mongoose": "^4.0.1",
     "mongoose-timestamp": "^0.4.0",
