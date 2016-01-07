@@ -130,14 +130,25 @@ exports.createVisitor = function(req, res, next){
                         if (err) return next(err);
                         if (!doc) return res.status(400).json(result.error);
                         if (doc){
+                            function toTitleCase(str)
+                            {
+                                return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+                            }
+                            var vis,memb;
+
+                            vis = toTitleCase(doc.visitor.name);
+                            memb = toTitleCase(doc.member.name);
+
+
                             var data = {
                                 //Specify email data
                                 from: config.MAILGUN_FROM_WHO,
                                 //The email to contact
                                 to: doc.member.email,
                                 //Subject and text data
-                                subject: 'Hello '+doc.member.name.toUpperCase()+' meet to '+doc.visitor.name.toUpperCase(),
-                                html: 'Name of Visitor: '+doc.visitor.name.toUpperCase()+'<br/> Visitor Email: '+doc.visitor.email+'<br/> Please <a href="http://192.168.1.2:3000/selfaccepted/'+doc.id+' ">Accepted</a>'
+                                subject: 'You have a visitor',
+                                //subject: 'Hello '+doc.member.name.toUpperCase()+' meet to '+doc.visitor.name.toUpperCase(),
+                                html: 'Hi '+memb+' , <br/>'+vis+' is here to visit you. Do you know him? <br/> <a href="http://192.168.10.4:3000/selfaccepted/'+doc.id+' ">Yes</a>'
                             }
 
                             //Invokes the method to send emails given the above data with the helper library
@@ -182,7 +193,17 @@ exports.updateVisit = function (req, res, next) {
 
             visit.save(function (err, uvisit) {
                 if (err) return next(err);
-                res.send("thank you")
+                res.render('thankyou', function(err, html) {
+                    if (err) {
+                        // log any error to the console for debug
+                        console.log(err);
+                    }
+                    else {
+                        //no error, so send the html to the browser
+                        res.send(html)
+                    };
+                });
+
                 //res.json(uvisit.public());
             });
         }
@@ -191,11 +212,3 @@ exports.updateVisit = function (req, res, next) {
     });
 
 };
-
-var api_key = 'key-c86dae640d81900ecd77aff209f15f8a';
-
-//Your domain, from the Mailgun Control Panel
-var domain = 'sandbox35788e99d4274bfd8d14bd22d07f5c32.mailgun.org';
-
-//Your sending email address
-var from_who = 'postmaster@sandbox35788e99d4274bfd8d14bd22d07f5c32.mailgun.org';
