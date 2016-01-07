@@ -5,10 +5,11 @@ td {{v.organisation.name | capitalize}}
 td {{v.room.room | capitalize}}
 td {{v.wing.name | capitalize}}
 td {{v.location.location | capitalize}}
-td {{v.accepted}}
+td(ng-class="{'warning': !v.accepted, 'success': v.accepted}") {{v.accepted}}
 td
-    //.btn-group
-    //    .btn.btn-default()
-    //        i.glyphicon.glyphicon-trash
-    //    .btn.btn-default()
-    //        i.glyphicon.glyphicon-edit
+    input(type="checkbox" ng-model="ids[v.id]")
+td
+    p In: {{v.checkedInAt | date: 'MMM d, y h:mm a'}}
+    p Out: {{v.checkedOutAt | date: 'MMM d, y h:mm a'}}
+td.dontprint
+    button.btn.btn-min-width(ng-click="checkInOrCheckOut(v)" ng-class="{'btn-primary': !v.checkedIn, 'btn-danger': v.checkedIn}" ng-disabled="((v.checkedIn && v.checkedOut) || !ids[v.id]) ?  true : false") {{ v.checkedIn?"Check Out":"Check In" }}

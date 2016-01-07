@@ -35,6 +35,20 @@ var VisitSchema = new mongoose.Schema({
     },
     deleted: {type: Boolean, required: false, default: false},
     accepted: {type: Boolean, required: false, default: false},
+    checkedIn: {type: Boolean, required: false, default: false},
+    checkedInAt: {type: Date, required: false},
+    checkedInBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'User'
+    },
+    checkedOut: {type: Boolean, required: false, default: false},
+    checkedOutAt: {type: Date, required: false},
+    checkedOutBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'User'
+    },
     deletedAt: {type: Date, required: false},
     deletedBy: {
         type: mongoose.Schema.Types.ObjectId,

@@ -82,6 +82,7 @@ website.delete('/members/:memberId', [admins.isAdmin], members.deleteMember);
 
 //frontdesk
 website.get('/visits', [frontdesks.isFrontDesk], frontdesks.listVisits);
+website.put('/visits/:visitId', [frontdesks.isFrontDesk], frontdesks.updateVisit);
 
 
 //client side routes
@@ -102,7 +103,7 @@ website.get('/selfaccepted/:visitId', clients.updateVisit);
 // Chart Data
 //website.get('/data/promotions', [admins.isAdmin], admins.usageData);
 
-//website.get('/reports', [frontdesk.isFrontDesk], admins.generateReport);
+website.get('/reports', [frontdesks.isFrontDesk], frontdesks.generateReport);
 
 website.get('/', function (req, res, next) {
     req.session.isGuest = true;

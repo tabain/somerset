@@ -38,9 +38,20 @@ section
                             th  Wing
                             th  Wing Location
                             th  Accepted
+                            th  Checked Id
+                            th  Timestamps
                             th
                     tbody
                         tr(ng-repeat="v in visits | orderBy:'-createdAt' | filter:searchText" ng-include="'views/partials/frontdesk_row.html'")
+
+                .pull-right.dontprint
+                    .btn.btn-default(ng-click="print()")
+                        i.glyphicon.glyphicon-print
+                        span.span-left-margin Print Data
+                    .btn.btn-default
+                        a(ng-href="{{reports()}}")
+                            i.glyphicon.glyphicon-export
+                            span.span-left-margin Export to CSV
 
 
 

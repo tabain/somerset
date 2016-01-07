@@ -5,6 +5,7 @@ angular.module('app').controller('FrontDest',
         $scope.wing = $rootScope.currentUser.wing;
         $scope.vaildwings=[{name: 'All', value: null}];
         $scope.isadmin = false;
+        $scope.ids={};
         if ($rootScope.currentUser.role === 'admin') {$scope.wing= $scope.vaildwings[0].value;$scope.isadmin=true;}
         $scope.wings=[];
 
@@ -34,7 +35,9 @@ angular.module('app').controller('FrontDest',
                 });
         };
         loadWings();
-
+        $scope.print = function () {
+            window.print();
+        };
         $scope.phonePattern = /^[\+](?:[0-9] ?){6,14}[0-9]$/;
         $scope.namePattern = /^[a-zA-Z0-9 .'-]+ [a-zA-Z0-9 .'-]+/;//[a-zA-Z.]+ [a-zA-Z.]+
         $scope.date = {
@@ -119,32 +122,39 @@ angular.module('app').controller('FrontDest',
             $interval.cancel(pageRefresh);
         });
 
-        //
-        //
-        //$scope.reports = function () {
-        //    var url_report = '/reports';
-        //    if ($scope.date){
-        //        url_report += '?startdate=' + moment($scope.date.startDate).format("YYYY-MM-DD") +
-        //        '&enddate=' + moment($scope.date.endDate).format("YYYY-MM-DD");
-        //    }
-        //    if ($scope.residentName && !$scope.name)
-        //    {
-        //        var rnamme = decodeURIComponent($scope.residentName);
-        //        url_report += '?residentName=' + rnamme;
-        //    }
-        //
-        //    if ($scope.name && !$scope.residentName)
-        //    {
-        //        var nname = decodeURIComponent($scope.name);
-        //        url_report += '?name=' + nname;
-        //    }
-        //    if ($scope.residentName && $scope.name){
-        //        var nname = decodeURIComponent($scope.name);
-        //        var rnamme = decodeURIComponent($scope.residentName);
-        //        url_report += '?name=' + nname + '&residentName=' + rnamme;
-        //    }
-        //    return url_report;
-        //};
+
+        $scope.checkInOrCheckOut = function (visit) {
+            if (visit.checkedIn && visit.checkedOut) {
+                //TODO: throw error in toaster
+            } else if (!visit.checkedIn) {
+                $scope.permission({id: visit.id, checkIn: true , visitorId: visit.visitor.id});
+            } else if (visit.checkedIn && !visit.checkedOut) {
+                $scope.permission({id: visit.id, checkOut: true , VisitorId: visit.visitor.id});
+            }
+
+            $scope.ids[visit.id] = false;
+
+        };
+        $scope.permission = function (visit) {
+            $http.put('/visits/' + visit.id, visit)
+                .success(function (result) {
+                    $scope.forceLoadVisits();
+                })
+                .error(function (err) {
+                    showError(err);
+                });
+        };
+
+
+
+        $scope.reports = function () {
+            var url_report = '/reports';
+            if ($scope.date){
+                url_report += '?startdate=' + moment($scope.date.startDate).format("YYYY-MM-DD") +
+                '&enddate=' + moment($scope.date.endDate).format("YYYY-MM-DD");
+            }
+            return url_report;
+        };
 
     });
 
