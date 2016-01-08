@@ -1,6 +1,6 @@
 angular.module('app').controller('ManageWingLocs',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window, $location) {
-
+        $( "html" ).removeClass( "background-client" );
         $scope.wings= [];
         $scope.winglocs = [];
         $scope.wingloc ={};

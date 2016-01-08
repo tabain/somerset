@@ -1,7 +1,7 @@
 angular.module('app').controller('client',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window,$location) {
 
-
+        $( "html" ).addClass( "background-client" );
 
         $scope.wings = [];
         $scope.wing ={};

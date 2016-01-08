@@ -45,6 +45,7 @@ body
   margin: 0px
   padding: 25px 0px
   font-family: Century-Gothic
+  background-color: rgba(255, 255, 255, 0.01)
 
 label
   color: $color-lt-gray
@@ -52,7 +53,8 @@ label
 
 h1, h2, h3, h4, h5, h6
   color: $color-dr-gray
-
+.white
+  color: $color-white
 .h1class
   color: #ffffff
 
@@ -61,8 +63,8 @@ nav.navbar
   margin-bottom: 25px
   color: $color-lt-gray
   width: 100%
-  background-color: white
-  border-bottom: 0px solid $color-white
+  background-color: rgba(255, 255, 255, 0)
+  border-bottom: 0px solid rgba(255, 255, 255, 0)
 
 section
   margin: 10px
@@ -87,7 +89,8 @@ section
   font-color:  lightgrey
   font-size: 10px
 .navbar-right
-  margin-top: 25px
+  margin-top: 20px
+  margin-right: 10px
   li
     ul
       li
@@ -96,6 +99,15 @@ section
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus
   background-color: transparent
   color: $color-lt-gray
+
+
+.background-client
+  //background: url(./../../../imgs/nido/imgs/westhampstead.jpg) no-repeat center top
+  background: linear-gradient(rgba(0,0,0, .5),rgba(0,0,0, .5)), url(./../../../imgs/somersethouse.jpg) no-repeat center center fixed
+  background-attachment: fixed
+  background-size: cover
+
+
 .panel-email
   border: 0px solid transparent
   border-radius: 0px
@@ -112,7 +124,76 @@ section
     h4
       color: #696969
       text-align: center
+.checkin-form
+  border: 0px solid transparent
+  border-radius: 0px
+  padding: 10px 25px 20px
+  box-shadow: 2px 5px 13px 0px #000
+  background-color: rgba(255, 255, 255, 0.75)
+  color: #101010
+  button
+    margin-top: 25px
+  h2
+    color: #101010
+  label
+    font-size: 11px
+    color: #101010
+    font-weight: 600
+  .mem-name
+    font-size: 24px
+  .org-margin
+    margin-top: -10px
+    font-size: 16px
 
+  .form-control
+    border: none
+    border-bottom: 2px solid #333333
+    border-radius: 0px
+    box-shadow: 3px 4px 8px -3px rgba(0, 0, 0, 0.0)
+    background-color: rgba(255, 255, 255, 0)
+    &::-webkit-input-placeholder
+      color: #595959
+      font-family: Century-Gothic
+    &:focus
+      border-color: #595959
+      box-shadow: 3px 4px 8px -3px rgba(0, 0, 0, 0.0)
+      &::-webkit-input-placeholder
+        color: #595959
+        font-family: Century-Gothic
+
+.member-row
+  height: 200px
+  padding: 10px
+  margin: 10px 0px
+  border: 0px solid transparent
+  border-radius: 0px
+  box-shadow: 0px 5px 11px -6px rgba(0, 0, 0, 0.75)
+  background-color: rgba(255, 255, 255, 0.75)
+  color: #101010
+  border-top: solid 10px rgba(16, 16, 16, 0.80)
+  transition:  .5s
+  h3
+    text-transform: capitalize
+    color: #101010
+  p
+    color: #353535
+
+  &:hover
+    cursor: pointer
+    background-color: rgba(255, 255, 255, 1)
+    border-top: solid 10px rgba(16, 16, 16, 1)
+  //&:hover
+  //  cursor: pointer
+  //  background-color: rgba(0, 0, 0, 0.75)
+  //  border-top: solid 10px rgba(255, 255, 255, 0.80)
+  //  h3
+  //    text-transform: capitalize
+  //    color: #ffffff
+  //  p
+  //    color: #ffffff
+
+.b-width
+  width: 45px
 
 #promotions label
   font-size: 12px
@@ -167,6 +248,9 @@ section
   margin-top: 5px
   font-size: 12px
   display: block
+
+
+
 .btn
   text-align: center
   border-radius: 0
@@ -185,7 +269,19 @@ section
   display: block
   margin-left: auto
   margin-right: auto
-
+.btn-search
+  background-color: rgba(51, 51, 51, 0.80)
+  border-color: #333333
+  height: 45px
+  color: #fff
+  &:hover, &:focus
+    background-color: rgba(89, 89, 89, 0.80)
+    border-color: #595959
+    color: #fff
+.btn-search:active:hover, .btn-search.active:hover, .open > .dropdown-toggle.btn-search:hover, .btn-search:active:focus, .btn-search.active:focus, .open > .dropdown-toggle.btn-search:focus, .btn-search:active.focus, .btn-search.active.focus, .open > .dropdown-toggle.btn-search.focus
+  background-color: rgba(89, 89, 89, 0.80)
+  border-color: #595959
+  color: #fff
 .displayed-v-center
   display: table-cell
   vertical-align: middle
@@ -232,6 +328,15 @@ section
     &::-webkit-input-placeholder
       color: #c0c0c0
       font-family: Century-Gothic
+.form-control-client
+
+  border: 1px solid rgba(255, 255, 255, 0.80)
+
+  background-color: rgba(255, 255, 255, 0.80)
+  &::-webkit-input-placeholder
+  &:focus
+    border-color: rgba(255, 255, 255, 0.80)
+
 
 .title
   margin-bottom: 25px

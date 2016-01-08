@@ -1,7 +1,7 @@
 angular.module('app').controller('ManageWings',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window) {
 
-
+        $( "html" ).removeClass( "background-client" );
         $scope.wings = [];
         $scope.wing ={};
         loadWings = function () {

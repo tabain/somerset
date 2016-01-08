@@ -1,5 +1,6 @@
 angular.module('app').controller('Guest',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window, $location) {
+
         $scope.guest = {};
         $scope.member = {};
         if ($rootScope.member){

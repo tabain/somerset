@@ -1,5 +1,6 @@
 angular.module('app').controller('Welcome',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window,$location) {
+
         $scope.welcome = {};
         showError = function (err) {
             if (!err)

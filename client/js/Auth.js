@@ -2,7 +2,7 @@ app.factory("Auth", function ($http, $q, $rootScope) {
     var user;
 
     var initialization;
-
+    $( "html" ).removeClass( "background-client" );
     function init() {
         initialization = $q.defer();
         $http.get('/me')

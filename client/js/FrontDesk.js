@@ -1,5 +1,7 @@
 angular.module('app').controller('FrontDest',
     function ($scope, $http, $interval, toaster, $rootScope, $location, $resource, $window, $timeout) {
+
+        $( "html" ).removeClass( "background-client" );
         $scope.visits = [];
         $scope.loadingVisits = false;
         $scope.wing = $rootScope.currentUser.wing;

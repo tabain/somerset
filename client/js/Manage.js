@@ -1,6 +1,6 @@
 angular.module('app').controller('Manage',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window, $location) {
-
+        $( "html" ).removeClass( "background-client" );
         $scope.name = 'Manage';
 
         $scope.gotoAdminManage = function(){

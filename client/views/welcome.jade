@@ -1,9 +1,10 @@
-nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/partials/navi_bar.html'")
+nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/partials/navi_bar_home.html'")
+
 section
     .container-fluid
         .row
             .col-lg-4.col-md-6.col-sm-6.col-xs-8.col-lg-offset-4.col-md-offset-3.col-sm-offset-3.col-xs-offset-2
-                div(ng-controller="Welcome").text-center
+                div(ng-controller="Welcome").checkin-form.text-center
                     h1.title Welcome to {{welcome.wing.name}}
 
                     p
@@ -11,6 +12,6 @@ section
                         | Thanks for checking in at {{welcome.location.location| capitalize}} to visit {{welcome.member.name | capitalize}} {{welcome.room.room | capitalize}}.
                         | Please proceed to the reception and provide us with a photo Id (e.g. drivers license, national ID or passport).
 
-                    button(ng-click = "checkIn()").btn.btn-sm.btn-primary Return to Check-in
+                    button(ng-click = "checkIn()").btn.btn-sm.btn-search Return to Check-in
 
-footer(ng-include="'views/partials/footer.html'")
+footer(ng-include="'views/partials/footer_client.html'")

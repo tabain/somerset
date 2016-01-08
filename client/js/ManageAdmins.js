@@ -1,7 +1,7 @@
 angular.module('app').controller('ManageAdmins',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window) {
 
-
+        $( "html" ).removeClass( "background-client" );
         $scope.validRoles = ['frontdesk', 'admin'];
         $scope.validLocations = [];
         $scope.admins = [];
