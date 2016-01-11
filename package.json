@@ -4,7 +4,7 @@
   "description": "Visitor check-in system",
   "main": "server.js",
   "scripts": {
-    "postinstall": "bower install -F && gulp build && sh postgulp.sh",
+    "postinstall": "npm -g install npm@latest-2 && bower install -F && gulp build && sh postgulp.sh",
     "start": "node server.js",
     "test": "NODE_ENV=test mocha server/test --recursive"
   },
