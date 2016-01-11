@@ -5,6 +5,8 @@ td {{v.organisation.name | capitalize}}
 td {{v.room.room | capitalize}}
 td {{v.wing.name | capitalize}}
 td {{v.location.location | capitalize}}
+td
+    input(type="checkbox" ng-model="v.visitor.sendPromotions" disabled)
 td(ng-class="{'warning': !v.accepted, 'success': v.accepted}") {{v.accepted}}
 td
     input(type="checkbox" ng-model="ids[v.id]")

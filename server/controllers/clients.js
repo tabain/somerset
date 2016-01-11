@@ -22,7 +22,9 @@ var lists = {
         phone: joi.string().regex(/^[\+]?(?:[0-9] ?){6,14}[0-9]$/).required(),
         mobile: joi.string().optional(),
         email: joi.string().email().required(),
-        age: joi.number().optional()
+        age: joi.number().optional(),
+        sendPromotions : joi.boolean().default(false)
+
     },
     createVisitt = {
         member: joi.objectId(),
