@@ -28,7 +28,7 @@ var UserSchema = new mongoose.Schema({
     //    type: String
     //},
         wing: {type: mongoose.Schema.Types.ObjectId,
-            required: true,
+            required: false,
             ref: 'Wing'
         },
     permissions: [String],
