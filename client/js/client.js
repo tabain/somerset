@@ -11,20 +11,23 @@ angular.module('app').controller('client',
         $scope.disablesearch = false;
 
 
-        $scope.search = function(member) {
-            var urll  = "clientMembers?wing=" +$rootScope.defaultWing;
+        $scope.search = function(isValid) {
 
-            if (member)
-                urll += '&name=' + member;
-            $http
-                .get(urll)
-                .success(function(data){
-                    $scope.members = data;
-                    $scope.disablesearch = true;
-                })
-                .error(function(err){
-                    showError(err);
-                });
+            var urll  = "clientMembers?wing=" +$rootScope.defaultWing;
+            if (isValid){
+                if ($scope.member)
+                    urll += '&name=' + $scope.member;
+                $http
+                    .get(urll)
+                    .success(function(data){
+                        $scope.members = data;
+                        $scope.disablesearch = true;
+                    })
+                    .error(function(err){
+                        showError(err);
+                    });
+            }
+
 
 
         };
