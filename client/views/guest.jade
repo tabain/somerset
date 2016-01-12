@@ -28,6 +28,11 @@ section
                                         input(type="text" ng-model="guest.phone" intl-tel-input placeholder="Phone No e.g 1234567" default-country="gb" preferred-countries="gb, us" name="phone" required).form-control
                                         p.help-block(ng-show="guestForm.phone.$invalid && !guestForm.phone.$pristine") Please provide us with a valid phone number beginning with country code e.g. +44
                                     .form-group
+                                        .checkbox
+                                            label
+                                                input(type="checkbox" ng-model="guest.sendPromotions")
+                                                | Would you like to be contacted with great offers from Somerset house and our marketing partners?
+                                    .form-group
                                         button(type="submit" ng-disabled="memberForm.$invalid").btn.btn-search.btn-lg.btn-block Check-In
 
 

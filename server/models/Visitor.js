@@ -14,6 +14,7 @@ var VisitorSchema = new mongoose.Schema({
         required: false,
         ref: 'User'
     },
+    sendPromotions: {type: Boolean, required: false, default: false},
     deleted: {type: Boolean, required: false, default: false},
     deletedAt: {type: Date, required: false},
     deletedBy: {
