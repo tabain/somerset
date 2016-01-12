@@ -179,7 +179,7 @@ angular.module('CustomFilter', []).
 
 angular.module('app').controller('AdminLogin',
     function ($scope, $rootScope, $resource, $location, toaster, Auth) {
-
+        $( "html" ).removeClass( "background-client" );
         $scope.submitForm = function (isValid) {
 
             if (isValid) {
