@@ -132,6 +132,8 @@ exports.createVisitor = function(req, res, next){
                         if (err) return next(err);
                         if (!doc) return res.status(400).json(result.error);
                         if (doc){
+                            res.json(visit.public());
+
                             function toTitleCase(str)
                             {
                                 return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
@@ -158,7 +160,7 @@ exports.createVisitor = function(req, res, next){
                                 //If there is an error, render the error page
                                 console.log(body);
                                 if (err) {
-                                    res.render('error', { error : err});
+                                    //res.render('error', { error : err});
                                     console.log("got an error: ", err);
                                 }
                                 //Else we can greet    and leave
@@ -171,7 +173,6 @@ exports.createVisitor = function(req, res, next){
                                 }
 
                             });
-                            res.json(visit.public());
 
 
                         }
