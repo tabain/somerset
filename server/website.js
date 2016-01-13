@@ -92,7 +92,7 @@ website.delete('/visits/:visitId', [frontdesks.isFrontDesk], frontdesks.deleteVi
 
 website.get('/clientMembers', [base.isSessionAvailable], clients.listMembers);
 website.get('/clientWings', [base.isSessionAvailable], wings.listWings);
-website.post('/guests', [base.isSessionAvailable], clients.createVisitor);
+website.post('/clients', [base.isSessionAvailable], clients.createVisitor);
 website.get('/guests/:visitId', [base.isSessionAvailable], clients.findoneVisit);
 website.get('/selfaccepted/:visitId', clients.updateVisit);
 

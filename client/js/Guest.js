@@ -33,7 +33,7 @@ angular.module('app').controller('Guest',
                 if ($scope.guest.mobile) obj.mobile = $scope.guest.mobile;
                 if ($scope.guest.age) obj.age = $scope.guest.age;
                 $http
-                    .post('/guests', obj)
+                    .post('/clients', obj)
                     .success(function(data){
                         toaster.success(data);
                         $rootScope.lastGuest = data;
