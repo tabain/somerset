@@ -32,19 +32,14 @@ angular.module('app').controller('Guest',
                 };
                 if ($scope.guest.mobile) obj.mobile = $scope.guest.mobile;
                 if ($scope.guest.age) obj.age = $scope.guest.age;
+                $http
+                    .post('/guests', obj)
+                    .success(function(data){
+                        toaster.success(data);
+                        $rootScope.lastGuest = data;
+                        $location.path('/welcome');
+                    }).error(function(err){showError(err);})
 
-                var Guest= $resource('/guests/:id', {id: '@id'}, {
-                    checkin: {method: 'POST', params: {}, responseType: 'json'}
-                }, {/*empty options*/});
-                new Guest(obj).$save(function (data, headers) {
-                    toaster.success(data);
-                    $rootScope.lastGuest = data;
-                    $location.path('/welcome');
-                }, function (err) {
-                    // TODO: Create Error Translator on Server and add helpful errors here
-                    showError(err);
-
-                });
             }
 
         };
