@@ -156,6 +156,7 @@ exports.createVisitor = function(req, res, next){
                             //Invokes the method to send emails given the above data with the helper library
                             mailgun.messages().send(data, function (err, body) {
                                 //If there is an error, render the error page
+                                console.log(body);
                                 if (err) {
                                     res.render('error', { error : err});
                                     console.log("got an error: ", err);
@@ -165,12 +166,12 @@ exports.createVisitor = function(req, res, next){
                                     //Here "submitted.jade" is the view file for this landing page
                                     //We pass the variable "email" from the url parameter in an object rendered by Jade
 
-                                    console.log(body);
-                                    res.json(visit.public());
+
+
                                 }
 
                             });
-
+                            res.json(visit.public());
 
 
                         }
