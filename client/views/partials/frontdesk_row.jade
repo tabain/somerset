@@ -15,7 +15,7 @@ td
     p Out: {{v.checkedOutAt | date: 'MMM d, y h:mm a'}}
 td.dontprint
     .btn-group
-        button.btn.btn-default()
+        button.btn.btn-default(ng-click='deleteVisit(v)')
             i.glyphicon.glyphicon-trash
         button.btn.btn-default(ng-click="editVisit(v)")
             i.glyphicon.glyphicon-edit

@@ -63,6 +63,18 @@ section
                             | Edit Member
                     .modal-body
                         div(ng-include="'views/partials/edit_visit.html'")
+        .modal.fade#deleteVisit
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | Delete Visit
+                    .modal-body
+                        p Are you sure you want to delete this {{ visit.visitor.name | capitalize }}?
+                    .modal-footer
+                        btn.btn.btn-primary(ng-click="confirmDeleted()") Confirm
+                        btn.btn.btn-danger(ng-click="cancel()") Cancel
 
 
 

@@ -330,3 +330,23 @@ exports.isFrontDesk = function (req, res, next) {
     if (req.user && (req.user.role === 'admin' || req.user.role === 'frontdesk')) return next();
     res.status(403).end();
 };
+
+
+exports.deleteVisit = function (req, res, next) {
+
+    Visit.findOne({_id: req.params.visitId}, function (err, visit) {
+        if (err) return next(err);
+        if (!visit) return res.status(404).json({message: 'Visit not found, invalid identifier'});
+        visit.deleted = true;
+        visit.deletedAt = new Date();
+        visit.deletedBy = req.user._id;
+
+        visit.save(function (err, visit) {
+            if (err) return next(err);
+            res.json(visit.public());
+        });
+
+    });
+
+
+};

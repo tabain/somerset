@@ -192,7 +192,7 @@ angular.module('app').controller('FrontDest',
                         .success(function (result) {
 
                             $('#editVisit').modal('hide');
-                            loadMembers();
+                            $scope.forceLoadVisits();
 
                         })
                         .error(function (err) {
@@ -200,6 +200,38 @@ angular.module('app').controller('FrontDest',
                         });
                 }
 
+            };
+        };
+
+
+        $scope.deleteVisit = function (visit) {
+
+            $('#deleteVisit').modal('show');
+            $scope.visit = visit;
+            $scope.confirmDeleted = function () {
+                $http.delete('/visits/' +  visit.id, {})
+                    .success(function (result) {
+                        var index = -1;
+                        $scope.visits.forEach(function (g, i) {
+                            if (g.id == visit.id) {
+                                index = i;
+                            }
+                        });
+                        if (index >= 0) {
+                            $scope.visits.splice(index, 1);
+
+                        }
+                        $('#deleteVisit').modal('hide');
+                    })
+                    .error(function (err) {
+                        $('#deleteVisit').modal('hide');
+                        showError(err);
+                    });
+
+            };
+
+            $scope.cancel = function () {
+                $('#deleteVisit').modal('hide');
             };
         };
 

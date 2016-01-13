@@ -84,6 +84,7 @@ website.delete('/members/:memberId', [admins.isAdmin], members.deleteMember);
 website.get('/visits', [frontdesks.isFrontDesk], frontdesks.listVisits);
 website.get('/fmembers', [frontdesks.isFrontDesk], frontdesks.getMBW);
 website.put('/visits/:visitId', [frontdesks.isFrontDesk], frontdesks.updateVisit);
+website.delete('/visits/:visitId', [frontdesks.isFrontDesk], frontdesks.deleteVisit);
 
 
 //client side routes
