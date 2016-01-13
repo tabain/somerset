@@ -1,0 +1,21 @@
+form(name="visitForm" ng-submit="submitForm(visitForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
+
+
+   .form-group
+      label Member Name
+      select.form-control(name="member" ng-model="visit.member" ng-options="m.name | capitalize for m in members"  required)
+      p.help-block(ng-show="visitForm.member.$invalid && !visitForm.member.$pristine") Please provide us with a Member
+   .form-group
+      label Visitor Name
+      input.form-control(type="text" placeholder="Visitor Name" ng-model="visitor.name" name="name" required)
+      p.help-block(ng-show="visitForm.name.$invalid && !visitFormname.$pristine") Please provide us with a organisation name
+   .form-group
+      label Email
+      input.form-control(placeholder="Email e.g john@gmail.com" type="email" ng-model="visitor.email" name="email" ng-pattern='emailPattern' required)
+      p.help-block(ng-show="visitForm.email.$invalid && !visitForm.email.$pristine") Please provide us with a valid email address
+   .form-group
+      label Phone
+      input(type="text" ng-model="visitor.phone" intl-tel-input placeholder="Phone No e.g 1234567" default-country="gb" preferred-countries="gb, us" name="phone" required).form-control
+      p.help-block(ng-show="visitForm.phone.$invalid && !visitForm.phone.$pristine") Please provide us with a valid phone number beginning with country code e.g. +44
+   .form-group
+      button(type="submit" ng-disabled="visitForm.$invalid").btn.btn-primary.btn-lg.btn-block update

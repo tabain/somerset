@@ -2,6 +2,7 @@ var Mongoose = require('mongoose');
 var User = require('../models/User');
 var Member = require('../models/Member');
 var Visit = require('../models/Visit');
+var Visitor = require('../models/Visitor');
 var joi = require('joi');
 var moment = require('moment');
 joi.objectId = require('joi-objectid');
@@ -41,55 +42,108 @@ var checkinorcheckout = {
 };
 exports.updateVisit = function(req,res,next){
 var result =  joi.validate(req.body, checkinorcheckout, {stripUnknown: true});
-    Visit.findOne({_id: req.params.visitId}, function (err, visit) {
-        if (err) return next(err);
-        if (!visit) return res.status(404).json({message: 'Visit not found, invalid identifier'});
 
-        if (result.value.checkIn === true) {
-
-            if (visit.checkedOut !== false) {
-                //TODO: throw error
-            }
-
-            if (!visit.checkedInAt || visit.checkedIn===false) {
-                visit.checkedInBy = req.user._id;
-                visit.checkedInAt = new Date();
-                visit.checkedIn = true;
-            }
-
-        }
-
-        if (result.value.checkOut === true) {
-
-            if (visit.checkedIn !== true) {
-                //TODO: throw error
-            }
-
-            if (!visit.checkedOutAt) {
-                visit.checkedOutBy = req.user._id;
-                visit.checkedOutAt = new Date();
-                visit.checkedOut = true;
-
-            }
-        }
-
-        var update = false;
-        for (prop in result.value) {
-
-
-            update = true;
-        }
-
-        if (update) visit.updatedBy = req.user._id;
-
-        visit.save(function (err, newVisit) {
+    updateVisitor = function(x){
+        Visitor.findOne({_id: x.id},function(err, v){
             if (err) return next(err);
-            res.json(newVisit);
+            if (!v) return res.status(404).json({message: 'Visitor not found, invalid identifier'});
+            if (v){
+                v.name = x.name;
+                v.phone = x.phone;
+                v.email = x.email;
+                v.updatedBy = req.user._id;
+
+                v.save(function(err, uv){
+                    if (err) return next(err);
+                    if (uv){
+                        updatevisi();
+                    }
+
+                })
+            }
+
+
+        })
+    }
+    updatevisi = function () {
+        Visit.findOne({_id: req.params.visitId}, function (err, visit) {
+            if (err) return next(err);
+            if (!visit) return res.status(404).json({message: 'Visit not found, invalid identifier'});
+            var update = false;
+            if (req.body.member){
+                visit.member = req.body.member._id;
+                visit.organisation = req.body.member.organisation;
+                visit.wing = req.body.member.wing;
+                visit.location = req.body.member.location;
+                visit.room = req.body.member.room;
+                update = true;
+
+            }
+            if (result.value.checkIn === true) {
+
+                if (visit.checkedOut !== false) {
+                    //TODO: throw error
+                }
+
+                if (!visit.checkedInAt || visit.checkedIn===false) {
+                    visit.checkedInBy = req.user._id;
+                    visit.checkedInAt = new Date();
+                    visit.checkedIn = true;
+                }
+
+            }
+
+            if (result.value.checkOut === true) {
+
+                if (visit.checkedIn !== true) {
+                    //TODO: throw error
+                }
+
+                if (!visit.checkedOutAt) {
+                    visit.checkedOutBy = req.user._id;
+                    visit.checkedOutAt = new Date();
+                    visit.checkedOut = true;
+
+                }
+            }
+
+            for (prop in result.value) {
+
+
+                update = true;
+            }
+
+            if (update) visit.updatedBy = req.user._id;
+
+            visit.save(function (err, newVisit) {
+                if (err) return next(err);
+                res.json(newVisit);
+            });
+
+
         });
+    }
+    if (req.body.visitor){
+        updateVisitor(req.body.visitor);
+    }else{updatevisi()};
 
 
-    });
+
 };
+
+//get member by wing
+
+exports.getMBW = function(req,res,next){
+    var q = {deleted : false};
+    if (req.query.wing)  q.wing = req.query.wing;
+    Member.find(q, function(err, members) {
+        if (err) return next(err);
+        if (!members) return res.status(404).json({message: 'Visit not found, invalid identifier'});
+        if (members) res.json(members);
+    });
+
+};
+
 
 currentDate = function () {
     return new Date();

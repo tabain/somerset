@@ -82,6 +82,7 @@ website.delete('/members/:memberId', [admins.isAdmin], members.deleteMember);
 
 //frontdesk
 website.get('/visits', [frontdesks.isFrontDesk], frontdesks.listVisits);
+website.get('/fmembers', [frontdesks.isFrontDesk], frontdesks.getMBW);
 website.put('/visits/:visitId', [frontdesks.isFrontDesk], frontdesks.updateVisit);
 
 

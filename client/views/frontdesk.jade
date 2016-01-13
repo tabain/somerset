@@ -54,6 +54,15 @@ section
                             i.glyphicon.glyphicon-export
                             span.span-left-margin Export to CSV
 
+        .modal.fade#editVisit
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | Edit Member
+                    .modal-body
+                        div(ng-include="'views/partials/edit_visit.html'")
 
 
 

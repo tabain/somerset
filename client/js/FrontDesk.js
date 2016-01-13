@@ -2,7 +2,21 @@ angular.module('app').controller('FrontDest',
     function ($scope, $http, $interval, toaster, $rootScope, $location, $resource, $window, $timeout) {
 
         $( "html" ).removeClass( "background-client" );
+        showError = function (err) {
+            if (!err)
+                toaster.error(errors.UNKNOWN);
+            else if (err.status == 403)
+                toaster.error(errors.UNAUTHORIZED);
+            else if (err.status == 400)
+                toaster.error(errors.BAD);
+            else if (err.code == 404)
+                toaster.error(err.message);
+            //else
+            //toaster.error(errors.UNKNOWN);
+        };
         $scope.visits = [];
+        $scope.members = [];
+        $scope.visit = {};
         $scope.loadingVisits = false;
         $scope.wing = $rootScope.currentUser.wing;
         $scope.vaildwings=[{name: 'All', value: null}];
@@ -10,7 +24,19 @@ angular.module('app').controller('FrontDest',
         $scope.ids={};
         if ($rootScope.currentUser.role === 'admin') {$scope.wing= $scope.vaildwings[0].value;$scope.isadmin=true;}
         $scope.wings=[];
-
+        getMemberByWing = function(){
+            var u = '/fmembers';
+                if ($scope.wing)
+                    u +='?wing='+$scope.wing;
+          $http.get(u)
+              .success(function(data, headers){
+                    $scope.members = data;
+              })
+              .error(function(err){
+                  showError(err);
+              })
+        };
+        getMemberByWing();
         loadWings = function(){
             $http.get('/wings')
                 .success(function (data, headers){
@@ -42,6 +68,8 @@ angular.module('app').controller('FrontDest',
         };
         $scope.phonePattern = /^[\+](?:[0-9] ?){6,14}[0-9]$/;
         $scope.namePattern = /^[a-zA-Z0-9 .'-]+ [a-zA-Z0-9 .'-]+/;//[a-zA-Z.]+ [a-zA-Z.]+
+        $scope.emailPattern = /^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$/;
+
         $scope.date = {
             startDate: moment().startOf('day').toDate(),
             endDate: moment().endOf('day').toDate()
@@ -81,18 +109,7 @@ angular.module('app').controller('FrontDest',
                 });
         };
 
-        showError = function (err) {
-            if (!err)
-                toaster.error(errors.UNKNOWN);
-            else if (err.status == 403)
-                toaster.error(errors.UNAUTHORIZED);
-            else if (err.status == 400)
-                toaster.error(errors.BAD);
-            else if (err.code == 404)
-                toaster.error(err.message);
-            //else
-            //toaster.error(errors.UNKNOWN);
-        };
+
 
         getTime = function () {
             return new Date().getTime();
@@ -156,6 +173,34 @@ angular.module('app').controller('FrontDest',
                 '&enddate=' + moment($scope.date.endDate).format("YYYY-MM-DD");
             }
             return url_report;
+        };
+
+        $scope.editVisit= function (visit) {
+            $scope.visitor = visit.visitor;
+            $scope.members.forEach(function(doc){
+                if (doc._id === visit.member.id) $scope.visit.member = doc;
+            });
+            $('#editVisit').modal('show');
+            $scope.submitForm = function (isValid) {
+                if (isValid) {
+                    var obj = {
+                        member: $scope.visit.member,
+                        visitor: $scope.visitor
+
+                    };
+                    $http.put('/visits/' + visit.id, obj)
+                        .success(function (result) {
+
+                            $('#editVisit').modal('hide');
+                            loadMembers();
+
+                        })
+                        .error(function (err) {
+                            showError(err);
+                        });
+                }
+
+            };
         };
 
     });
