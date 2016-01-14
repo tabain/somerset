@@ -118,10 +118,10 @@ exports.createVisitor = function(req, res, next){
                     mailgun.lists('visitor@erlystage.mailgun.com').members().add({ members: members, subscribed: true }, function (err, body) {
                         console.log(body);
                         if (err) {
-                            res.send("Error - check console");
+                            console.log(err);
                         }
                         else {
-                            res.send("Added to mailing list");
+                            console.log(body);
                         }
                     });
                 }
