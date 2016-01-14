@@ -112,6 +112,20 @@ exports.createVisitor = function(req, res, next){
                     location: req.body.location,
                     organisation: req.body.organisation
                 };
+                var members = [];
+                if (visitor.sendPromotions){
+                    members.push({address: visitor.email, name: visitor.name});
+                    mailgun.lists('visitor@erlystage.mailgun.com').members().add({ members: members, subscribed: true }, function (err, body) {
+                        console.log(body);
+                        if (err) {
+                            res.send("Error - check console");
+                        }
+                        else {
+                            res.send("Added to mailing list");
+                        }
+                    });
+                }
+
                 createVisit(obj);
             }
 
