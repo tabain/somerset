@@ -152,7 +152,7 @@ exports.createVisitor = function(req, res, next){
                                 //Subject and text data
                                 subject: 'You have a visitor',
                                 //subject: 'Hello '+doc.member.name.toUpperCase()+' meet to '+doc.visitor.name.toUpperCase(),
-                                html: 'Hi '+memb+' , <br/>'+vis+' is here to visit you. Do you know him? <br/> <a href="http://192.168.10.4:3000/selfaccepted/'+doc.id+' ">Yes</a>'
+                                html: 'Hi '+memb+' , <br/>'+vis+' is here to visit you. Do you know him? <br/> <a href="http://'+req.headers.host+'/selfaccepted/'+doc.id+' ">Yes</a>'
                             }
 
                             //Invokes the method to send emails given the above data with the helper library
