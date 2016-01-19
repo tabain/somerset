@@ -18,6 +18,8 @@
                         a(ng-click="manage()" ng-show="isAdminUser()") Manage
                     li
                         a(ng-click="frontdesk()" ng-show="isFrontUser()") Frondesk
+                    li
+                        a(ng-click="stats()" ng-show="isAdminUser()") Stats
                     li.divider(role='separator')
                     li
                         a(ng-click="logout()") Logout

@@ -1,0 +1,30 @@
+nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/partials/navi_bar.html'")
+
+section
+    .container-fluid(ng-controller="Stats")
+        .row
+            .col-lg-12
+                h1.text-center Analytics
+                br
+        .row#searcharea
+            .col-sm-4
+                .form-group
+                    label Date Range
+                    input(date-range-picker ng-model="date" min="'2015-01-01'" ng-disabled="isLoading" options="opts" placeholder="{{date.startDate | date:'EEE dd MMM yyyy'}} - {{date.endDate | date:'EEE dd MMM yyyy'}} ").form-control.date-picker
+            //.col-sm-1
+            //    label Grouped
+            //    input(type="checkbox" ng-model="grouped")
+            .col-sm-4
+                .form-group
+                    label Wing
+                    select.form-control(name="wing" ng-model="searchLocation" ng-disabled="isLoading" ng-options="l.value as l.name for l in searchValidLocations" required)
+            .col-sm-4
+                .form-group
+                    label Admin
+                    select.form-control(name="admin" ng-model="searchAdmin" ng-disabled="isLoading" ng-options="a.value as a.name for a in admins" required)
+
+        .row
+            promo-chart.col-xs-12(val="formattedData" grouped="grouped")
+
+
+footer(ng-include="'/views/partials/footer.html'")

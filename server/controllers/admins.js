@@ -1,5 +1,6 @@
 var Mongoose = require('mongoose');
 var User = require('../models/User');
+var Visit = require('../models/Visit');
 var joi = require('joi');
 var moment = require('moment');
 joi.objectId = require('joi-objectid');
@@ -114,5 +115,65 @@ exports.deleteUser = function (req, res, next) {
 
     });
 
+};
+var usageV = {
+    start: joi.date().default(currentDate),
+    end: joi.date().min(joi.ref('start')).default(currentDate),
+    wing: joi.objectId(),
+    userId: joi.objectId()
+};
+
+exports.usageData = function (req, res, next) {
+
+    var result = joi.validate(req.query, usageV, {stripUnknown: true});
+    if (result.error) return res.status(400).json(result.error);
+
+    var match = {
+        createdAt: {
+            $gte: result.value.start,
+            $lte: result.value.end
+        },
+        deleted: false
+    };
+
+    if (result.value.wing){
+        match.wing = ObjectId(result.value.wing);
+    }
+    if (result.value.userId){
+        match.updatedBy = ObjectId(result.value.userId);
+    }
+    Visit.aggregate([
+        {
+            $match: match
+        },
+        {
+            $lookup: {
+                from: "visitors",
+                localField: "visitor",
+                foreignField: "_id",as: "visitors"
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    month: {
+                        $month: "$createdAt"
+                    }
+                    ,day: {
+                        $dayOfMonth: "$createdAt"
+                    },
+                    year: {
+                        $year: "$createdAt"
+                    },optin: "$visitors.sendPromotions"
+                },count: {
+                    $sum: 1
+                }
+            }
+        }
+    ], function (err, data) {
+        if (err) return next(err);
+        res.setHeader('Cache-Control', 'public, max-age=' + (60 * 5));
+        res.json(data);
+    })
 };
 

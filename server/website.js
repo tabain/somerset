@@ -103,7 +103,7 @@ website.get('/selfaccepted/:visitId', clients.updateVisit);
 
 
 // Chart Data
-//website.get('/data/promotions', [admins.isAdmin], admins.usageData);
+website.get('/data/promotions', [admins.isAdmin], admins.usageData);
 
 website.get('/reports', [frontdesks.isFrontDesk], frontdesks.generateReport);
 
