@@ -10,6 +10,7 @@ var wingLocs = require('./controllers/wingLocations');
 var wingRooms = require('./controllers/wingLocRooms');
 var orgs = require('./controllers/organisations');
 var members = require('./controllers/members');
+var propOwners = require('./controllers/propOwners');
 var clients = require('./controllers/clients');
 var frontdesks = require('./controllers/frontdesks');
 var base = require('./controllers/base');
@@ -86,6 +87,11 @@ website.get('/fmembers', [frontdesks.isFrontDesk], frontdesks.getMBW);
 website.put('/visits/:visitId', [frontdesks.isFrontDesk], frontdesks.updateVisit);
 website.delete('/visits/:visitId', [frontdesks.isFrontDesk], frontdesks.deleteVisit);
 
+//Property Owner
+website.get('/owners', [admins.isAdmin], propOwners.listOwner);
+website.post('/owners', [admins.isAdmin], propOwners.createOwner);
+website.put('/owners/:propOwnerId', [admins.isAdmin], propOwners.updateOwner);
+website.delete('/owners/:propOwnerId', [admins.isAdmin], propOwners.deleteOwner);
 
 //client side routes
 

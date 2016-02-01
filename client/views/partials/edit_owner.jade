@@ -1,0 +1,27 @@
+form(name="POForm" ng-submit="submitForm(POForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
+    .form-group
+        label Property Owner
+        input.form-control(type="text" placeholder="Property Owner" ng-model="ownere.propOwner" name="PropertyOwner" required)
+        p.help-block(ng-show="POForm.PropertyOwner.$invalid && !POForm.PropertyOwner.$pristine") Please provide us with a Property Owner
+    .form-group
+        label Email
+        input.form-control(placeholder="Email e.g john@gmail.com" type="email" ng-model="ownere.email" name="email" ng-pattern='emailPattern' required)
+        p.help-block(ng-show="POForm.email.$invalid && !POForm.email.$pristine") Please provide us with a valid email address
+    .form-group
+        label Phone
+        input(type="text" ng-model="ownere.phone" intl-tel-input placeholder="Phone No e.g 1234567" default-country="gb" preferred-countries="gb, us" name="phone" required).form-control
+        p.help-block(ng-show="POForm.phone.$invalid && !POForm.phone.$pristine") Please provide us with a valid phone number beginning with country code e.g. +44
+    .form-group
+        label Ext
+        input.form-control(placeholder="Ext No e.g 12345" type="text" ng-model="ownere.ext" name="ext")
+        p.help-block(ng-show="POForm.ext.$invalid && !POForm.ext.$pristine") Please provide us with a valid ext
+    .form-group
+        label Wing
+        select.form-control(name="wing" ng-model="ownere.wing" ng-options="w.name | capitalize for w in wings" required)
+        p.help-block(ng-show="POForm.wing.$invalid && !POForm.wing.$pristine") Please provide us with a Wing
+    .form-group
+        label Location
+        select.form-control(name="location" ng-model="ownere.location" ng-options="l.location | capitalize for l in winglocs" ng-disabled="locDisabled" required)
+        p.help-block(ng-show="POForm.location.$invalid && !POForm.location.$pristine") Please provide us with a location
+    .form-group
+        button(type="submit" ng-disabled="POForm.$invalid").btn.btn-primary.btn-lg.btn-block Update

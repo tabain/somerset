@@ -1,0 +1,13 @@
+td {{o.propOwner | capitalize}}
+td {{o.email}}
+td {{o.phone}}
+td {{o.ext}}
+td {{o.location.location | capitalize}}
+td {{o.wing.name | capitalize}}
+
+td
+    .btn-group
+        .btn.btn-default(ng-click="deleteOwner(o)")
+            i.glyphicon.glyphicon-trash
+        .btn.btn-default(ng-click="editOwner(o)")
+            i.glyphicon.glyphicon-edit

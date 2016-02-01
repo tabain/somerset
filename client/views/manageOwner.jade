@@ -1,0 +1,57 @@
+nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/partials/navi_bar.html'")
+
+section
+    .container-fluid(ng-controller="PropOwner")
+        .row
+            .col-lg-12
+                h1.text-center Manage Owners
+                button(ng-click="addOwner()").pull-right Create Owner
+        .row
+            .col-lg-12
+                table.table.table-condensed
+                    thead
+                        tr
+                            th  Property Owner
+                            th  Email
+                            th  Phone
+                            th  Ext
+                            th  Location
+                            th  Wing
+                            th
+                    tbody
+                        tr(ng-repeat="o in owners | orderBy:'-createdAt'" ng-include="'views/partials/owner_row.html'")
+
+
+        .modal.fade#addOwner
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | New Owner
+                    .modal-body
+                        div(ng-include="'views/partials/create_owner.html'")
+        .modal.fade#editOwner
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | Edit Owner
+                    .modal-body
+                        div(ng-include="'views/partials/edit_owner.html'")
+
+        .modal.fade#deleteOwner
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | Delete Owner
+                    .modal-body
+                        p Are you sure you want to delete this Owner?
+                    .modal-footer
+                        btn.btn.btn-primary(ng-click="confirmDeleted()") Confirm
+                        btn.btn.btn-danger(ng-click="cancel()") Cancel
+
+footer(ng-include="'views/partials/footer.html'")

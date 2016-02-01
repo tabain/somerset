@@ -26,6 +26,9 @@ angular.module('app').controller('Manage',
         $scope.gotoMemberManage = function(){
             $location.path('/manage/member');
 
+        };$scope.gotoManageOwner = function(){
+            $location.path('/manage/owners');
+
         };
 
 
