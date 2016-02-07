@@ -82,6 +82,11 @@ angular.module('app').config(['$routeProvider', '$locationProvider', function ($
             data: {
                 authorizedRoles: [USER_ROLES.admin]
             }
+        }).when('/manage/contracts', {
+            templateUrl: '/views/contracts.html',
+            data: {
+                authorizedRoles: [USER_ROLES.admin]
+            }
         }).when('/manage/member', {
             templateUrl: '/views/manageMember.html',
             data: {
@@ -118,50 +123,7 @@ angular.module('app').config(['$httpProvider', function ($httpProvider) {
 angular.module('app').run(function ($rootScope, $location, $http, Auth) {
     $rootScope.editguest = {};
     $rootScope.frontCrash = false;
-    var getLocations = function(){
-        $http
-            .get('/locations')
-            .success(function(locs){
-                $rootScope.validLocations1 = [];
-                $rootScope.validLocations = locs;
-                searchValidLocations.forEach(function(doc, i){
-                    if (doc.name === 'Spitalfields') {
-                        locs.forEach(function(doc2){
-                            if(doc2.name === 'Spitalfields'){
-                                doc.value = doc2.id;
-                                $rootScope.validLocations1.push(doc);
-                            }
 
-                        });
-                    }else if(doc.name === 'Notting Hill'){
-                        locs.forEach(function(doc2){
-                            if(doc2.name === 'Notting Hill'){
-                                doc.value = doc2.id;
-                                $rootScope.validLocations1.push(doc);
-                            }
-
-                        });
-
-                    }else if(doc.name === 'King\'s Cross' || doc.name === 'Kings Cross'  ){
-                        locs.forEach(function(doc2){
-                            if(doc2.name === 'King\'s Cross' || doc2.name === 'Kings Cross'){
-                                doc.value = doc2.id;
-                                $rootScope.validLocations1.push(doc);
-                            }
-
-                        });
-
-                    }else if(doc.name === 'All'){
-                        $rootScope.validLocations1.push(doc);
-                    }
-
-                });
-            })
-            .error(function(err){
-                console.log(err);
-            });
-    };
-    getLocations();
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
         Auth.isAuthorized(next.data.authorizedRoles).then(function (isAuthorized) {
             //console.log('is Auth resolved');

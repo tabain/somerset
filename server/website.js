@@ -11,6 +11,7 @@ var wingRooms = require('./controllers/wingLocRooms');
 var orgs = require('./controllers/organisations');
 var members = require('./controllers/members');
 var propOwners = require('./controllers/propOwners');
+var contracts = require('./controllers/contracts');
 var clients = require('./controllers/clients');
 var frontdesks = require('./controllers/frontdesks');
 var base = require('./controllers/base');
@@ -92,6 +93,12 @@ website.get('/owners', [admins.isAdmin], propOwners.listOwner);
 website.post('/owners', [admins.isAdmin], propOwners.createOwner);
 website.put('/owners/:propOwnerId', [admins.isAdmin], propOwners.updateOwner);
 website.delete('/owners/:propOwnerId', [admins.isAdmin], propOwners.deleteOwner);
+
+//Contract
+website.get('/contracts', [admins.isAdmin], contracts.listContracts);
+website.post('/contracts', [admins.isAdmin], contracts.createContract);
+website.put('/contracts/:contractId', [admins.isAdmin], contracts.updateContract);
+website.delete('/contracts/:contractId', [admins.isAdmin], contracts.deleteContract);
 
 //client side routes
 

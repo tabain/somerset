@@ -1,0 +1,59 @@
+nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/partials/navi_bar.html'")
+
+section
+    .container-fluid(ng-controller="Contracts")
+        .row
+            .col-lg-12
+                h1.text-center Manage Contracts
+                button(ng-click="addContract()").pull-right Create Contract
+        .row
+            .col-lg-12
+                table.table.table-condensed
+                    thead
+                        tr
+                            th  Contract
+                            th  Prop Owner
+                            th  Room
+                            th  Organisation
+                            th  Start Date
+                            th  End Date
+                            th  Monthly Rent
+                            th  Notes
+                            th
+                    tbody
+                        tr(ng-repeat="c in contracts | orderBy:'-createdAt'" ng-include="'views/partials/contract_row.html'")
+
+
+        .modal.fade#addContract
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | New Contract
+                    .modal-body
+                        div(ng-include="'views/partials/create_contract.html'")
+        .modal.fade#editContract
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | Edit Contract
+                    .modal-body
+                        div(ng-include="'views/partials/edit_contract.html'")
+
+        .modal.fade#deleteContract
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | Delete Contract
+                    .modal-body
+                        p Are you sure you want to delete this Contract?
+                    .modal-footer
+                        btn.btn.btn-primary(ng-click="confirmDeleted()") Confirm
+                        btn.btn.btn-danger(ng-click="cancel()") Cancel
+
+footer(ng-include="'views/partials/footer.html'")

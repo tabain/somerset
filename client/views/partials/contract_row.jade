@@ -1,0 +1,14 @@
+td {{c.contract | capitalize}}
+td {{c.propOwner.name | capitalize}}
+td {{c.room.room | capitalize}}
+td {{c.organisation.name}}
+td {{c.start}}
+td {{c.end}}
+td {{c.mothlyRent}}
+td {{c.notes}}
+td
+    .btn-group
+        .btn.btn-default(ng-click="deleteContract(c)")
+            i.glyphicon.glyphicon-trash
+        .btn.btn-default(ng-click="editContract(c)")
+            i.glyphicon.glyphicon-edit

@@ -1,0 +1,276 @@
+angular.module('app').controller('Contracts',
+    function ($scope, $http, $interval, toaster, $rootScope, $resource, $window, $location) {
+        $( "html" ).removeClass( "background-client" );
+        $scope.owners = [];
+        $scope.winglocs = [];
+        $scope.contract ={};
+        $scope.contracts =[];
+        $scope.orgs =[];
+        $scope.rooms=[];
+        $scope.contractE ={};
+        $scope.locDisabled = true;
+        $scope.roomDisabled = true;
+        $scope.orgDisabled = true;
+        $scope.emailPattern = /^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$/;
+        $scope.phonePattern = /^[\+](?:[0-9] ?){6,14}[0-9]$/;
+
+        $scope.contract.date = {
+            startDate: moment().startOf('year').toDate(),
+            endDate: moment().endOf('year').toDate()
+        };
+        loadContracts = function(){
+            $http.get('/contracts')
+                .success(function (data, headers){
+                    if (data) {
+                        $scope.contracts = data;
+                    }
+                })
+                .error(function(err){
+                    showError(err);
+                });
+        };
+
+        loadContracts();
+
+        loadOwners = function () {
+            var url = '/owners';
+            $http.get(url)
+                .success(function (data, headers) {
+                    $scope.owners = data;
+                })
+                .error(function (err) {
+                    showError(err);
+                });
+        };
+        loadOwners();
+        $scope.$watch('contract.propOwner', function(){
+            $scope.roomDisabled = true;
+            if ($scope.contract.propOwner === undefined || !$scope.contract.propOwner){
+
+            }
+            else{loadlocbyroom($scope.contract.propOwner);}
+
+
+        });
+        $scope.$watch('contractE.propOwner', function(){
+            $scope.roomDisabled = true;
+            if ($scope.contractE.propOwner === undefined || !$scope.contractE.propOwner){
+
+            }
+            else{loadlocbyroom($scope.contractE.propOwner);}
+
+
+        });
+        $scope.$watch('contract.room', function(){
+            $scope.roomDisabled = true;
+            if ($scope.contract.room === undefined || !$scope.contract.room){
+
+            }
+            else{loadroombyorg($scope.contract);}
+
+
+        });
+        $scope.$watch('contractE.room', function(){
+            $scope.roomDisabled = true;
+            if ($scope.contractE.room === undefined || !$scope.contractE.room){
+
+            }
+            else{loadroombyorg($scope.contractE);}
+
+
+        });
+
+        $scope.$watch('contractE', function(){
+
+            loadlocbyroom($scope.contractE);
+            loadroombyorg($scope.contractE);
+        });
+
+        $scope.$watch('rooms', function(){
+            $scope.orgDisabled = true;
+            if ($scope.contractE.room){
+                $scope.rooms.forEach(function(d){
+                    if (d.id === $scope.contractE.room.id){
+                        $scope.contractE.room = d;
+                    }
+                });
+            }
+            if ($scope.rooms.length > 0){
+                $scope.orgDisabled = false;
+
+            }
+        });
+        $scope.$watch('orgs', function(){
+
+            if ($scope.contractE.organisation){
+                $scope.orgs.forEach(function(d){
+                    if (d.id === $scope.contractE.organisation.id){
+                        $scope.contractE.organisation = d;
+                    }
+                });
+            }
+            if ($scope.orgs.length > 0){
+                $scope.orgDisabled = false;
+            }
+        });
+
+
+
+        loadlocbyroom = function(c){
+            if (!c.location) return;
+            $scope.rooms =[];
+            $http
+                .get("/rooms/" + c.location.id)
+                .success(function (data){
+                    $scope.rooms = data;
+                    if ($scope.rooms == 0) $scope.rooms =[];
+                })
+                .error(function(err){
+                    $scope.rooms =[];
+                    showError(err);
+                });
+        };
+        loadroombyorg = function(c){
+            if (!c.room) return;
+            $scope.orgs =[];
+            $http
+                .get("/orgs/" + c.room.id)
+                .success(function (data){
+                    $scope.orgs = data;
+                    if ($scope.orgs == 0) $scope.orgs =[];
+                })
+                .error(function(err){
+                    $scope.orgs =[];
+                    showError(err);
+                });
+        };
+
+        showError = function (err) {
+            if (!err)
+                toaster.error(errors.UNKNOWN);
+            else if (err.status == 403)
+                toaster.error(errors.UNAUTHORIZED);
+            else
+                toaster.error(errors.UNKNOWN);
+        };
+
+        $('#addContract').on('shown.bs.modal', function () {
+            $scope.modalshowhide = true;
+
+        });
+
+
+        $scope.addContract = function () {
+            $('#addContract').modal('show');
+            var Contract= $resource('/contracts/:id', {id: '@id'}, {
+                checkin: {method: 'POST', params: {}, responseType: 'json'}
+            }, {/*empty options*/});
+
+            $scope.submitForm = function (isValid) {
+
+                if (isValid) {
+                    var obj = {
+                        propOwner: $scope.contract.propOwner.id,
+                        organisation: $scope.contract.organisation.id,
+                        room: $scope.contract.room.id,
+                        contract: $scope.contract.contract,
+                        notes: $scope.contract.notes,
+                        start: $scope.contract.date.startDate,
+                        end: $scope.contract.date.endDate
+
+                    };
+                    new Contract(obj).$save(function (data, headers) {
+                        $(".modal-backdrop").hide();
+                        $('#addContract').modal('hide');
+                        // TODO: Post Success
+
+
+                        $scope.rooms.forEach(function(d){
+                            if (d.id == data.room){
+                                data.room = d;
+                            }
+                        });
+                        $scope.orgs.forEach(function(d){
+                            if (d.id == data.organisation){
+                                data.organisation = d;
+                            }
+                        });
+                        $scope.contracts.push(data);
+                        $scope.contract={};
+
+
+                    }, function (err) {
+                        // TODO: Create Error Translator on Server and add helpful errors here
+                        showError(err);
+
+                    });
+                }
+
+            };
+        };
+
+
+        $scope.editContract = function (contractE) {
+            loadlocbyroom(contractE);
+            loadroombyorg(contractE);
+            $rootScope.editContract= contractE;
+            $scope.contractE = angular.copy(contractE);
+            $('#editContract').modal('show');
+            $scope.submitForm = function (isValid) {
+                if (isValid) {
+                    var obj = {
+                        propOwner: $scope.contractE.propOwner.id,
+                        organisation: $scope.contractE.organisation.id,
+                        room: $scope.contractE.room.id,
+                        contract: $scope.contractE.contract,
+                        notes: $scope.contractE.notes,
+                        start: $scope.contractE.date.startDate,
+                        end: $scope.contractE.date.endDate
+                    };
+                    $http.put('/contracts/' + $scope.contractE.id, obj)
+                        .success(function (result) {
+
+                            $('#editContract').modal('hide');
+                            loadContracts();
+
+                        })
+                        .error(function (err) {
+                            showError(err);
+                        });
+                }
+
+            };
+        };
+
+        $scope.deleteContract = function (contract) {
+            $('#deleteContract').modal('show');
+            $scope.confirmDeleted = function () {
+                $http.delete('/contracts/' +  contract.id, {})
+                    .success(function (result) {
+                        var index = -1;
+                        $scope.contracts.forEach(function (g, i) {
+                            if (g.id == contract.id) {
+                                index = i;
+                            }
+                        });
+                        if (index >= 0) {
+                            $scope.contracts.splice(index, 1);
+
+                        }
+                        $('#deleteContract').modal('hide');
+                    })
+                    .error(function (err) {
+                        $('#deleteContract').modal('hide');
+                        showError(err);
+                    });
+
+            };
+
+            $scope.cancel = function () {
+                $('#deleteContract').modal('hide');
+            };
+        };
+    });
+
+
+
