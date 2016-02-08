@@ -250,7 +250,9 @@ angular.module('app').controller('Contracts',
 
         };
         $scope.deleteContract = function (contract) {
+
             $('#deleteContract').modal('show');
+            $scope.contractD = contract;
             $scope.confirmDeleted = function () {
                 $http.delete('/contracts/' +  contract.id, {})
                     .success(function (result) {
