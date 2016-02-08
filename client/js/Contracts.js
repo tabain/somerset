@@ -279,6 +279,9 @@ angular.module('app').controller('Contracts',
                 $('#deleteContract').modal('hide');
             };
         };
+        $scope.getInvoice = function(c){
+
+        };
     });
 
 
