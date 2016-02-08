@@ -26,7 +26,7 @@ form(name="contractForm" ng-model-options="{ updateOn: 'blur', debounce: { defau
       p.help-block(ng-show="contractForm.rent.$invalid && !contractForm.rent.$pristine") Please provide us with a organisation name
 
    .form-group
-      label Contract
+      label Notes
       input.form-control(type="text" placeholder="Notes" ng-model="contractE.notes" name="notes" required)
       p.help-block(ng-show="contractForm.notes.$invalid && !contractForm.notes.$pristine") Please provide us with a organisation name
   .form-group

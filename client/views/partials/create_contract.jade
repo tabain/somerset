@@ -1,8 +1,8 @@
 form(name="CF" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
    .form-group
       label Date
-      input(date-range-picker ng-model="contract.date" min="'2015-01-01'" name="date"  placeholder="{{date.startDate | date:'EEE dd MMM yyyy'}} - {{date.endDate | date:'EEE dd MMM yyyy'}} ").form-control.date-picker
-      p.help-block(ng-show="CF.date.$invalid && !CF.date.$pristine") Please provide us with a valid email address
+      input(date-range-picker ng-model="contract.date" min="'2015-01-01'" name="date" type="text"  placeholder="{{date.startDate | date:'EEE dd MMM yyyy'}} - {{date.endDate | date:'EEE dd MMM yyyy'}} ").form-control.date-picker
+      p.help-block(ng-show="CF.date.$invalid && !CF.date.$pristine") Please provide us with a valid date
    .form-group
       label Contract
       input.form-control(type="text" placeholder="Contract Name" ng-model="contract.contract" name="contract" required)
@@ -26,7 +26,7 @@ form(name="CF" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, 
       p.help-block(ng-show="CF.rent.$invalid && !CF.rent.$pristine") Please provide us with a rent
 
    .form-group
-      label Contract
+      label Notes
       input.form-control(type="text" placeholder="Notes" ng-model="contract.notes" name="notes" required)
       p.help-block(ng-show="CF.notes.$invalid && !CF.notes.$pristine") Please provide us with a notes
   .form-group
