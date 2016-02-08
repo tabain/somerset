@@ -1,33 +1,33 @@
-form(name="contractForm" ng-submit="submitForm(contractForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
+form(name="CF" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
    .form-group
       label Date
-      input(date-range-picker ng-model="contract.date" min="'2015-01-01'" name="date" ng-disabled="loadingVisits" options="opts" placeholder="{{date.startDate | date:'EEE dd MMM yyyy'}} - {{date.endDate | date:'EEE dd MMM yyyy'}} ").form-control.date-picker
-      p.help-block(ng-show="contractForm.date.$invalid && !contractForm.date.$pristine") Please provide us with a valid email address
+      input(date-range-picker ng-model="contract.date" min="'2015-01-01'" name="date"  placeholder="{{date.startDate | date:'EEE dd MMM yyyy'}} - {{date.endDate | date:'EEE dd MMM yyyy'}} ").form-control.date-picker
+      p.help-block(ng-show="CF.date.$invalid && !CF.date.$pristine") Please provide us with a valid email address
    .form-group
       label Contract
       input.form-control(type="text" placeholder="Contract Name" ng-model="contract.contract" name="contract" required)
-      p.help-block(ng-show="contractForm.contract.$invalid && !contractForm.contract.$pristine") Please provide us with a organisation name
+      p.help-block(ng-show="CF.contract.$invalid && !CF.contract.$pristine") Please provide us with a organisation name
    .form-group
       label Property Owner
-      select.form-control(name="propOwner" ng-model="contract.propOwner" ng-options="o.name | capitalize for o in owners" required)
-      p.help-block(ng-show="contractForm.propOwner.$invalid && !contractForm.propOwner.$pristine") Please provide us with a Property Owner
+      select.form-control(name="propOwner" ng-model="contract.propOwner" ng-options="o.propOwner | capitalize for o in owners" required)
+      p.help-block(ng-show="CF.propOwner.$invalid && !CF.propOwner.$pristine") Please provide us with a Property Owner
    .form-group
       label Room
       select.form-control(name="room" ng-model="contract.room" ng-options="r.room | capitalize for r in rooms"   required)
-      p.help-block(ng-show="contractForm.room.$invalid && !contractForm.room.$pristine") Please provide us with a room
+      p.help-block(ng-show="CF.room.$invalid && !CF.room.$pristine") Please provide us with a room
    .form-group
       label Organisation
       select.form-control(name="organisation" ng-model="contract.organisation" ng-options="r.name | capitalize for r in orgs"  required)
-      p.help-block(ng-show="contractForm.organisation.$invalid && !contractForm.organisation.$pristine") Please provide us with a Organisation
+      p.help-block(ng-show="CF.organisation.$invalid && !CF.organisation.$pristine") Please provide us with a Organisation
 
    .form-group
       label Monthly Rent
-      input.form-control(type="rent" placeholder="Monthly Rent" ng-model="contract.monthlyRent" name="age" required)
-      p.help-block(ng-show="contractForm.rent.$invalid && !contractForm.rent.$pristine") Please provide us with a organisation name
+      input.form-control(type="number" placeholder="Monthly Rent" ng-model="contract.monthlyRent" name="rent" required)
+      p.help-block(ng-show="CF.rent.$invalid && !CF.rent.$pristine") Please provide us with a rent
 
    .form-group
       label Contract
       input.form-control(type="text" placeholder="Notes" ng-model="contract.notes" name="notes" required)
-      p.help-block(ng-show="contractForm.notes.$invalid && !contractForm.notes.$pristine") Please provide us with a organisation name
+      p.help-block(ng-show="CF.notes.$invalid && !CF.notes.$pristine") Please provide us with a notes
   .form-group
-      button(type="submit" ng-disabled="contractForm.$invalid").btn.btn-primary.btn-lg.btn-block Create
+      button(type="submit" ng-disabled="CF.$invalid" ng-click="submitForm1(CF.$valid)" ).btn.btn-primary.btn-lg.btn-block Create

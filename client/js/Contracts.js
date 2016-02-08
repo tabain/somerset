@@ -159,89 +159,96 @@ angular.module('app').controller('Contracts',
 
         });
 
-
+        var Contract= $resource('/contracts/:id', {id: '@id'}, {
+            checkin: {method: 'POST', params: {}, responseType: 'json'}
+        }, {/*empty options*/});
         $scope.addContract = function () {
             $('#addContract').modal('show');
-            var Contract= $resource('/contracts/:id', {id: '@id'}, {
-                checkin: {method: 'POST', params: {}, responseType: 'json'}
-            }, {/*empty options*/});
-
-            $scope.submitForm = function (isValid) {
-
-                if (isValid) {
-                    var obj = {
-                        propOwner: $scope.contract.propOwner.id,
-                        organisation: $scope.contract.organisation.id,
-                        room: $scope.contract.room.id,
-                        contract: $scope.contract.contract,
-                        notes: $scope.contract.notes,
-                        start: $scope.contract.date.startDate,
-                        end: $scope.contract.date.endDate
-
-                    };
-                    new Contract(obj).$save(function (data, headers) {
-                        $(".modal-backdrop").hide();
-                        $('#addContract').modal('hide');
-                        // TODO: Post Success
 
 
-                        $scope.rooms.forEach(function(d){
-                            if (d.id == data.room){
-                                data.room = d;
-                            }
-                        });
-                        $scope.orgs.forEach(function(d){
-                            if (d.id == data.organisation){
-                                data.organisation = d;
-                            }
-                        });
-                        $scope.contracts.push(data);
-                        $scope.contract={};
 
-
-                    }, function (err) {
-                        // TODO: Create Error Translator on Server and add helpful errors here
-                        showError(err);
-
-                    });
-                }
-
-            };
         };
+        $scope.submitForm1 = function (isValid) {
 
+            if (isValid) {
+                var obj = {
+                    propOwner: $scope.contract.propOwner.id,
+                    organisation: $scope.contract.organisation.id,
+                    room: $scope.contract.room.id,
+                    contract: $scope.contract.contract,
+                    notes: $scope.contract.notes,
+                    start: $scope.contract.date.startDate,
+                    end: $scope.contract.date.endDate,
+                    monthlyRent: $scope.contract.monthlyRent
+
+                };
+                new Contract(obj).$save(function (data, headers) {
+                    $(".modal-backdrop").hide();
+                    $('#addContract').modal('hide');
+                    // TODO: Post Success
+
+
+                    loadContracts();
+                    $scope.contract={};
+
+
+                }, function (err) {
+                    // TODO: Create Error Translator on Server and add helpful errors here
+                    showError(err);
+
+                });
+            }
+
+        };
 
         $scope.editContract = function (contractE) {
-            loadlocbyroom(contractE);
-            loadroombyorg(contractE);
             $rootScope.editContract= contractE;
             $scope.contractE = angular.copy(contractE);
+            $scope.contractE.date = {
+                startDate: new Date($scope.contractE.start),
+                endDate: new Date($scope.contractE.end)
+
+            }
+            loadlocbyroom(contractE);
+            loadroombyorg(contractE);
+            $scope.owners.forEach(function(d){
+                if ( $scope.contractE.propOwner.id === d.id) return  $scope.contractE.propOwner = d;
+            })
+            $scope.orgs.forEach(function(d){
+                if ( $scope.contractE.organisation.id === d.id) return  $scope.contractE.organisation = d;
+            })
+            $scope.rooms.forEach(function(d){
+                if ( $scope.contractE.room.id === d.id) return  $scope.contractE.room = d;
+            })
+
             $('#editContract').modal('show');
-            $scope.submitForm = function (isValid) {
-                if (isValid) {
-                    var obj = {
-                        propOwner: $scope.contractE.propOwner.id,
-                        organisation: $scope.contractE.organisation.id,
-                        room: $scope.contractE.room.id,
-                        contract: $scope.contractE.contract,
-                        notes: $scope.contractE.notes,
-                        start: $scope.contractE.date.startDate,
-                        end: $scope.contractE.date.endDate
-                    };
-                    $http.put('/contracts/' + $scope.contractE.id, obj)
-                        .success(function (result) {
 
-                            $('#editContract').modal('hide');
-                            loadContracts();
-
-                        })
-                        .error(function (err) {
-                            showError(err);
-                        });
-                }
-
-            };
         };
+        $scope.submitForm = function (isValid) {
+            if (isValid) {
+                var obj = {
+                    propOwner: $scope.contractE.propOwner.id,
+                    organisation: $scope.contractE.organisation.id,
+                    room: $scope.contractE.room.id,
+                    contract: $scope.contractE.contract,
+                    notes: $scope.contractE.notes,
+                    start: $scope.contractE.date.startDate,
+                    end: $scope.contractE.date.endDate,
+                    monthlyRent: $scope.contractE.date.monthlyRent
+                };
+                $http.put('/contracts/' + $scope.contractE.id, obj)
+                    .success(function (result) {
 
+                        $('#editContract').modal('hide');
+                        loadContracts();
+
+                    })
+                    .error(function (err) {
+                        showError(err);
+                    });
+            }
+
+        };
         $scope.deleteContract = function (contract) {
             $('#deleteContract').modal('show');
             $scope.confirmDeleted = function () {

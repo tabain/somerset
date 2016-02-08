@@ -14,7 +14,7 @@ var ContractSchema = new mongoose.Schema({
     monthlyRent: {type: Number, required:true},
     room:  {type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Room'
+        ref: 'WingLocationRoom'
     },
     notes:{type:String, required:false},
     updatedBy: {

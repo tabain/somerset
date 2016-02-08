@@ -1,10 +1,10 @@
 td {{c.contract | capitalize}}
-td {{c.propOwner.name | capitalize}}
+td {{c.propOwner.propOwner | capitalize}}
 td {{c.room.room | capitalize}}
 td {{c.organisation.name}}
-td {{c.start}}
-td {{c.end}}
-td {{c.mothlyRent}}
+td {{c.start | date:'EEE dd MMM yyyy'}}
+td {{c.end | date:'EEE dd MMM yyyy'}}
+td {{c.monthlyRent}}
 td {{c.notes}}
 td
     .btn-group

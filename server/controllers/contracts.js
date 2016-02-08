@@ -9,7 +9,12 @@ joi.objectId = require('joi-objectid');
 var Create = {
     propOwner: joi.objectId(),
     organisation: joi.objectId(),
-
+    room: joi.objectId(),
+    start: joi.string().optional(),
+    end:joi.string().optional(),
+    contract:  joi.string().optional(),
+    notes: joi.string().optional(),
+    monthlyRent: joi.number().optional(),
 };
 
 
@@ -18,7 +23,7 @@ exports.listContracts = function (req, res, next) {
     Contract.find({deleted: false})
         .limit(req.query.limit ? req.query.limit : 30)
         .skip(req.query.offset ? req.query.offset : 0)
-        .populate(['propOwner', 'organisation'])
+        .populate(['propOwner', 'organisation', 'room'])
         .exec(function (err, contracts) {
             if (err) return next(err);
             var arr = [];
