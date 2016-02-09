@@ -30,4 +30,4 @@ form(name="contractForm" ng-model-options="{ updateOn: 'blur', debounce: { defau
       input.form-control(type="text" placeholder="Notes" ng-model="contractE.notes" name="notes" required)
       p.help-block(ng-show="contractForm.notes.$invalid && !contractForm.notes.$pristine") Please provide us with a organisation name
   .form-group
-      button(type="submit" ng-disabled="contractForm.$invalid" ng-click="submitForm(contractForm.$valid)").btn.btn-primary.btn-lg.btn-block Create
+      button(type="submit" ng-disabled="contractForm.$invalid" ng-click="submitForm(contractForm.$valid)").btn.btn-primary.btn-lg.btn-block Update

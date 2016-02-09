@@ -12,6 +12,7 @@ var orgs = require('./controllers/organisations');
 var members = require('./controllers/members');
 var propOwners = require('./controllers/propOwners');
 var contracts = require('./controllers/contracts');
+var invoices = require('./controllers/invoices');
 var clients = require('./controllers/clients');
 var frontdesks = require('./controllers/frontdesks');
 var base = require('./controllers/base');
@@ -117,6 +118,7 @@ website.get('/selfaccepted/:visitId', clients.updateVisit);
 
 // Chart Data
 website.get('/data/promotions', [admins.isAdmin], admins.usageData);
+website.post('/invoices', [admins.isAdmin], invoices.create);
 
 website.get('/reports', [frontdesks.isFrontDesk], frontdesks.generateReport);
 

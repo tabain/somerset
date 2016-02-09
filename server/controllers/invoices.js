@@ -8,14 +8,18 @@ joi.objectId = require('joi-objectid');
 
 
 var Create = {
-    propOwner: joi.objectId(),
-    organisation: joi.objectId(),
-    room: joi.objectId(),
-    start: joi.string().optional(),
-    end:joi.string().optional(),
-    contract:  joi.string().optional(),
-    notes: joi.string().optional(),
-    monthlyRent: joi.number().optional(),
+        contract: joi.objectId(),
+        issueDate: joi.string().optional(),
+        period :joi.string().optional(),
+        dueDate:joi.string().optional(),
+        status:joi.string().optional(),
+        vat:joi.number().optional(),
+        total:joi.number().optional(),
+        //balance:joi.number().optional(),
+        monthlyRent:joi.number().optional(),
+        organisation:joi.objectId(),
+        room:joi.objectId(),
+        propOwner:joi.objectId()
 },
     get = {
         contract: joi.objectId(),
@@ -28,14 +32,14 @@ var Create = {
     };
 
 exports.generateInvoice = function(req, res, next){
-    var result, start, end, current, sub;
-    result = joi.validate(req.body, get, {stripUnknown: true});
-
-    if (result.error) return res.status(400).json(result.error);
-    start = new Date(result.start).getMonth();
-    end = new Date(result.end).getMonth();
-    current = new Date().getMonth();
-    sub = current - start;
+    //var result, start, end, current, sub;
+    //result = joi.validate(req.body, get, {stripUnknown: true});
+    //
+    //if (result.error) return res.status(400).json(result.error);
+    //start = new Date(result.start).getMonth();
+    //end = new Date(result.end).getMonth();
+    //current = new Date().getMonth();
+    //sub = current - start;
 
 
 
@@ -55,16 +59,15 @@ exports.listContracts = function (req, res, next) {
             res.json(arr);
         });
 };
-exports.createContract = function (req, res, next) {
+exports.create = function (req, res, next) {
 
     var result = joi.validate(req.body, Create, {stripUnknown: true});
 
     if (result.error) return res.status(400).json(result.error);
-
-    Contract.create(result.value, function (err, contract) {
+    Invoice.create(result.value, function (err, invoice) {
         if (err) return next(err);
-        if (!contract) /*TODO: What to do*/ ;
-        res.json(contract.public());
+        if (!invoice) /*TODO: What to do*/ ;
+        res.json(invoice.public());
     });
 
 

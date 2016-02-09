@@ -55,5 +55,53 @@ section
                     .modal-footer
                         btn.btn.btn-primary(ng-click="confirmDeleted()") Confirm
                         btn.btn.btn-danger(ng-click="cancel()") Cancel
+        .modal.fade#generate
+            .modal-dialog.modal-lg
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | Invoice
+                    .modal-body
+                       .row
+                           .col-lg-6
+                               .form-group
+                                   label Invoice Period
+                                   select.form-control(name="period" ng-model="invoice.period"  ng-options="a | date:'EEE dd MMM yyyy' for a in allMonthsInPeriod" required)
+
+                               label Contract
+                               p
+                                strong {{invoice.contract}}
+                               label Owner
+                               p
+                                strong {{invoice.propOwner.propOwner}}
+                               label Room
+                               p
+                                strong {{invoice.room.room}}
+                           .col-lg-6
+                                   label status
+                                   p
+                                    strong {{invoice.status}}
+                                   label Organisation
+                                   p
+                                    strong {{invoice.organisation.name}}
+                                   label Issue Date
+                                   p
+                                    strong {{invoice.issueDate | date:'EEE dd MMM yyyy'}}
+                                   label Due Date
+                                   p
+                                    strong {{invoice.dueDate | date:'EEE dd MMM yyyy'}}
+                                   label Monthly Rent
+                                   p
+                                    strong {{invoice.monthlyRent | currency:"£":0}}
+                                   label VAT
+                                   p
+                                    strong {{invoice.vat | currency:"£":0}}
+                                   label Total
+                                   p
+                                    strong {{invoice.total | currency:"£":0}}
+                    .modal-footer
+                        btn.btn.btn-primary(ng-click="generate()") Generate
+                        btn.btn.btn-danger(ng-click="cancel()") Cancel
 
 footer(ng-include="'views/partials/footer.html'")
