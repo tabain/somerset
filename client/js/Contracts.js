@@ -1,5 +1,5 @@
 angular.module('app').controller('Contracts',
-    function ($scope, $http, $interval, toaster, $rootScope, $resource, $window, $location) {
+    function ($scope, $http, $interval, toaster, $rootScope, $resource, $window, $location, $timeout) {
         $( "html" ).removeClass( "background-client" );
         $scope.owners = [];
         $scope.statuses=['unpaid','paid','collection', 'other'];
@@ -339,6 +339,11 @@ angular.module('app').controller('Contracts',
                     .success(function(data){
                         console.log(data);
                         $('#generate').modal('hide');
+
+                        $timeout(function(){
+                            $location.path('/manage/invoices');
+                        }, 300);
+
                     })
                     .error(function(err){
                         console.log(err)

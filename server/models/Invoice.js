@@ -8,7 +8,7 @@ var InvoiceSchema = new mongoose.Schema({
         required: true,
         ref: 'Contract'},
     issueDate:{type:Date, required: false},
-    period:{type:Date, required: false},
+    period:{type:String, required: false},
     dueDate:{type:Date, required: false},
     monthlyRent:{type:Number, required:false},
     vat:{type:Number, required:false},
@@ -21,7 +21,7 @@ var InvoiceSchema = new mongoose.Schema({
         ref: 'PropOwner'},
     room:{type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'Room'},
+        ref: 'WingLocationRoom'},
     updatedBy: {
         type: mongoose.Schema.Types.ObjectId,
         required: false,

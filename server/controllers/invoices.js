@@ -20,7 +20,7 @@ var Create = {
         organisation:joi.objectId(),
         room:joi.objectId(),
         propOwner:joi.objectId()
-},
+    },
     get = {
         contract: joi.objectId(),
         start: joi.string().optional(),
@@ -45,11 +45,11 @@ exports.generateInvoice = function(req, res, next){
 
 }
 
-exports.listContracts = function (req, res, next) {
-    Contract.find({deleted: false})
+exports.invoices = function (req, res, next) {
+    Invoice.find({deleted: false})
         .limit(req.query.limit ? req.query.limit : 30)
         .skip(req.query.offset ? req.query.offset : 0)
-        .populate(['propOwner', 'organisation', 'room'])
+        .populate(['propOwner', 'organisation', 'contract', 'room'])
         .exec(function (err, contracts) {
             if (err) return next(err);
             var arr = [];
@@ -62,13 +62,23 @@ exports.listContracts = function (req, res, next) {
 exports.create = function (req, res, next) {
 
     var result = joi.validate(req.body, Create, {stripUnknown: true});
-
     if (result.error) return res.status(400).json(result.error);
-    Invoice.create(result.value, function (err, invoice) {
-        if (err) return next(err);
-        if (!invoice) /*TODO: What to do*/ ;
-        res.json(invoice.public());
+    Invoice.findOne({period: result.value.period, contract:result.value.contract}, function(err, doc){
+        if (err || (!err && !doc)) {
+            invoiceCreate();
+        }if (doc){
+            res.json(doc.public());
+        }
     });
+    function invoiceCreate(){
+        Invoice.create(result.value, function (err, invoice) {
+            if (err) return next(err);
+            if (!invoice) /*TODO: What to do*/ ;
+            res.json(invoice.public());
+        });
+    };
+
+
 
 
 };
@@ -79,12 +89,12 @@ exports.updateContract = function (req, res, next) {
     if (result.error) return res.status(400).json(result.error);
 
     Contract.findOne({_id: req.params.contractId}, function (err, contract) {
-            if (err) return next(err);
-            if (!contract) return res.status(404).json({message: 'Contract not found, invalid identifier'});
-            var update = false;
-            for (prop in result.value) {
-                contract[prop] = result.value[prop];
-                update = true;
+        if (err) return next(err);
+        if (!contract) return res.status(404).json({message: 'Contract not found, invalid identifier'});
+        var update = false;
+        for (prop in result.value) {
+            contract[prop] = result.value[prop];
+            update = true;
         }
         if (update) contract.updatedBy = req.user._id;
 

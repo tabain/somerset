@@ -1,0 +1,110 @@
+nav.navbar.navbar-default.navbar-static-top(role='navigation' ng-controller="NaviController" ng-include="'views/partials/navi_bar.html'")
+
+section
+    .container-fluid(ng-controller="Invoices")
+        .row
+            .col-lg-12
+                h1.text-center Manage Invoices
+                //button(ng-click="").pull-right Create Invoice
+        .row
+            .col-lg-12
+                table.table.table-condensed
+                    thead
+                        tr
+                            th  Contract
+                            th  Prop Owner
+                            th  Room
+                            th  Organisation
+                            th  Period
+                            th  issue Date
+                            th  Due Date
+                            th  Status
+                            th  Monthly Rent
+                            th  Vat
+                            th  Total
+                            th
+                    tbody
+                        tr(ng-repeat="i in invoices | orderBy:'-createdAt'" ng-include="'views/partials/invoice_row.html'")
+
+
+        //.modal.fade#addContract
+        //    .modal-dialog
+        //        .modal-content
+        //            .modal-header
+        //                h4.modal-title
+        //                    i.glyphicon.glyphicon-user.span-right-margin
+        //                    | New Invoice
+        //            .modal-body
+        //                div(ng-include="'views/partials/create_contract.html'")
+        //.modal.fade#editContract
+        //    .modal-dialog
+        //        .modal-content
+        //            .modal-header
+        //                h4.modal-title
+        //                    i.glyphicon.glyphicon-user.span-right-margin
+        //                    | Edit Invoice
+        //            .modal-body
+        //                div(ng-include="'views/partials/edit_contract.html'")
+        //
+        //.modal.fade#deleteContract
+        //    .modal-dialog
+        //        .modal-content
+        //            .modal-header
+        //                h4.modal-title
+        //                    i.glyphicon.glyphicon-user.span-right-margin
+        //                    | Delete Invoice
+        //            .modal-body
+        //                p Are you sure you want to delete this {{contractD.contract}}?
+        //            .modal-footer
+        //                btn.btn.btn-primary(ng-click="confirmDeleted()") Confirm
+        //                btn.btn.btn-danger(ng-click="cancel()") Cancel
+        //.modal.fade#generate
+        //    .modal-dialog.modal-lg
+        //        .modal-content
+        //            .modal-header
+        //                h4.modal-title
+        //                    i.glyphicon.glyphicon-user.span-right-margin
+        //                    | Invoice
+        //            .modal-body
+        //               .row
+        //                   .col-lg-6
+        //                       .form-group
+        //                           label Invoice Period
+        //                           select.form-control(name="period" ng-model="invoice.period"  ng-options="a | date:'EEE dd MMM yyyy' for a in allMonthsInPeriod" required)
+        //
+        //                       label Contract
+        //                       p
+        //                        strong {{invoice.contract}}
+        //                       label Owner
+        //                       p
+        //                        strong {{invoice.propOwner.propOwner}}
+        //                       label Room
+        //                       p
+        //                        strong {{invoice.room.room}}
+        //                   .col-lg-6
+        //                           label status
+        //                           p
+        //                            strong {{invoice.status}}
+        //                           label Organisation
+        //                           p
+        //                            strong {{invoice.organisation.name}}
+        //                           label Issue Date
+        //                           p
+        //                            strong {{invoice.issueDate | date:'EEE dd MMM yyyy'}}
+        //                           label Due Date
+        //                           p
+        //                            strong {{invoice.dueDate | date:'EEE dd MMM yyyy'}}
+        //                           label Monthly Rent
+        //                           p
+        //                            strong {{invoice.monthlyRent | currency:"£":0}}
+        //                           label VAT
+        //                           p
+        //                            strong {{invoice.vat | currency:"£":0}}
+        //                           label Total
+        //                           p
+        //                            strong {{invoice.total | currency:"£":0}}
+        //            .modal-footer
+        //                btn.btn.btn-primary(ng-click="generate()") Generate
+        //                btn.btn.btn-danger(ng-click="cancel()") Cancel
+
+footer(ng-include="'views/partials/footer.html'")

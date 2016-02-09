@@ -1,0 +1,18 @@
+td {{i.contract.contract | capitalize}}
+td {{i.propOwner.propOwner | capitalize}}
+td {{i.room.room | capitalize}}
+td {{i.organisation.name}}
+td {{i.period | date:'EEE dd MMM yyyy'}}
+td {{i.issueDate | date:'EEE dd MMM yyyy'}}
+td {{i.dueDate | date:'EEE dd MMM yyyy'}}
+td {{i.monthlyRent | currency:"£":0}}
+td {{i.vat | currency:"£":0}}
+td {{i.total | currency:"£":0}}
+td
+    //.btn-group
+    //    .btn.btn-default(ng-click="")
+    //        i.glyphicon.glyphicon-trash
+    //    .btn.btn-default(ng-click="")
+    //        i.glyphicon.glyphicon-edit
+    //     .btn.btn-default(ng-click="") Invoice
+

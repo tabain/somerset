@@ -119,6 +119,7 @@ website.get('/selfaccepted/:visitId', clients.updateVisit);
 // Chart Data
 website.get('/data/promotions', [admins.isAdmin], admins.usageData);
 website.post('/invoices', [admins.isAdmin], invoices.create);
+website.get('/invoices', [admins.isAdmin], invoices.invoices);
 
 website.get('/reports', [frontdesks.isFrontDesk], frontdesks.generateReport);
 

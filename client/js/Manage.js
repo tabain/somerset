@@ -32,6 +32,9 @@ angular.module('app').controller('Manage',
         };$scope.contract = function(){
             $location.path('/manage/contracts');
 
+        };$scope.invoices = function(){
+            $location.path('/manage/invoices');
+
         };
 
 
