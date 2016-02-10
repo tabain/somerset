@@ -12,5 +12,18 @@ td
             i.glyphicon.glyphicon-trash
         .btn.btn-default(ng-click="editContract(c)")
             i.glyphicon.glyphicon-edit
-         .btn.btn-default(ng-click="getInvoice(c)") Invoice
+
+    .btn-group
+        button.btn.btn-default.btn-md(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false',ng-click="getMonth(c)")
+            span.fa.fa-file-text
+            span.span-left-margin Get Invoice
+        button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false', ng-click="getMonth(c)")
+            span.caret
+            span.sr-only Toggle Dropdown
+        ul.dropdown-menu
+            li(ng-repeat="a in allMonthsInPeriod")
+                a(ng-click="setPeriod(a)") {{a}}
+
+
+    //.btn.btn-min-width.btn-info(ng-click="getInvoice(c)") Invoice
 

@@ -65,10 +65,9 @@ section
                     .modal-body
                        .row
                            .col-lg-6
-                               .form-group
-                                   label Invoice Period
-                                   select.form-control(name="period" ng-model="invoice.period"  ng-options="a | date:'EEE dd MMM yyyy' for a in allMonthsInPeriod" required)
-
+                               label Invoice Period
+                               p
+                                strong {{invoice.period}}
                                label Contract
                                p
                                 strong {{invoice.contract}}

@@ -285,6 +285,77 @@ angular.module('app').controller('Contracts',
             $scope.modalshowhide = true;
             $scope.allMonthsInPeriod = [];
         });
+        $scope.getMonth = function(c){
+            $scope.invoice = c;
+            var startDateString = c.start;
+            var endDateString = c.end;
+            var startDate = moment(startDateString, "YYYY-M-DD");
+            var endDate = moment(endDateString, "YYYY-M-DD").endOf("month");
+
+
+
+            while (startDate.isBefore(endDate)) {
+                $scope.allMonthsInPeriod.push(startDate.format("YYYY-MM"));
+                startDate = startDate.add(1, "month");
+            };
+            $scope.allMonthsInPeriod.forEach(function(d, i){
+                var index = -1;
+                if ($scope.allMonthsInPeriod[0] === d){
+                    index = i ;
+
+                    if (index >= 0) {
+                        $scope.allMonthsInPeriod.splice(index, 1);
+
+                    }
+
+                }
+
+            });
+            $scope.setPeriod = function(period){
+                $('#generate').modal('show');
+                $scope.invoice.period = period;
+                $scope.invoice.vat = (20/100) * $scope.invoice.monthlyRent;
+                $scope.invoice.total = $scope.invoice.vat + $scope.invoice.monthlyRent;
+                $scope.invoice.issueDate = new Date();
+                $scope.invoice.dueDate =new Date(new moment($scope.invoice.issueDate).add(10, 'days'));
+                $scope.invoice.status =$scope.statuses[0];
+
+                $scope.generate = function(){
+                    var g = {
+                        contract: $scope.invoice.id,
+                        issueDate: $scope.invoice.issueDate,
+                        period: $scope.invoice.period,
+                        dueDate:$scope.invoice.dueDate,
+                        monthlyRent:$scope.invoice.monthlyRent,
+                        vat:$scope.invoice.vat,
+                        total:$scope.invoice.total,
+                        organisation:$scope.invoice.organisation.id,
+                        propOwner:$scope.invoice.propOwner.id,
+                        room:$scope.invoice.room.id,
+                        status:$scope.invoice.status
+
+
+                    };
+                    $http
+                        .post('/invoices',g)
+                        .success(function(data){
+                            console.log(data);
+                            $('#generate').modal('hide');
+
+                            $timeout(function(){
+                                $location.path('/manage/invoices');
+                            }, 300);
+
+                        })
+                        .error(function(err){
+                            console.log(err)
+                        })
+                }
+                $scope.cancel = function () {
+                    $('#generate').modal('hide');
+                };
+            };
+        }
         $scope.getInvoice = function(c){
             $('#generate').modal('show');
             $scope.invoice = c;

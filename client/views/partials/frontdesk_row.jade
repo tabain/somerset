@@ -12,11 +12,11 @@ td
     input(type="checkbox" ng-model="ids[v.id]")
 td
     p In: {{v.checkedInAt | date: 'MMM d, y h:mm a'}}
-    p Out: {{v.checkedOutAt | date: 'MMM d, y h:mm a'}}
+    //p Out: {{v.checkedOutAt | date: 'MMM d, y h:mm a'}}
 td.dontprint
     .btn-group
         button.btn.btn-default(ng-click='deleteVisit(v)')
             i.glyphicon.glyphicon-trash
         button.btn.btn-default(ng-click="editVisit(v)")
             i.glyphicon.glyphicon-edit
-    button.btn.btn-min-width(ng-click="checkInOrCheckOut(v)" ng-class="{'btn-primary': !v.checkedIn, 'btn-danger': v.checkedIn}" ng-disabled="((v.checkedIn && v.checkedOut) || !ids[v.id]) ?  true : false") {{ v.checkedIn?"Check Out":"Check In" }}
+    button.btn.btn-min-width(ng-click="checkInOrCheckOut(v)" ng-class="{'btn-primary': !v.checkedIn, 'btn-info': v.checkedIn}" ng-disabled="((v.checkedIn)) ?  true : false") {{ v.checkedIn?"Check In":"Check In" }}

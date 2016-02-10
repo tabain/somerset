@@ -3,8 +3,7 @@ angular.module('app').controller('FrontDest',
 
         $( "html" ).removeClass( "background-client" );
         showError = function (err) {
-            if (!err)
-                toaster.error(errors.UNKNOWN);
+            if (!err){}
             else if (err.status == 403)
                 toaster.error(errors.UNAUTHORIZED);
             else if (err.status == 400)
