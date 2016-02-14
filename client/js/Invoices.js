@@ -88,16 +88,16 @@ angular.module('app').controller('Invoices',
 
             $scope.generate = function(){
                 var g = {
-                    contract: $scope.invoice.id,
+                   contract: $scope.contract.id,
                     issueDate: $scope.invoice.issueDate,
                     period: $scope.invoice.period,
                     dueDate:$scope.invoice.dueDate,
-                    monthlyRent:$scope.invoice.monthlyRent,
+                    monthlyRent:$scope.contract.monthlyRent,
                     vat:$scope.invoice.vat,
                     total:$scope.invoice.total,
-                    organisation:$scope.invoice.organisation.id,
-                    propOwner:$scope.invoice.propOwner.id,
-                    room:$scope.invoice.room.id,
+                    organisation:$scope.contract.organisation.id,
+                    propOwner:$scope.contract.propOwner.id,
+                    room:$scope.contract.room.id,
                     status:$scope.invoice.status
 
 
@@ -168,12 +168,12 @@ angular.module('app').controller('Invoices',
                     //issueDate: $scope.invoice.issueDate,
                     period: $scope.invoice.period,
                     dueDate:$scope.invoice.dueDate,
-                    monthlyRent:$scope.invoice.monthlyRent,
+                    monthlyRent:$scope.contract.monthlyRent,
                     vat:$scope.invoice.vat,
                     total:$scope.invoice.total,
-                    organisation:$scope.invoice.organisation.id,
-                    propOwner:$scope.invoice.propOwner.id,
-                    room:$scope.invoice.room.id,
+                    organisation:$scope.contract.organisation.id,
+                    propOwner:$scope.contract.propOwner.id,
+                    room:$scope.contract.room.id,
                     status:$scope.invoice.status
 
 
