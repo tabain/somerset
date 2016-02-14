@@ -9,7 +9,6 @@ angular.module('app').controller('Invoices',
             else
                 toaster.error(errors.UNKNOWN);
         };
-        $scope.allMonthsInPeriod =[];
         $scope.statuses=['unpaid','paid','collection', 'other'];
         $scope.invoices = [];
         $scope.contracts =[];
@@ -41,9 +40,10 @@ angular.module('app').controller('Invoices',
 
         loadContracts();
          function getMonth(c){
+             $scope.allMonthsInPeriod =[];
              $scope.invoice = c;
-             var startDateString = c.start;
-             var endDateString = c.end;
+             var startDateString = c.contract.start;
+             var endDateString = c.contract.end;
              var startDate = moment(startDateString, "YYYY-M-DD");
              var endDate = moment(endDateString, "YYYY-M-DD").endOf("month");
              while (startDate.isBefore(endDate)) {
@@ -63,19 +63,27 @@ angular.module('app').controller('Invoices',
                  }
 
              });
+             $scope.invoice.vat = (20/100) * c.contract.monthlyRent;
+             $scope.invoice.total = $scope.invoice.vat + c.contract.monthlyRent;
+             $scope.invoice.issueDate = new Date();
+             $scope.invoice.dueDate =new Date(new moment($scope.invoice.issueDate).add(10, 'days'));
+             $scope.invoice.status =$scope.statuses[0];
         };
+
         $scope.$watch('contract',function(){
-            getMonth($scope.contract);
+            $scope.invoice.contract = $scope.contract;
+            getMonth($scope.invoice);
+        });$scope.$watch('allMonthsInPeriod',function(){
+            if ($scope.invoice.period){
+                $scope.allMonthsInPeriod.forEach(function(d){
+                    if ($scope.invoice.period === d) $scope.invoice.period = d;
+                });
+            }
         });
-        $scope.$watch('invoice.period',function(){
-            $scope.invoice.period = $scope.invoice.period;
-            $scope.invoice.vat = (20/100) * $scope.invoice.monthlyRent;
-            $scope.invoice.total = $scope.invoice.vat + $scope.invoice.monthlyRent;
-            $scope.invoice.issueDate = new Date();
-            $scope.invoice.dueDate =new Date(new moment($scope.invoice.issueDate).add(10, 'days'));
-            $scope.invoice.status =$scope.statuses[0];
-        });
+
         $scope.take = function(){
+            $scope.create = 'Create';
+
             $('#generate').modal('show');
 
             $scope.generate = function(){
@@ -138,6 +146,52 @@ angular.module('app').controller('Invoices',
 
             $scope.cancel = function () {
                 $('#deleteContract').modal('hide');
+            };
+        };
+        $scope.edit = function (invoice) {
+            $scope.create = 'Edit';
+            getMonth(invoice);
+            $scope.contracts.forEach(function(d){
+              if (invoice.contract.id === d.id) {
+                  $scope.contract = d;
+              }
+            });
+            $scope.allMonthsInPeriod.forEach(function(d){
+              if (invoice.period=== d) {
+                  $scope.invoice.period = d;
+              }
+            });
+            $('#generate').modal('show');
+            $scope.generate = function(){
+                var g = {
+                    contract: $scope.contract.id,
+                    //issueDate: $scope.invoice.issueDate,
+                    period: $scope.invoice.period,
+                    dueDate:$scope.invoice.dueDate,
+                    monthlyRent:$scope.invoice.monthlyRent,
+                    vat:$scope.invoice.vat,
+                    total:$scope.invoice.total,
+                    organisation:$scope.invoice.organisation.id,
+                    propOwner:$scope.invoice.propOwner.id,
+                    room:$scope.invoice.room.id,
+                    status:$scope.invoice.status
+
+
+                };
+                $http
+                    .put('/invoices'+invoice.id,g)
+                    .success(function(data){
+                        console.log(data);
+                        $('#generate').modal('hide');
+                        list();
+
+                    })
+                    .error(function(err){
+                        console.log(err)
+                    })
+            }
+            $scope.cancel = function () {
+                $('#generate').modal('hide');
             };
         };
 

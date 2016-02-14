@@ -2,6 +2,7 @@ angular.module('app').controller('Contracts',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window, $location, $timeout) {
         $( "html" ).removeClass( "background-client" );
         $scope.owners = [];
+        $scope.create = 'Create';
         $scope.statuses=['unpaid','paid','collection', 'other'];
         $scope.allMonthsInPeriod = [];
         $scope.winglocs = [];
