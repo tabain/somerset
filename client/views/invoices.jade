@@ -78,17 +78,17 @@ section
 
                                label Property Owner
                                p
-                                strong {{invoice.propOwner.propOwner}}
+                                strong {{invoice.contract.propOwner.propOwner}}
                                label Room
                                p
-                                strong {{invoice.room.room}}
+                                strong {{invoice.contract.room.room}}
                            .col-lg-6
                                    label status
                                    p
                                     strong {{invoice.status}}
                                    label Organisation
                                    p
-                                    strong {{invoice.organisation.name}}
+                                    strong {{invoice.contract.organisation.name}}
                                    label Issue Date
                                    p
                                     strong {{invoice.issueDate | date:'EEE dd MMM yyyy'}}
