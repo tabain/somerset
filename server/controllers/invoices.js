@@ -83,22 +83,22 @@ exports.create = function (req, res, next) {
 
 };
 
-exports.updateContract = function (req, res, next) {
+exports.update = function (req, res, next) {
 
     var result = joi.validate(req.body, Create, {stripUnknown: true});
     if (result.error) return res.status(400).json(result.error);
 
-    Contract.findOne({_id: req.params.contractId}, function (err, contract) {
+    Invoice.findOne({_id: req.params.invoiceId}, function (err, invoice) {
         if (err) return next(err);
-        if (!contract) return res.status(404).json({message: 'Contract not found, invalid identifier'});
+        if (!invoice) return res.status(404).json({message: 'Invoice not found, invalid identifier'});
         var update = false;
         for (prop in result.value) {
-            contract[prop] = result.value[prop];
+            invoice[prop] = result.value[prop];
             update = true;
         }
-        if (update) contract.updatedBy = req.user._id;
+        if (invoice) invoice.updatedBy = req.user._id;
 
-        contract.save(function (err, data) {
+        invoice.save(function (err, data) {
             if (err) return next(err);
             res.json(data.public());
         });
@@ -107,16 +107,16 @@ exports.updateContract = function (req, res, next) {
 
 };
 
-exports.deleteContract = function (req, res, next) {
+exports.delete = function (req, res, next) {
 
-    Contract.findOne({_id: req.params.contractId}, function (err, contract) {
+    Invoice.findOne({_id: req.params.invoiceId}, function (err, invoice) {
         if (err) return next(err);
-        if (!contract) return res.status(404).json({message: 'Contract not found, invalid identifier'});
-        contract.deleted = true;
-        contract.deletedAt = new Date();
-        contract.deletedBy = req.user._id;
+        if (!invoice) return res.status(404).json({message: 'Invoice not found, invalid identifier'});
+        invoice.deleted = true;
+        invoice.deletedAt = new Date();
+        invoice.deletedBy = req.user._id;
 
-        contract.save(function (err, deleted) {
+        invoice.save(function (err, deleted) {
             if (err) return next(err);
             res.json(deleted.public());
         });
