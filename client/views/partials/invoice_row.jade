@@ -10,10 +10,10 @@ td {{i.monthlyRent | currency:"£":0}}
 td {{i.vat | currency:"£":0}}
 td {{i.total | currency:"£":0}}
 td
-    //.btn-group
-    //    .btn.btn-default(ng-click="")
-    //        i.glyphicon.glyphicon-trash
-    //    .btn.btn-default(ng-click="")
-    //        i.glyphicon.glyphicon-edit
-    //     .btn.btn-default(ng-click="") Invoice
+    .btn-group
+        .btn.btn-default(ng-click="delete(i)")
+            i.glyphicon.glyphicon-trash
+        .btn.btn-default(ng-click="")
+            i.glyphicon.glyphicon-edit
+
 

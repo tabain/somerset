@@ -66,7 +66,8 @@ angular.module('app').controller('Invoices',
         };
         $scope.$watch('contract',function(){
             getMonth($scope.contract);
-        });$scope.$watch('invoice.period',function(){
+        });
+        $scope.$watch('invoice.period',function(){
             $scope.invoice.period = $scope.invoice.period;
             $scope.invoice.vat = (20/100) * $scope.invoice.monthlyRent;
             $scope.invoice.total = $scope.invoice.vat + $scope.invoice.monthlyRent;
@@ -107,6 +108,36 @@ angular.module('app').controller('Invoices',
             }
             $scope.cancel = function () {
                 $('#generate').modal('hide');
+            };
+        };
+        $scope.delete = function (invoice) {
+
+            $('#delete').modal('show');
+            $scope.invoice = invoice;
+            $scope.confirmDeleted = function () {
+                $http.delete('/invoices/' +  invoice.id, {})
+                    .success(function (result) {
+                        var index = -1;
+                        $scope.invoices.forEach(function (g, i) {
+                            if (g.id == invoice.id) {
+                                index = i;
+                            }
+                        });
+                        if (index >= 0) {
+                            $scope.invoices.splice(index, 1);
+
+                        }
+                        $('#delete').modal('hide');
+                    })
+                    .error(function (err) {
+                        $('#delete').modal('hide');
+                        showError(err);
+                    });
+
+            };
+
+            $scope.cancel = function () {
+                $('#deleteContract').modal('hide');
             };
         };
 
