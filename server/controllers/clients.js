@@ -203,11 +203,11 @@ exports.sendMessage = function(req, res, next){
         //Specify email data
         from: config.MAILGUN_FROM_WHO,
         //The email to contact
-        to: req.body.sendmsg.email,
+        to: req.body.email,
         //Subject and text data
         subject: 'You have a visitor',
         //subject: 'Hello '+doc.member.name.toUpperCase()+' meet to '+doc.visitor.name.toUpperCase(),
-        html: 'Hi '+req.body.sendmsg.name+' , <br/>'+req.body.sendmsg.visitor+' <br/>'+req.body.sendmsg.message
+        html: 'Hi '+req.body.name+' , <br/>'+req.body.visitor+' is here to visit you. Do you know him?'+'  <br/>'+req.body.message
     }
 
     //Invokes the method to send emails given the above data with the helper library

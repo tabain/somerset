@@ -23,7 +23,7 @@ angular.module('app').controller('client',
                     .success(function(data){
                         if (data.length === 0) {
                             toaster.error('Not found member');
-                            $('#someone-else').modal('show');
+                            $scope.someone();
                         }
                         $scope.members = data;
                         $scope.disablesearch = true;
@@ -38,12 +38,13 @@ angular.module('app').controller('client',
         };
         $scope.someone = function(){
             $('#someone-else').modal('show');
-            $scope.send = function(isValid){
+            $scope.sendEmail = function(isValid){
                 if (isValid){
                     $http
                         .post('/sendmsg', $scope.sendmsg)
                         .success(function(data){
-                            toaster.success(data);
+                            $('#someone-else').modal('hide');
+                            toaster.success(data.message);
                         })
                         .error(function(err){
                             toaster.error(err);

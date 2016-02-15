@@ -105,7 +105,7 @@ website.delete('/contracts/:contractId', [admins.isAdmin], contracts.deleteContr
 
 
 website.get('/clientMembers', [base.isSessionAvailable], clients.listMembers);
-website.get('/sendmsg', [base.isSessionAvailable], clients.sendMessage);
+website.post('/sendmsg', [base.isSessionAvailable], clients.sendMessage);
 website.get('/clientWings', [base.isSessionAvailable], wings.listWings);
 website.post('/clients', [base.isSessionAvailable], clients.createVisitor);
 website.get('/guests/:visitId', [base.isSessionAvailable], clients.findoneVisit);

@@ -64,23 +64,23 @@ section(ng-controller="client")
                     .modal-body
 
 
-                        form(name="sendMsg" ng-submit="send(sendMsg.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
+                        form(name="sendMsg" ng-submit="sendEmail(sendMsg.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
 
                             .form-group
-                                label Name
-                                input.form-control(type='text' placeholder="full name" name="person"  ng-model="sendmsg.name" required)
+                                label Member Name
+                                input.form-control(type='text' placeholder="Name of member" name="person"  ng-model="sendmsg.name" required)
                                 p.help-block(ng-show="sendMsg.person.$invalid && !sendMsg.person.$pristine") Please provide us with a name
                             .form-group
-                                label Email
-                                input.form-control(name="email" type='email' ng-model="sendmsg.email" required)
+                                label Member Email
+                                input.form-control(name="email" placeholder="Email e.g john@gmail.com" type='email' ng-model="sendmsg.email" required)
                                 p.help-block(ng-show="sendMsg.email.$invalid && !sendMsg.email.$pristine") Please provide us with a email
                             .form-group
                                 label Visitor Name
-                                input.form-control(name="visitor" type='text' ng-model="sendmsg.visitor" required)
+                                input.form-control(name="visitor" placeholder="Name of visitor" type='text' ng-model="sendmsg.visitor" required)
                                 p.help-block(ng-show="sendMsg.visitor.$invalid && !sendMsg.visitor.$pristine") Please provide us with a visitor name
                             .form-group
                                 label Message
-                                textarea.form-control(name="message" type='text' ng-model="sendmsg.message" required)
+                                textarea.form-control(name="message" placeholder="Some text ......." type='text' ng-model="sendmsg.message" required)
                                 p.help-block(ng-show="sendMsg.message.$invalid && !sendMsg.message.$pristine") Please provide us with a message
                             .form-group
                                 button(type="submit" ng-disabled="sendMsg.$invalid").btn.btn-primary.btn-lg.btn-block Send
