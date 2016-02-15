@@ -4,6 +4,7 @@ angular.module('app').controller('client',
         $( "html" ).addClass( "background-client" );
 
         $scope.wings = [];
+        $scope.sendmsg = {};
         $scope.wing ={};
         $scope.member ="";
         $scope.members ={};
@@ -20,6 +21,10 @@ angular.module('app').controller('client',
                 $http
                     .get(urll)
                     .success(function(data){
+                        if (data.length === 0) {
+                            toaster.error('Not found member');
+                            $('#someone-else').modal('show');
+                        }
                         $scope.members = data;
                         $scope.disablesearch = true;
                     })
@@ -29,6 +34,25 @@ angular.module('app').controller('client',
             }
 
 
+
+        };
+        $scope.someone = function(){
+            $('#someone-else').modal('show');
+            $scope.send = function(isValid){
+                if (isValid){
+                    $http
+                        .post('/sendmsg', $scope.sendmsg)
+                        .success(function(data){
+                            toaster.success(data);
+                        })
+                        .error(function(err){
+                            toaster.error(err);
+                        })
+                }
+            };
+            $scope.close = function(){
+                $('#someone-else').modal('hide');
+            }
 
         };
         $scope.selectOne = function(member){
@@ -76,6 +100,7 @@ angular.module('app').controller('client',
 
             }else{
                 $('#defaultwing').modal('show');
+                $('#someone-else').modal('show');
                 $scope.submitForm = function(isvaild){
                     if (isvaild){
                         $rootScope.defaultWing = $window.localStorage.getItem('default_wing_id');

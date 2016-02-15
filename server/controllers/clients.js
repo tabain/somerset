@@ -198,6 +198,40 @@ exports.createVisitor = function(req, res, next){
     };
 
 };
+exports.sendMessage = function(req, res, next){
+    var data = {
+        //Specify email data
+        from: config.MAILGUN_FROM_WHO,
+        //The email to contact
+        to: req.body.sendmsg.email,
+        //Subject and text data
+        subject: 'You have a visitor',
+        //subject: 'Hello '+doc.member.name.toUpperCase()+' meet to '+doc.visitor.name.toUpperCase(),
+        html: 'Hi '+req.body.sendmsg.name+' , <br/>'+req.body.sendmsg.visitor+' <br/>'+req.body.sendmsg.message
+    }
+
+    //Invokes the method to send emails given the above data with the helper library
+    mailgun.messages().send(data, function (err, body) {
+        //If there is an error, render the error page
+
+        if(body) res.json(body);
+        if (err) {
+            //res.render('error', { error : err});
+            console.log("got an error: ", err);
+        }
+        //Else we can greet    and leave
+        else {
+            //Here "submitted.jade" is the view file for this landing page
+            //We pass the variable "email" from the url parameter in an object rendered by Jade
+
+
+
+        }
+
+    });
+
+};
+
 exports.updateVisit = function (req, res, next) {
 
 

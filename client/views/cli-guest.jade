@@ -17,7 +17,7 @@ section(ng-controller="client")
                     h4.white Please select one
 
                     //div(ng-repeat="m in members" ng-click="selectOne(m)").member-row
-                    div(ng-repeat="m in members" ng-click="selectOne(m)").col-lg-6
+                    div(ng-repeat="m in members").col-lg-6
                         .member-row
 
                             h3 {{m.name}}
@@ -30,6 +30,8 @@ section(ng-controller="client")
                                     strong  Room:
                                     br
                                     | {{m.room.room}}
+                            button(ng-click="selectOne(m)").btn.btn-sm.btn-success Select
+                            button(ng-click="someone()").btn.btn-sm.btn-default Someone else
 
 
                                 //button.btn.btn-default() Select
@@ -52,6 +54,36 @@ section(ng-controller="client")
                                 p.help-block(ng-show="wingform.wing.$invalid && !wingform.wing.$pristine") Please provide us with a Wing
                             .form-group
                                 button(type="submit").btn.btn-primary.btn-lg.btn-block Set
+        .modal.fade#someone-else
+            .modal-dialog
+                .modal-content
+                    .modal-header
+                        h4.modal-title
+                            i.glyphicon.glyphicon-user.span-right-margin
+                            | Someone else
+                    .modal-body
+
+
+                        form(name="sendMsg" ng-submit="send(sendMsg.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
+
+                            .form-group
+                                label Name
+                                input.form-control(type='text' placeholder="full name" name="person"  ng-model="sendmsg.name" required)
+                                p.help-block(ng-show="sendMsg.person.$invalid && !sendMsg.person.$pristine") Please provide us with a name
+                            .form-group
+                                label Email
+                                input.form-control(name="email" type='email' ng-model="sendmsg.email" required)
+                                p.help-block(ng-show="sendMsg.email.$invalid && !sendMsg.email.$pristine") Please provide us with a email
+                            .form-group
+                                label Visitor Name
+                                input.form-control(name="visitor" type='text' ng-model="sendmsg.visitor" required)
+                                p.help-block(ng-show="sendMsg.visitor.$invalid && !sendMsg.visitor.$pristine") Please provide us with a visitor name
+                            .form-group
+                                label Message
+                                textarea.form-control(name="message" type='text' ng-model="sendmsg.message" required)
+                                p.help-block(ng-show="sendMsg.message.$invalid && !sendMsg.message.$pristine") Please provide us with a message
+                            .form-group
+                                button(type="submit" ng-disabled="sendMsg.$invalid").btn.btn-primary.btn-lg.btn-block Send
 
 
 footer(ng-include="'views/partials/footer_client.html'")
