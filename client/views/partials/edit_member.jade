@@ -1,17 +1,5 @@
-form(name="memberForm" ng-submit="submitForm(memberForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
+form(name="memberForm" ng-submit="submitForm(memberForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 100, blur: 100 } }" novalidate)
 
-   .form-group
-      label Wing
-      select.form-control(name="wing" ng-model="membere.wing" ng-options="w.name | capitalize for w in wings" required)
-      p.help-block(ng-show="memberForm.wing.$invalid && !memberForm.wing.$pristine") Please provide us with a Wing
-   .form-group
-      label Location
-      select.form-control(name="location" ng-model="membere.location" ng-options="l.location | capitalize for l in winglocs" required)
-      p.help-block(ng-show="memberForm.location.$invalid && !memberForm.location.$pristine") Please provide us with a location
-   .form-group
-      label Room
-      select.form-control(name="room" ng-model="membere.room" ng-options="r.room | capitalize for r in rooms"   required)
-      p.help-block(ng-show="memberForm.room.$invalid && !memberForm.room.$pristine") Please provide us with a room
    .form-group
       label Organisation
       select.form-control(name="organisation" ng-model="membere.organisation" ng-options="r.name | capitalize for r in orgs"  required)
@@ -26,11 +14,11 @@ form(name="memberForm" ng-submit="submitForm(memberForm.$valid)" ng-model-option
       p.help-block(ng-show="memberForm.age.$invalid && !memberForm.age.$pristine") Please provide us with a organisation name
    .form-group
       label Email
-      input.form-control(placeholder="Email e.g john@gmail.com" type="email" ng-model="membere.email" name="email" ng-pattern='emailPattern' required)
+      input.form-control(placeholder="Email e.g john@gmail.com" type="email" ng-model="membere.email" name="email" ng-pattern='emailPattern'   required)
       p.help-block(ng-show="memberForm.email.$invalid && !memberForm.email.$pristine") Please provide us with a valid email address
    .form-group
       label Phone
-      input(type="text" ng-model="membere.phone" intl-tel-input placeholder="Phone No e.g 1234567" default-country="gb" preferred-countries="gb, us" name="phone" required).form-control
+      input(type="text"  ng-model="membere.phone" intl-tel-input placeholder="Phone No e.g 1234567" default-country="gb" preferred-countries="gb, us" autofocus name="phone" required).form-control
       p.help-block(ng-show="memberForm.phone.$invalid && !memberForm.phone.$pristine") Please provide us with a valid phone number beginning with country code e.g. +44
    .form-group
       label Ext
@@ -41,4 +29,4 @@ form(name="memberForm" ng-submit="submitForm(memberForm.$valid)" ng-model-option
       input(type="text" ng-model="membere.mobile" intl-tel-input placeholder="Mobile No e.g 1234567" default-country="gb" preferred-countries="gb, us" name="mobile").form-control
       p.help-block(ng-show="memberForm.mobile.$invalid && !memberForm.mobile.$pristine") Please provide us with a valid mobile number beginning with country code e.g. +44
    .form-group
-      button(type="submit" ng-disabled="memberForm.$invalid").btn.btn-primary.btn-lg.btn-block update
+      button(type="submit" ng-disabled="").btn.btn-primary.btn-lg.btn-block update

@@ -8,4 +8,4 @@ form(name="newRoomForm" ng-submit="submitForm(newRoomForm.$valid)" ng-model-opti
       select.form-control(name="location" ng-model="roome.location" ng-options="l.location | capitalize for l in winglocs" required)
       p.help-block(ng-show="newRoomForm.location.$invalid && !newRoomForm.location.$pristine") Please provide us with a location
    .form-group
-      button(type="submit" ng-disabled="newRoomForm.$invalid").btn.btn-primary.btn-lg.btn-block Update
+      button(type="submit").btn.btn-primary.btn-lg.btn-block Update

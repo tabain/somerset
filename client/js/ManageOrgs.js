@@ -146,12 +146,14 @@ angular.module('app').controller('ManageOrgs',
                     })
                     .error(function (err) {
                         $('#deleteOrg').modal('hide');
+                        $scope.orgDeleted={};
                         showError(err);
                     });
 
             };
 
             $scope.cancel = function () {
+                $scope.orgDeleted={};
                 $('#deleteOrg').modal('hide');
             };
         };

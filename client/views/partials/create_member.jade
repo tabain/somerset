@@ -1,18 +1,6 @@
 form(name="memberForm" ng-submit="submitForm(memberForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
 
    .form-group
-      label Wing
-      select.form-control(name="wing" ng-model="member.wing" ng-options="w.name | capitalize for w in wings" required)
-      p.help-block(ng-show="memberForm.wing.$invalid && !memberForm.wing.$pristine") Please provide us with a Wing
-   .form-group
-      label Location
-      select.form-control(name="location" ng-model="member.location" ng-options="l.location | capitalize for l in winglocs" ng-disabled="locDisabled" required)
-      p.help-block(ng-show="memberForm.location.$invalid && !memberForm.location.$pristine") Please provide us with a location
-   .form-group
-      label Room
-      select.form-control(name="room" ng-model="member.room" ng-options="r.room | capitalize for r in rooms"   required)
-      p.help-block(ng-show="memberForm.room.$invalid && !memberForm.room.$pristine") Please provide us with a room
-   .form-group
       label Organisation
       select.form-control(name="organisation" ng-model="member.organisation" ng-options="r.name | capitalize for r in orgs"  required)
       p.help-block(ng-show="memberForm.organisation.$invalid && !memberForm.organisation.$pristine") Please provide us with a Organisation

@@ -135,11 +135,14 @@ angular.module('app').controller('ManageRooms',
                     .error(function (err) {
                         $('#deleteRoom').modal('hide');
                         showError(err);
+                        $scope.roomdeleted = {};
+
                     });
 
             };
 
             $scope.cancel = function () {
+                $scope.roomdeleted = {};
                 $('#deleteRoom').modal('hide');
             };
         };
