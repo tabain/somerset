@@ -199,15 +199,17 @@ exports.createVisitor = function(req, res, next){
 
 };
 exports.sendMessage = function(req, res, next){
+    function toTitleCase(str)
+    {
+        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
+    var vis = toTitleCase(req.body.visitor), mem = toTitleCase(req.body.name);
     var data = {
-        //Specify email data
         from: config.MAILGUN_FROM_WHO,
-        //The email to contact
         to: req.body.email,
-        //Subject and text data
         subject: 'You have a visitor',
-        //subject: 'Hello '+doc.member.name.toUpperCase()+' meet to '+doc.visitor.name.toUpperCase(),
-        html: 'Hi '+req.body.name+' , <br/>'+req.body.visitor+' is here to visit you. Do you know him?'+'  <br/>'+req.body.message
+        html: 'Hi '+mem+',<br/>'+vis+' is here to visit you.<br/>Here is a message from him/her:<br/>'+req.body.message
+
     }
 
     //Invokes the method to send emails given the above data with the helper library

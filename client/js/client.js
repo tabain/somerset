@@ -101,7 +101,6 @@ angular.module('app').controller('client',
 
             }else{
                 $('#defaultwing').modal('show');
-                $('#someone-else').modal('show');
                 $scope.submitForm = function(isvaild){
                     if (isvaild){
                         $rootScope.defaultWing = $window.localStorage.getItem('default_wing_id');
