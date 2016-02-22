@@ -46,7 +46,7 @@ section
                             i.glyphicon.glyphicon-user.span-right-margin
                             | Delete Room
                     .modal-body
-                        p Are you sure you want to delete this Room?
+                        p Are you sure you want to delete this Room {{roomdeleted.room}}?
                     .modal-footer
                         btn.btn.btn-primary(ng-click="confirmDeleted()") Confirm
                         btn.btn.btn-danger(ng-click="cancel()") Cancel

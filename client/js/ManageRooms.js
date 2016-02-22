@@ -1,61 +1,12 @@
 angular.module('app').controller('ManageRooms',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window, $location) {
         $( "html" ).removeClass( "background-client" );
-        $scope.wings= [];
         $scope.winglocs = [];
-        $scope.locs = [];
         $scope.room ={};
         $scope.rooms=[];
         $scope.roome ={};
         $scope.locDisabled = true;
 
-
-        loadWings = function(){
-            $http.get('/wings')
-                .success(function (data, headers){
-                    if (data) {
-                        $scope.wings = data;
-
-                        $scope.room.wing = $scope.wings[0];
-                    }
-                })
-                .error(function(err){
-                    showError(err);
-                });
-        };
-        loadWings();
-        $scope.$watch('room.wing', function(){
-            $scope.locDisabled = true;
-                if ($scope.room.wing === undefined || !$scope.room.wing){
-
-                }
-                else{loadwingbyloc($scope.room);}
-
-
-        });
-        $scope.$watch('roome.wing', function(){
-            $scope.locDisabled = true;
-
-                if ($scope.room.wing === undefined || !$scope.room.wing){
-
-                }
-                else{loadwingbyloc($scope.roome);}
-
-
-        });
-        $scope.$watch('winglocs', function(){
-
-            if ($scope.roome.location){
-                $scope.winglocs.forEach(function(d){
-                    if (d.id === $scope.roome.location.id){
-                        $scope.roome.location = d;
-                    }
-                });
-            }
-            if ($scope.winglocs.length > 0){
-                $scope.locDisabled = false;
-            }
-        })
 
         loadRoom = function () {
             var url = '/rooms';
@@ -70,9 +21,9 @@ angular.module('app').controller('ManageRooms',
 
         loadRoom();
 
-        loadwingbyloc = function(room){
+        loadlocations= function(){
           $http
-              .get("/winglocs/" + room.wing.id)
+              .get("/winglocs/")
               .success(function (data){
                   $scope.winglocs = data;
                   if ($scope.winglocs == 0) $scope.winglocs =[];
@@ -82,7 +33,7 @@ angular.module('app').controller('ManageRooms',
                   showError(err);
               });
         };
-
+        loadlocations();
         showError = function (err) {
             if (!err)
                 toaster.error(errors.UNKNOWN);
@@ -108,24 +59,15 @@ angular.module('app').controller('ManageRooms',
                 if (isValid) {
                     var obj = {
                         location: $scope.room.location.id,
-                        wing: $scope.room.wing.id,
+                        wing: $scope.room.location.wing.id,
                         room: $scope.room.room
                     };
                     new Room(obj).$save(function (data, headers) {
                         $(".modal-backdrop").hide();
                         $('#addRoom').modal('hide');
                         // TODO: Post Success
-                        $scope.wings.forEach(function(d){
-                            if (d.id == data.wing){
-                                data.wing = d;
-                            }
-                        });
-                        $scope.winglocs.forEach(function(d){
-                            if (d.id == data.location){
-                                data.location = d;
-                            }
-                        });
-                        $scope.rooms.push(data);
+                        loadRoom();
+                        $scope.room.$rollbackViewValue()
 
                     }, function (err) {
                         // TODO: Create Error Translator on Server and add helpful errors here
@@ -139,13 +81,12 @@ angular.module('app').controller('ManageRooms',
 
 
         $scope.editRoom = function (room) {
-            loadwingbyloc(room);
             $rootScope.editRoom= room;
 
             $scope.roome = angular.copy(room);
-            $scope.wings.forEach(function(d){
-                if (d.id === $scope.roome.wing.id ){
-                    $scope.roome.wing = d;
+            $scope.winglocs.forEach(function(d){
+                if (d.id === $scope.roome.location.id ){
+                    $scope.roome.location = d;
 
                 }
             });
@@ -155,7 +96,7 @@ angular.module('app').controller('ManageRooms',
                 if (isValid) {
                     var obj = {
                         location : $scope.roome.location.id,
-                        wing : $scope.roome.wing.id,
+                        wing : $scope.roome.location.wing.id,
                         room: $scope.roome.room
                     };
                     $http.put('/rooms/' + $scope.roome.id, obj)
@@ -175,12 +116,13 @@ angular.module('app').controller('ManageRooms',
 
         $scope.deleteRoom = function (room) {
             $('#deleteRoom').modal('show');
+            $scope.roomdeleted = room;
             $scope.confirmDeleted = function () {
-                $http.delete('/rooms/' +  room.id, {})
+                $http.delete('/rooms/' +  $scope.roomdeleted.id, {})
                     .success(function (result) {
                         var index = -1;
                         $scope.rooms.forEach(function (g, i) {
-                            if (g.id == room.id) {
+                            if (g.id == $scope.roomdeleted.id) {
                                 index = i;
                             }
                         });
@@ -189,6 +131,7 @@ angular.module('app').controller('ManageRooms',
 
                         }
                         $('#deleteRoom').modal('hide');
+                        $scope.roomdeleted = {};
                     })
                     .error(function (err) {
                         $('#deleteRoom').modal('hide');
