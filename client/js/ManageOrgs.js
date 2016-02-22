@@ -1,32 +1,13 @@
 angular.module('app').controller('ManageOrgs',
     function ($scope, $http, $interval, toaster, $rootScope, $resource, $window, $location) {
         $( "html" ).removeClass( "background-client" );
-        $scope.wings= [];
-        $scope.winglocs = [];
-        $scope.locs = [];
         $scope.org ={};
         $scope.orgs =[];
         $scope.rooms=[];
         $scope.orge ={};
-        $scope.locDisabled = true;
-        $scope.roomDisabled = true;
         $scope.emailPattern = /^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$/;
         $scope.phonePattern = /^[\+](?:[0-9] ?){6,14}[0-9]$/;
 
-
-        loadWings = function(){
-            $http.get('/wings')
-                .success(function (data, headers){
-                    if (data) {
-                        $scope.wings = data;
-
-                        $scope.org.wing = $scope.wings[0];
-                    }
-                })
-                .error(function(err){
-                    showError(err);
-                });
-        };
         loadOrgs = function(){
             $http.get('/orgs')
                 .success(function (data, headers){
@@ -39,104 +20,19 @@ angular.module('app').controller('ManageOrgs',
                 });
         };
         loadOrgs();
-        loadWings();
-        $scope.$watch('org.wing', function(){
-            $scope.locDisabled = true;
-                if ($scope.org.wing === undefined || !$scope.org.wing){
 
-                }
-                else{loadwingbyloc($scope.org);}
+        loadRooms = function(org){
 
-
-        });
-        $scope.$watch('orge.wing', function(){
-            $scope.locDisabled = true;
-
-                if ($scope.orge.wing === undefined || !$scope.orge.wing){
-
-                }
-                else{loadwingbyloc($scope.orge);}
-
-
-        });
-
-
-        $scope.$watch('org.location', function(){
-            $scope.roomDisabled = true;
-            if ($scope.org.location === undefined || !$scope.org.location){
-
-            }
-            else{loadlocbyroom($scope.org);}
-
-
-        });
-        $scope.$watch('orge.location', function(){
-            $scope.locDisabled = true;
-
-            if ($scope.orge.location === undefined || !$scope.orge.location){
-
-            }
-            else{loadlocbyroom($scope.orge);}
-
-
-        });
-        $scope.$watch('winglocs', function(){
-
-            if ($scope.orge.location){
-                $scope.winglocs.forEach(function(d){
-                    if (d.id === $scope.orge.location.id){
-                        $scope.orge.location = d;
-                    }
-                });
-            }
-            if ($scope.winglocs.length > 0){
-                $scope.locDisabled = false;
-            }
-        });
-        $scope.$watch('rooms', function(){
-
-            if ($scope.orge.room){
-                $scope.rooms.forEach(function(d){
-                    if (d.id === $scope.orge.room.id){
-                        $scope.orge.room = d;
-                    }
-                });
-            }
-            if ($scope.rooms.length > 0){
-                $scope.roomDisabled = false;
-            }
-        });
-
-        loadwingbyloc = function(org){
-
-          $http
-              .get("/winglocs/" + org.wing.id)
-              .success(function (data){
-                  $scope.winglocs = data;
-                  if ($scope.winglocs == 0) $scope.winglocs =[];
-
-
-              })
-              .error(function(err){
-                  $scope.winglocs =[];
-                  showError(err);
-              });
-        };
-
-        loadlocbyroom = function(org){
-            $scope.rooms =[];
-            $http
-                .get("/rooms/" + org.location.id)
-                .success(function (data){
+            var url = '/rooms';
+            $http.get(url)
+                .success(function (data, headers) {
                     $scope.rooms = data;
-                    if ($scope.rooms == 0) $scope.rooms =[];
                 })
-                .error(function(err){
-                    $scope.rooms =[];
+                .error(function (err) {
                     showError(err);
                 });
         };
-
+        loadRooms();
         showError = function (err) {
             if (!err)
                 toaster.error(errors.UNKNOWN);
@@ -161,8 +57,8 @@ angular.module('app').controller('ManageOrgs',
 
                 if (isValid) {
                     var obj = {
-                        location: $scope.org.location.id,
-                        wing: $scope.org.wing.id,
+                        location: $scope.org.room.location.id,
+                        wing: $scope.org.room.wing.id,
                         room: $scope.org.room.id,
                         name: $scope.org.name,
                         phone: $scope.org.phone,
@@ -175,23 +71,7 @@ angular.module('app').controller('ManageOrgs',
                         $(".modal-backdrop").hide();
                         $('#addOrg').modal('hide');
                         // TODO: Post Success
-                        $scope.wings.forEach(function(d){
-                            if (d.id == data.wing){
-                                data.wing = d;
-                            }
-                        });
-                        $scope.winglocs.forEach(function(d){
-                            if (d.id == data.location){
-                                data.location = d;
-                            }
-                        });
-
-                        $scope.rooms.forEach(function(d){
-                            if (d.id == data.room){
-                                data.room = d;
-                            }
-                        });
-                        $scope.orgs.push(data);
+                        loadOrgs();
 
                     }, function (err) {
                         // TODO: Create Error Translator on Server and add helpful errors here
@@ -205,14 +85,13 @@ angular.module('app').controller('ManageOrgs',
 
 
         $scope.editOrg = function (org) {
-            loadwingbyloc(org);
-            loadlocbyroom(org);
+
             $rootScope.editOrg= org;
 
             $scope.orge = angular.copy(org);
-            $scope.wings.forEach(function(d){
-                if (d.id === $scope.orge.wing.id ){
-                    $scope.orge.wing = d;
+            $scope.rooms.forEach(function(d){
+                if (d.id === $scope.orge.room.id ){
+                    $scope.orge.room = d;
 
                 }
             });
@@ -221,8 +100,8 @@ angular.module('app').controller('ManageOrgs',
             $scope.submitForm = function (isValid) {
                 if (isValid) {
                     var obj = {
-                        location: $scope.orge.location.id,
-                        wing: $scope.orge.wing.id,
+                        location: $scope.orge.room.location.id,
+                        wing: $scope.orge.room.wing.id,
                         room: $scope.orge.room.id,
                         name: $scope.orge.name,
                         phone: $scope.orge.phone,
@@ -248,6 +127,7 @@ angular.module('app').controller('ManageOrgs',
 
         $scope.deleteOrg = function (org) {
             $('#deleteOrg').modal('show');
+            $scope.orgDeleted = org;
             $scope.confirmDeleted = function () {
                 $http.delete('/orgs/' +  org.id, {})
                     .success(function (result) {
@@ -262,6 +142,7 @@ angular.module('app').controller('ManageOrgs',
 
                         }
                         $('#deleteOrg').modal('hide');
+                        $scope.orgDeleted={};
                     })
                     .error(function (err) {
                         $('#deleteOrg').modal('hide');

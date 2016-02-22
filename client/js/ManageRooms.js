@@ -67,7 +67,6 @@ angular.module('app').controller('ManageRooms',
                         $('#addRoom').modal('hide');
                         // TODO: Post Success
                         loadRoom();
-                        $scope.room.$rollbackViewValue()
 
                     }, function (err) {
                         // TODO: Create Error Translator on Server and add helpful errors here

@@ -1,12 +1,5 @@
 form(name="newRoomForm" ng-submit="submitForm(newRoomForm.$valid)" ng-model-options="{ updateOn: 'blur', debounce: { default: 2000, blur: 100 } }" novalidate)
-   .form-group
-      label Wing
-      select.form-control(name="wing" ng-model="orge.wing" ng-options="w.name | capitalize for w in wings" required)
-      p.help-block(ng-show="newOrgForm.wing.$invalid && !newOrgForm.wing.$pristine") Please provide us with a Wing
-   .form-group
-      label Location
-      select.form-control(name="location" ng-model="orge.location" ng-options="l.location | capitalize for l in winglocs" required)
-      p.help-block(ng-show="newOrgForm.location.$invalid && !newOrgForm.location.$pristine") Please provide us with a location
+
    .form-group
       label Room
       select.form-control(name="room" ng-model="orge.room" ng-options="r.room | capitalize for r in rooms" required)
