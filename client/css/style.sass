@@ -2,10 +2,10 @@
 
 $button-padding: 8px 10px 5px 10px
 $color-green: #000000
-$color-dr-gray: #616265
-$color-lt-gray: #8b8b8b
+$color-dr-gray: #453e29
+$color-lt-gray: #988f74
 $color-dropdown-selector: #e7e7e7
-$color-br: #5f4d3a
+$color-br: #362f1c
 $color-white: #fff
 $pad-porfile-heading: 16px 70px 5px 25px
 $font-roboto-reg: roboto-reg
@@ -48,6 +48,7 @@ body
 
   font-family: Century-Gothic
   background-color: rgba(255, 255, 255, 0.01)
+  color: $color-dr-gray
 
 label
   color: $color-lt-gray
@@ -106,7 +107,7 @@ section
 
 .background-client
   //background: url(./../../../imgs/nido/imgs/westhampstead.jpg) no-repeat center top
-  background: linear-gradient(rgba(0,0,0, .5),rgba(0,0,0, .5)), url(./../../../imgs/somersethouse.jpg) no-repeat center center fixed
+  background: linear-gradient(rgba(208, 198, 159, 0.39), rgba(0, 0, 0, 0.96)), url(./../../../imgs/somersethouse.jpg) no-repeat center center fixed
   background-attachment: fixed
   background-size: cover
 
@@ -199,6 +200,29 @@ section
 
 .b-width
   width: 45px
+.btn-primary
+  background-color: $color-dr-gray
+  border: none
+  color: #ffffff
+  &:hover, &:focus, &:active, &:target
+    background-color: #524932
+    color: #dddddd
+  &:disabled
+    background-color: #6c5c3d
+    color: #dddddd
+    &:hover, &:focus
+      background-color: #6c5c3d
+      color: #dddddd
+
+.btn-default
+  color: #6c5c3d
+  &:hover, &:focus, &:active, &:target
+    color: #362f1c
+  &:disabled
+    color: rgba(140, 120, 81, 0.65)
+    &:hover, &:focus
+      color: rgba(140, 120, 81, 0.65)
+
 
 #promotions label
   font-size: 12px
@@ -313,6 +337,11 @@ section
 
   img
     height: 100px
+    display: block
+    left: 0
+    right: 0
+
+    margin: auto
 
 .form-group
   border: 0px
@@ -322,17 +351,18 @@ section
 
 .form-control
   height: 45px
-  border: 1px solid #dadbde
+  border: 0px solid #362f1c
+  border-bottom: 1px solid $color-lt-gray
   border-radius: 0px
   box-shadow: 3px 4px 8px -3px rgba(0, 0, 0, 0.0)
   &::-webkit-input-placeholder
     color: $color-lt-gray
     font-family: Century-Gothic
   &:focus
-    border-color: #c0c0c0
+    border-color: $color-lt-gray
     box-shadow: 3px 4px 8px -3px rgba(0, 0, 0, 0.0)
     &::-webkit-input-placeholder
-      color: #c0c0c0
+      color: $color-lt-gray
       font-family: Century-Gothic
 .form-control-client
 

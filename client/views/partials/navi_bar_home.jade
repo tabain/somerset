@@ -1,16 +1,16 @@
 .container-fluid
     .navbar-header
         a.navbar-brand(href="/#!/")
-            h1.white Somerset House
+            img(style="height:150px;" src="/imgs/SomersetHouse_Logo_black).png")
             //img(src="/imgs/greystar/imgs/empty-logo.png")
     div( ng-show="showLogout" ng-scope)
        .nav.navbar-nav.navbar-right
 
            .btn-group
-                button.btn.btn-search(type='button')
+                button.btn.btn-primary(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                         span.glyphicon.glyphicon-user
                         span.span-left-margin {{currentUser}}
-                button.btn.btn-search.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                button.btn.btn-primary.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                     span.caret
                     span.sr-only Toggle Dropdown
                 ul.dropdown-menu

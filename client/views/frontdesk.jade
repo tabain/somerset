@@ -46,13 +46,12 @@ section
                         tr(ng-repeat="v in visits | orderBy:'-createdAt' | filter:searchText" ng-include="'views/partials/frontdesk_row.html'")
 
                 .pull-right.dontprint
-                    .btn.btn-default(ng-click="print()")
+                    .btn.btn-primary(ng-click="print()")
                         i.glyphicon.glyphicon-print
                         span.span-left-margin Print Data
-                    .btn.btn-default
-                        a(ng-href="{{reports()}}")
-                            i.glyphicon.glyphicon-export
-                            span.span-left-margin Export to CSV
+                    .btn.btn-primary(ng-href="{{reports()}}")
+                        i.glyphicon.glyphicon-export
+                        span.span-left-margin Export to CSV
 
         .modal.fade#editVisit
             .modal-dialog

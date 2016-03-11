@@ -19,4 +19,4 @@ td.dontprint
             i.glyphicon.glyphicon-trash
         button.btn.btn-default(ng-click="editVisit(v)")
             i.glyphicon.glyphicon-edit
-    button.btn.btn-min-width(ng-click="checkInOrCheckOut(v)" ng-class="{'btn-primary': !v.checkedIn, 'btn-info': v.checkedIn}" ng-disabled="((v.checkedIn)) ?  true : false") {{ v.checkedIn?"Check In":"Check In" }}
+    button.btn.btn-min-width(ng-click="checkInOrCheckOut(v)" ng-class="{'btn-default': !v.checkedIn, 'btn-primary': v.checkedIn}" ng-disabled="((v.checkedIn)) ?  true : false") {{ v.checkedIn?"Check In":"Check In" }}
