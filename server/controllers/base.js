@@ -23,6 +23,7 @@ exports.clientErrorHandler = function (err, req, res, next) {
     if (acceptsJSON) {
         res.status(500).json(err);
     } else {
+        
         next(err);
     }
 };
